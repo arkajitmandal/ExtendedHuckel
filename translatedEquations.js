@@ -29,6 +29,9 @@ function F(m,N,Nd){
     min = min(m,Nd);
     return sumOfFunction(min,sigma,function(s){ return Math.pow(-1,s)*binomial(N, m-s)*binomial(Nd,s)});
 }
+function D(beta,l,lambda){
+    return ((Math.pow(-1,(l-beta)/(2)))/(Math.pow(2,l)))*(Math.pow(((((2*l)+1)/(2))*((binomial(l + lambda, l))/((binomial(l ,lambda)))),(1/2)))*(binomial(l,(l-beta)/(2)))*(binomial(l+beta,beta-lambda));
+}
 function min(x,y){
     if (x>y){
         return y;
