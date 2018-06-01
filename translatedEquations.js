@@ -24,7 +24,19 @@ function B(n,p){
     }
 }
 
-function F()
+function F(m,N,Nd){
+    sigma = (1/2)*((m-N)+Math.abs(m-N));
+    min = min(m,Nd);
+    return sumOfFunction(min,sigma,function(s){ return Math.pow(-1,s)*binomial(N, m-s)*binomial(Nd,s)});
+}
+function min(x,y){
+    if (x>y){
+        return y;
+    }
+    else {
+        return x;
+    }
+}
 
 
 
@@ -54,3 +66,9 @@ function sumOfFunction(start, end, sigmaFunction){
     }
     return sum;
 }
+
+function binomial(a, b) {
+    numerator = factorial(a);
+    denominator = factorial(a-b) *  factorial(b);
+    return numerator / denominator;
+  }
