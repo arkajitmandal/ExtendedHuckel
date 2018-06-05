@@ -30,7 +30,7 @@ function F(m,N,Nd){
     return sumOfFunction(min,sigma,function(s){ return Math.pow(-1,s)*binomial(N, m-s)*binomial(Nd,s)});
 }
 function D(beta,l,lambda){
-    return ((Math.pow(-1,(l-beta)/(2)))/(Math.pow(2,l)))*(Math.pow(((((2*l)+1)/(2))*((binomial(l + lambda, l))/((binomial(l ,lambda)))),(1/2)))*(binomial(l,(l-beta)/(2)))*(binomial(l+beta,beta-lambda));
+    return ((Math.pow(-1,(l-beta)/(2)))/(Math.pow(2,l)))*(Math.pow(((((2*l)+1)/(2))*((binomial(l + lambda, l))/((binomial(l ,lambda)))),(1/2)))*(binomial(l,(l-beta)/(2)))*(binomial(l+beta,beta-lambda)));
 }
 function min(x,y){
     if (x>y){
@@ -40,6 +40,16 @@ function min(x,y){
         return x;
     }
 }
+
+
+//function G, takes in a_,b_, l1_,a1_,l2_ as parameters and returns the result.
+function G(a_,b_, l1_,a1_,l2_){
+
+var result = sumOfFunction(0,a1_, function(i){Math.pow(-1,i)*binomial(a1_,i)*D(a_+2*a1_-2*i,l1_,a1_)})*D(b_,l2_,a1);
+    return result;
+}
+
+
 
 
 
