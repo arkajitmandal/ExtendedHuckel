@@ -26,8 +26,8 @@ function B(n,p){
 
 function F(m,N,Nd){
     sigma = (1/2)*((m-N)+Math.abs(m-N));
-    min = min(m,Nd);
-    return sumOfFunction(min,sigma,function(s){ return Math.pow(-1,s)*binomial(N, m-s)*binomial(Nd,s)});
+    min1 = min(m,Nd);
+    return sumOfFunction(min1,sigma,function(s){ return Math.pow(-1,s)*binomial(N, m-s)*binomial(Nd,s)});
 }
 function D(beta,l,lambda){
     return ((Math.pow(-1,(l-beta)/(2)))/(Math.pow(2,l)))*(Math.pow(((((2*l)+1)/(2))*((binomial(l + lambda, l))/((binomial(l ,lambda)))),(1/2)))*(binomial(l,(l-beta)/(2)))*(binomial(l+beta,beta-lambda)));
@@ -51,7 +51,10 @@ var result = sumOfFunction(0,a1_, function(i){Math.pow(-1,i)*binomial(a1_,i)*D(a
 
 
 
-
+function Q(p,t,n,nd,q){
+    result = sumOfFunction(0,(n+nd),function(m){return F(m,n,nd)*A(n+nd-m+q,p)*B(m+q,p*t)})
+    return result;
+}
 
 
 function factorial(num){
