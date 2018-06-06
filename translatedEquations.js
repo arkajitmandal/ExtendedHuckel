@@ -10,6 +10,13 @@ function A(n,p){
     return a;
 
 }
+
+function N(n,nd,p,t){
+
+    result = (Math.pow(p(1+t),n+1/2)*Math.pow(p(1-t),nd+1/2))/(Math.pow(factorial(2*n)*factorial(2*nd),1/2));
+    return result;
+
+}
 //function B is a function of n and p
 function B(n,p){
 
