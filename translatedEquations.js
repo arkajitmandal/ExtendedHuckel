@@ -1,8 +1,104 @@
-function testFunction(n){
-    var a = (sumOfFunction(0,n,function(m){return(m)}));
-    console.log(a);
+function em(m1,m2){
+
+    var a = 0;
+    var b = 0;
+    if (m1 == 0){
+        a = 1;
+    }
+    else {
+        a = sign(m1);
+    }
+    if (m2 == 0){
+        b = 1;
+    }
+    else {
+        b = sign(m2);
+    }
+
+    return a*b;
 }
 
+function sign(x){
+    if (x > 0){
+        return 1;
+    }
+    else if (x< 0){
+        return -1;
+    }
+    else {
+        return 0;
+    }
+}
+function clm(l1,l2,L,m1,m2,M){
+    var result = 0;
+    if(L >= M){
+        result = (-1)*
+        ((m1+Math.abs(m1)+m2+Math.abs(m2)+M+Math.abs(M))/(2))
+        *KroneckerDelta(M, m1 + m2)*Math.pow(1/((2*l1 + 1)
+        *(2*l2 + 1)*binomial(l1 + l2 + L + 1, l1 - l2 + L)
+        *binomial(l1 + l2 + L + 1, l2 - l1 + L)*binomial(2*l1, l1 + m1)
+        *binomial(2*l2, l2 + m2))*(Math.pow((2*L + 1),2)
+        *binomial(l1 + l2 + L + 1, l1 + l2 - L)*binomial(2*L, L + M)),1/2)
+        *sumOfFunction(Math.max(0, (l1 - m1 - (L - M)), (l2 + m2 - (L + M))),Math.min((l1 - m1),
+         (l2 + m2), (l1 + l2 - L)),function(t){return Math.pow(-1,t)*binomial(l1 + l2 - L, t)
+        *binomial(L - M, l1 - m1 - t)*binomial(L + M, l2 + m2 - t)});
+    }
+    else {
+        result = 0;
+    }
+    return result;
+
+}
+function tlm(a, l1, m1, l2, m2,theta,phi){
+
+    var y1 = Math.abs(m1);
+    var y2 = Math.abs(m2);
+    var result = 0;
+
+    if (y1==y2 && em(m1,m2)==(-1)){
+        return 0;
+    }
+    else {
+        result = 2/(Math.pow((1 + KroneckerDelta(a,0))*((1 + KroneckerDelta(m1, 0))*(1 + KroneckerDelta(m2, 0))),1/2))*doubleSumTlm(a, l1, m1, l2, m2,theta,phi);
+    }
+
+}
+
+function doubleSumTlm(a, l1, m1, l2, m2,theta,phi){
+    var sum = 0;
+    var y1 = Math.abs(m1);
+    var y2 = Math.abs(m2);
+    for (var i = -1; i <= 1; i=i+2){
+
+        for(var L = Math.abs(l1-l2); L <= (l1+l2); L=L+2){
+
+            if (L < i*y1 + y2) {
+
+                sum = sum + 0;
+            }
+            else {
+
+                sum = sum + (Math.pow(em(m1,0),KroneckerDelta(i, em(m1, m2)))*clm(l1, l2, L, i*y1, y2, i*y1 + y2)*clm(l1, l2, L, a, -a, 0)*Math.pow(((2*Math.PI)/(2*L+1))*((1 + KroneckerDelta(em(m1, m2)*Math.abs(i*y1 + y2), 0))),1/2)*slm(L, em(m1, m2)*Math.abs(i*y1 + y2), theta, phi));
+
+
+            }
+
+
+
+        }
+
+    }
+
+
+}
+function KroneckerDelta(i,j){
+    if(i==j){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 //function A is a function of n and p
 function A(n,p){
     
