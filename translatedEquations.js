@@ -119,11 +119,22 @@ function slm(l1, m1,theta,phi){
 
 function plm(l,a,theta){
     var result = 0;
-    if(Math.sin(theta) == 0 && a == 0){
-        result = Math.pow(-1,a)/(Math.pow(2,l))*(Math.pow((2*l+1)/(2*binomial(l,a)*binomial(l+a,a)),1/2));
+    var sum = 0;
+    if (l - a - 2*k == 0 && Math.cos(theta) == 0){
+        sum = sumOfFunction(0,(l-a-((1-(Math.pow(-1,l-a)))/2))/(2),function(k){
+            return Math.pow(-1,k)*binomial(a + k, k)*binomial(2*l - 2*k, l - k)*binomial(l - k, l - a - 2*k);
+        })
     }
     else {
-        result = Math.pow(-1,a)*(Math.pow(Math.sin(theta),a))/(Math.pow(2,l))*(Math.pow((2*l+1)/(2*binomial(l,a)*binomial(l+a,a)),1/2));
+        sum = sumOfFunction(0,(l-a-((1-(Math.pow(-1,l-a)))/2))/(2),function(k){
+            return Math.pow(-1,k)*binomial(a + k, k)*binomial(2*l - 2*k, l - k)*binomial(l - k, l - a - 2*k)*Math.pow(Math.cos(theta),l-a-2*k);
+        })
+    }
+    if(Math.sin(theta) == 0 && a == 0){
+        result = Math.pow(-1,a)/(Math.pow(2,l))*(Math.pow((2*l+1)/(2*binomial(l,a)*binomial(l+a,a)),1/2))*sum;
+    }
+    else {
+        result = Math.pow(-1,a)*(Math.pow(Math.sin(theta),a))/(Math.pow(2,l))*(Math.pow((2*l+1)/(2*binomial(l,a)*binomial(l+a,a)),1/2))*sum;
 
     }
     return result;
