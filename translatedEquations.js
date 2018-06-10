@@ -110,8 +110,23 @@ function slm(l1, m1,theta,phi){
         if (m1 >= 0) {
             return plm(l1, Math.abs(m1), theta)*(1)/(Math.pow(Math.PI*(1 + KroneckerDelta(m1, 0)),1/2))*Math.cos(Math.abs(m1)*phi);
         }
+        else {
+            return  plm(l1, Math.abs(m1), theta)*(1)/(Math.pow(Math.PI*(1 + KroneckerDelta(m1, 0)),1/2))*Math.sin(Math.abs(m1)*phi);
+        }
     }
 
+}
+
+function plm(l,a,theta){
+    var result = 0;
+    if(Math.sin(theta) == 0 && a == 0){
+        result = Math.pow(-1,a)/(Math.pow(2,l))*(Math.pow((2*l+1)/(2*binomial(l,a)*binomial(l+a,a)),1/2));
+    }
+    else {
+        result = Math.pow(-1,a)*(Math.pow(Math.sin(theta),a))/(Math.pow(2,l))*(Math.pow((2*l+1)/(2*binomial(l,a)*binomial(l+a,a)),1/2));
+
+    }
+    return result;
 }
 //function A is a function of n and p
 function A(n,p){
