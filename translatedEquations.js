@@ -99,6 +99,20 @@ function KroneckerDelta(i,j){
         return 0;
     }
 }
+
+
+function slm(l1, m1,theta,phi){
+
+    if (Math.abs(m1)> l1){
+        return 0;
+    }
+    else {
+        if (m1 >= 0) {
+            return plm(l1, Math.abs(m1), theta)*(1)/(Math.pow(Math.PI*(1 + KroneckerDelta(m1, 0)),1/2))*Math.cos(Math.abs(m1)*phi);
+        }
+    }
+
+}
 //function A is a function of n and p
 function A(n,p){
     
