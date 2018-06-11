@@ -139,6 +139,13 @@ function plm(l,a,theta){
     }
     return result;
 }
+
+function overlap(n1, l1, n2, l2, a1, s, s1, r){
+    var p = (r*(s+s1))/(2);
+    var t = (s-s1)/(s+s1);
+    var n = (Math.pow(p*(1 + t),n1 + 1/2)*Math.pow(p*(1 - t),n2 + 1/2))/(Math.pow(factorial(2*n1)*factorial(2*n2),1/2));
+}
+
 //function A is a function of n and p
 function A(n,p){
     
