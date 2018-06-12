@@ -144,6 +144,37 @@ function overlap(n1, l1, n2, l2, a1, s, s1, r){
     var p = (r*(s+s1))/(2);
     var t = (s-s1)/(s+s1);
     var n = (Math.pow(p*(1 + t),n1 + 1/2)*Math.pow(p*(1 - t),n2 + 1/2))/(Math.pow(factorial(2*n1)*factorial(2*n2),1/2));
+    var a11 = 0;
+    var a12 = 0;
+    if (Number.isInteger(l1 + a1) && (l1 + a1)%2 == 0){
+        a11 = -a1;
+    }
+    else {
+        a11 = -a1 +1;
+    }
+    if (Number.isInteger(l2 + a1) && (l2 + a1)%2 == 0){
+        a12 = a1;
+    }
+    else {
+        a12 = a1 +1;
+    }
+}
+function tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12){
+    var sum = 0;
+    var start1 = a12;
+    var end1 = l2;
+    var start2 = a11;
+    var end2 = l1;
+    for(var beta = start1;  beta <= end1 ;beta = beta +2){
+        for(var alpha = start2; alpha <= end2 ;alpha = alpha +2){
+            for(var q = 0; q <= alpha+beta ;q++){
+                for(var m = 0; m <=(n1 + n2 -alpha-beta) ;m++){
+                    sum = sum +G(alpha, beta, l1, a1, l2)*sumOfFunction(0,alpha+beta, function(q){return F(q,a1+alpha,beta-a1)})*sumOfFunction(0,(n1 + n2 -alpha-beta),function(m){return A(-m + n1 + n2 + q - alpha - beta, p)*B(m + q, p*t)*F(m, n1 - alpha, n2 - beta)});
+
+                }
+            }
+        }
+    }
 }
 
 //function A is a function of n and p
