@@ -167,12 +167,10 @@ function tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12){
     var end2 = l1;
     for(var beta = start1;  beta <= end1 ;beta = beta +2){
         for(var alpha = start2; alpha <= end2 ;alpha = alpha +2){
-            for(var q = 0; q <= alpha+beta ;q++){
-                for(var m = 0; m <=(n1 + n2 -alpha-beta) ;m++){
-                    sum = sum +G(alpha, beta, l1, a1, l2)*sumOfFunction(0,alpha+beta, function(q){return F(q,a1+alpha,beta-a1)})*sumOfFunction(0,(n1 + n2 -alpha-beta),function(m){return A(-m + n1 + n2 + q - alpha - beta, p)*B(m + q, p*t)*F(m, n1 - alpha, n2 - beta)});
+            
+                //the sum is done over beta first, then alpha
+            sum = sum +G(alpha, beta, l1, a1, l2)*sumOfFunction(0,alpha+beta, function(q){return F(q,a1+alpha,beta-a1)})*sumOfFunction(0,(n1 + n2 -alpha-beta),function(m){return A(-m + n1 + n2 + q - alpha - beta, p)*B(m + q, p*t)*F(m, n1 - alpha, n2 - beta)});
 
-                }
-            }
         }
     }
 }
