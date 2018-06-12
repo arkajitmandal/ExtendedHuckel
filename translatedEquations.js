@@ -158,6 +158,7 @@ function overlap(n1, l1, n2, l2, a1, s, s1, r){
     else {
         a12 = a1 +1;
     }
+    return Math.pow((-1),(a1 + l2))*n*tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12);
 }
 function tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12){
     var sum = 0;
@@ -173,6 +174,7 @@ function tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12){
 
         }
     }
+    return sum;
 }
 
 //function A is a function of n and p
