@@ -1,3 +1,5 @@
+//Usage calZeff(1,"1s",["1s1","2s2"]);
+
 // This is the file to calculate zeff 
 var toGroupValue= function(nl){
     // Asigns a value corresponding to orbital
