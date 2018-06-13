@@ -226,6 +226,7 @@ function G(a,b, l1,a1,l2){
 
         for(i = 0; i <= a1; i++){
             sum = sum + Math.pow(-1,i)*binomial(a1,i)*D(a+(2*a1)-(2*i),l1,a1);
+            console.log(D(a+(2*a1)-(2*i),l1,a1),D(b,l2,a1))
         }
         console.log(D(b,l2,a1)*sum);
         return D(b,l2,a1)*sum;
@@ -275,6 +276,9 @@ function sumOfFunction(start, end, sigmaFunction){
 }
 
 function binomial(n, k) {
+    if (k<0){
+        return 0;
+    }
     if ((typeof n !== 'number') || (typeof k !== 'number')) 
  return false; 
    var coeff = 1;
