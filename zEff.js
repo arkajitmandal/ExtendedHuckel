@@ -68,10 +68,9 @@ var getEffective =function(nle,nl){
 // Calculation of Sigma 
 var calSigma = function(selOrb,eConf){
 sigma=0
-	for (var i =0 ; i <eConf.length ; i=i+1){
-		thisOne=getEffective(eConf[i],selOrb);
-		sigma=sigma+thisOne; 
+for (var i =0 ; i <eConf.length ; i=i+1){
+	thisOne=getEffective(eConf[i],selOrb);
+	sigma=sigma+thisOne; 
 	}
-lastSigma=sigma;
 return sigma;
 }
