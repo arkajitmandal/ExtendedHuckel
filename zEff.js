@@ -74,3 +74,8 @@ for (var i =0 ; i <eConf.length ; i=i+1){
 	}
 return sigma;
 }
+
+var calZeff= function(p,selOrb,eConf){
+    return p- calSigma(selOrb,eConf);
+    
+    }
