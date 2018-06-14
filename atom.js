@@ -69,13 +69,20 @@ class molecule {
                 else {
                     ao1 = this.AOs[i];
                     ao2 = this.AOs[j];
-                    // get coordinate of AOi
+                    // get coordinate of AOi and AOj
                     x1  = ao1[4];
                     y1  = ao1[5];
                     z1  = ao1[6];
+                    x2  = ao2[4];
+                    y2  = ao2[5];
+                    z2  = ao2[6];
                     // Center AOi at origin
                     // Calculate relative position 
                     // of AOj
+                    x2 -= x1
+                    y2 -= y1
+                    z2 -= z1
+                    // Convert to spherical coordinate 
                     
                 }
             }
