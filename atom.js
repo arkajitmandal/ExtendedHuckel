@@ -125,7 +125,7 @@ class molecule {
         // off diagonal
         for (var i=0;i<N;i++){
             for (var j=i+1;j<N;j++){
-                Hij[i][j] = K*((Hij[i][i] + Hij[j][j])/2.0) * this.Sij[i][j]
+                Hij[i][j] = this.K*((Hij[i][i] + Hij[j][j])/2.0) * this.Sij[i][j]
                 // symmetry
                 Hji[i][j] = Hij[i][j];
             }
