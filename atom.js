@@ -11,12 +11,31 @@ class atom {
         this.radius = getRadius(Sym,atomRadius);
         this.Z = this.Basis[0][1];
         //zeff 
-        let zeff = []
+        let zeff = [];
         for (var i=0;i<this.Basis.length;i++){
             //console.log(this.Basis[i][4]+this.Basis[i][5]);
             zeff.push(calZeff(1,this.Basis[i][4]+this.Basis[i][5],this.eStructure));
         }
         this.zeff = zeff;
+        //orbitals
+        // read from basis and add orbitals
+        let orbitals = []; 
+        for (var i=0;i<this.Basis.length;i++){
+            let n = parseInt(this.Basis[i][4]);
+            let lsym = this.Basis[i][5];
+            if (lsym == "s"){var l = 0;}
+            else if (lsym == "p"){var l = 1;}
+            else if (lsym == "d"){var l = 2;}
+            else if (lsym == "f"){var l = 3;}
+            let orbitalZeff = this.zeff[i];
+            let orbitalEnergy = parseFloat(this.Basis[i][6]);
+            for(var mm=0;mm<2*l+1;mm++){
+                let m = mm - l;
+                orbitals.push([n,l,m,orbitalZeff,this.x,this.y,this.z,orbitalEnergy]);
+                }
+            }
+        this.orbitals = orbitals;
+        
     }
 
    
