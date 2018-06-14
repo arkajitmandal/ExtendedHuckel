@@ -97,13 +97,14 @@ class molecule {
                     theta = Math.atan(y2/x2);
                     phi = Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
                     // get Sij
-                    let Sij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1,zeff2,r,theta,phi);
-                    
+                    let thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1,zeff2,r,theta,phi);
+                    Sij[i][j] = thisSij;
+                    Sij[j][i] = thisSij;
                 }
             }
         }
         this.AOs = AOs;
-
+        this.Sij = Sij;
     }
 }
 
