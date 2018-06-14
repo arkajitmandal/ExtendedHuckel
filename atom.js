@@ -71,22 +71,22 @@ class molecule {
                     let ao1 = this.AOs[i];
                     let ao2 = this.AOs[j];
                     // get coordinate of AOi and AOj
-                    let x1  = ao1[4];
-                    let y1  = ao1[5];
-                    let z1  = ao1[6];
-                    let x2  = ao2[4];
-                    let y2  = ao2[5];
-                    let z2  = ao2[6];
+                    let x1  = ao1[0][4];
+                    let y1  = ao1[0][5];
+                    let z1  = ao1[0][6];
+                    let x2  = ao2[0][4];
+                    let y2  = ao2[0][5];
+                    let z2  = ao2[0][6];
                     //  n l m
-                    let n1 = ao1[0];
-                    let l1 = ao1[1];
-                    let m1 = ao1[2];
-                    let n2 = ao2[0];
-                    let l2 = ao2[1];
-                    let m2 = ao2[2];
+                    let n1 = ao1[0][0];
+                    let l1 = ao1[0][1];
+                    let m1 = ao1[0][2];
+                    let n2 = ao2[0][0];
+                    let l2 = ao2[0][1];
+                    let m2 = ao2[0][2];
                     // zeff
-                    let zeff1 = ao1[3];
-                    let zeff2 = ao2[3]
+                    let zeff1 = ao1[0][3];
+                    let zeff2 = ao2[0][3]
                     // Center AOi at origin
                     // Calculate relative position 
                     // of AOj
@@ -94,9 +94,10 @@ class molecule {
                     y2 -= y1;
                     z2 -= z1;
                     // Convert to spherical coordinate 
-                    r = Math.pow(x2*x2 +y2*y2 +z2*z2, 0.5 );
-                    theta = Math.atan(y2/x2);
-                    phi = Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
+                    let r = Math.pow(x2*x2 +y2*y2 +z2*z2, 0.5 );
+                    let theta = Math.atan(y2/x2);
+                    let phi = Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
+                    
                     // get Sij
                     let thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1,zeff2,r,theta,phi);
                     Sij[i][j] = thisSij;
@@ -106,6 +107,7 @@ class molecule {
         }
 
         this.Sij = Sij;
+
     }
 }
 
