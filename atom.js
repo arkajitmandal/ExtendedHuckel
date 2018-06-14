@@ -53,7 +53,7 @@ class molecule {
             }
         }
         this.AOs = AOs;
-        
+
     }
 }
 
