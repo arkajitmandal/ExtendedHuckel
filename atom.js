@@ -6,7 +6,8 @@ class atom {
         this.y = y;
         this.z = z;
         [this.color,this.radius] = colorSize(S);
-        this.Basis = constructBasis(Sym,atomParam)
+        this.Basis = constructBasis(Sym,atomParam);
+        this.eStructure = getEStructure(Sym,eStructure);
     }
 
    
@@ -30,6 +31,15 @@ class atom {
         }
         return Basis;
     }
+
+    var getEStructure= function(S,eS){
+        for (var i = 0; i<eS.length;i++){
+            if (eS[i][0] == S.toUpperCase()){
+                return eS[i][1];
+            }
+        }
+    }
+
     //;Atomlab AtNo Nvalen Nzeta Nquant Ang  IP       exp1     exp2   coeff1   coeff2
 
     var atomParam = [
@@ -333,3 +343,31 @@ class atom {
         "UNQ    104      0      1     6     d   -4.110   0.0000   0.0000   1.0000   0.0000",
         "UNQ    104      0      2     5     f  -10.620   4.9430   2.1060   0.7844   0.3908"
     ]
+
+
+
+var eStructure= [
+        ["H",["1s1"]],
+        ["He",["1s2"]],
+        ["Li",["1s2","2s1"]],
+        ["Be",["1s2","2s2"]],
+        ["B",["1s2","2s2","2p1"]],
+        ["C",["1s2","2s2","2p2"]],
+        ["N",["1s2","2s2","2p3"]],
+        ["O",["1s2","2s2","2p4"]],
+        ["F",["1s2","2s2","2p5"]],
+        ["Ne",["1s2","2s2","2p6"]],
+        ["Na",["1s2","2s2","2p6","3s1"]],
+        ["Mg",["1s2","2s2","2p6","3s2"]],
+        ["Al",["1s2","2s2","2p6","3s2","3p1"]],
+        ["Si",["1s2","2s2","2p6","3s2","3p2"]],
+        ["P",["1s2","2s2","2p6","3s2","3p3"]],
+        ["S",["1s2","2s2","2p6","3s2","3p4"]],
+        ["Cl",["1s2","2s2","2p6","3s2","3p5"]],
+        ["Ar",["1s2","2s2","2p6","3s2","3p6"]],
+        ["K",["1s2","2s2","2p6","3s2","3p6","4s1"]],
+        ["Ca",["1s2","2s2","2p6","3s2","3p6","4s2"]],
+        ["Sc",["1s2","2s2","2p6","3s2","3p6","3d1","4s2"]],
+        ["Ti",["1s2","2s2","2p6","3s2","3p6","3d2","4s2"]],
+        ["V",["1s2","2s2","2p6","3s2","3p6","3d3","4s2"]]
+    ];
