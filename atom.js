@@ -19,7 +19,7 @@ class atom {
         this.zeff = zeff;
         //orbitals
         // read from basis and add orbitals
-        let orbitals = []; 
+        let AO = []; 
         for (var i=0;i<this.Basis.length;i++){
             let n = parseInt(this.Basis[i][4]);
             let lsym = this.Basis[i][5];
@@ -31,10 +31,10 @@ class atom {
             let orbitalEnergy = parseFloat(this.Basis[i][6]);
             for(var mm=0;mm<2*l+1;mm++){
                 let m = mm - l;
-                orbitals.push([n,l,m,orbitalZeff,this.x,this.y,this.z,orbitalEnergy]);
+                AO.push([n,l,m,orbitalZeff,this.x,this.y,this.z,orbitalEnergy]);
                 }
             }
-        this.orbitals = orbitals;
+        this.AO = AO;
         
     }
 
