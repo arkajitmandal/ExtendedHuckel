@@ -30,6 +30,8 @@ class atom {
         }
         return Basis;
     }
+    //;Atomlab AtNo Nvalen Nzeta Nquant Ang  IP       exp1     exp2   coeff1   coeff2
+
     atomParam = [
         "H        1      1      1     1     s  -13.600   1.3000   0.0000   1.0000   0.0000",
         "HE       2      2      1     1     s  -23.400   1.6880   0.0000   1.0000   0.0000",
