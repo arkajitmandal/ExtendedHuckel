@@ -53,7 +53,7 @@ window.onresize = init;
 
 var sphere=[];
 
-function atom(a,b,c,d,col = 0xcd3333){
+function showatom(a,b,c,d,col = 0xcd3333){
 
     var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
     sphere.push( new THREE.Mesh(new THREE.SphereGeometry(d, 20, 20), material ));
@@ -82,7 +82,7 @@ function showatoms(){
     for (var i =0;  i<xyzData.length;i++){
         let xyz = xyzData[i].split(" ");
         let cs = colorSize(xyz[0]);
-        atom(xyz[1],xyz[2],xyz[3],cs[0],cs[1]);
+        showatom(xyz[1],xyz[2],xyz[3],cs[0],cs[1]);
     }
 }
 
