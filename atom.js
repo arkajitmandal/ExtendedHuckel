@@ -44,6 +44,16 @@ class atom {
 class molecule {
     constructor(atoms){
         this.atoms = atoms;
+        // Create AO basis for molecule 
+        let AOs = [];
+        for (var i=0;i<this.atoms.length;i++){
+            let AO = atoms[i].AO;
+            for (var j=0;j<AO.length;j++){
+                AOs.push([AO[j],atoms[i].S]);
+            }
+        }
+        this.AOs = AOs;
+        
     }
 }
 
