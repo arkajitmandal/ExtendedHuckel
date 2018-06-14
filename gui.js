@@ -6,13 +6,14 @@ function init() {
   var canv = document.getElementsByTagName("canvas")[0];
   var w = canv.clientWidth;
   var h = canv.clientHeight;
+
 try{  renderer = new THREE.WebGLRenderer({canvas:canv}); }
 catch(err){
 document.getElementById('allcontgrolss').innerHTML='';
 document.getElementById('allcontgrols').innerHTML='';
 document.getElementById('CanDivEl').innerHTML="<h2>Your Browser Does not support this application. We recommend firefox (latest) from a PC</h2>"}
   renderer.setSize( w, h );
-  renderer.setClearColor(new THREE.Color(0xeeeeee), 1);
+  renderer.setClearColor(new THREE.Color(0x34495e), 1);
 
    scene = new THREE.Scene();
 
@@ -52,9 +53,9 @@ window.onresize = init;
 
 var sphere=[];
 
-function atom(a,b,c,d){
+function atom(a,b,c,d,col = 0xcd3333){
 
-    var material = new THREE.MeshLambertMaterial( { color: 0xcd3333, side: THREE.DoubleSide} );
+    var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
     sphere.push( new THREE.Mesh(new THREE.SphereGeometry(d, 20, 20), material ));
     
     
@@ -63,10 +64,6 @@ function atom(a,b,c,d){
     scene.add(sphere[sphere.length-1]);
     //render();
     }
-    
-
-
-
     function removeAtoms(){
         for (var i=0;i<sphere.length;i=i+1){
         scene.remove(sphere[i]);}
@@ -78,7 +75,12 @@ function atom(a,b,c,d){
     }
     
 
-
-
-
-
+function showatoms(){
+    removeAtoms();
+    var xyzText = document.getElementById("xyzText").value;
+    xyzData = xyzText.split("\n");
+    for (var i =0;  i<xyzData.length;i++){
+        let xyz = xyzData[i].split(" ")
+        atom(xyz[1],xyz[2],xyz[3],1.0)
+    }
+}
