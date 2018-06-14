@@ -52,6 +52,7 @@ class molecule {
                 AOs.push([AO[j],atoms[i].S]);
             }
         }
+        this.AOs = AOs;
         // Overlap matrix
         // initialize Sij
         let Sij =  new Array(this.AOs.length);
@@ -103,7 +104,7 @@ class molecule {
                 }
             }
         }
-        this.AOs = AOs;
+
         this.Sij = Sij;
     }
 }
