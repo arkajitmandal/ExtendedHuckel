@@ -22,6 +22,14 @@ class atom {
    
 }
 
+class molecule {
+    constructor(atoms){
+        this.atoms = atoms;
+    }
+}
+
+
+
     function createAndPrint(){
             hydrogen = new atom("h", ["1s"]);
             console.log(hydrogen.Symbol);
