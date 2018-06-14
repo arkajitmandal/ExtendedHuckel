@@ -80,7 +80,36 @@ function showatoms(){
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
     for (var i =0;  i<xyzData.length;i++){
-        let xyz = xyzData[i].split(" ")
-        atom(xyz[1],xyz[2],xyz[3],1.0)
+        let xyz = xyzData[i].split(" ");
+        let cs = colorSize(xyz[0]);
+        atom(xyz[1],xyz[2],xyz[3],cs[0],cs[1]);
+    }
+}
+
+
+function colorSize(S){
+    if (S === "H"){
+        return [0.5,0xbdc3c7]
+    }
+    else if (S === "He"){
+        return [0.5,0x7f8c8d]
+    }
+    else if (S === "Li"){
+        return [0.8,0xf1c40f]
+    }
+    else if (S === "Be"){
+        return [0.76,0xf39c12]
+    }
+    else if (S === "B"){
+        return [0.9,0xd35400]
+    }
+    else if (S === "C"){
+        return [0.9,0x2c3e50]
+    }
+    else if (S === "O"){
+        return [0.95,0xe74c3c]
+    }
+    else {
+    return [1.0,0xcd3333]
     }
 }
