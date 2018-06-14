@@ -1,12 +1,12 @@
 class atom {
     
     constructor(Sym, x=0,y=0,z=0){
-        this.Symbol = Sym;
+        this.S = Sym;
         this.x = x;
         this.y = y;
         this.z = z;
         [this.color,this.radius] = colorSize(S);
-
+        this.Basis = constructBasis(Sym,atomParam)
     }
 
    
@@ -32,7 +32,7 @@ class atom {
     }
     //;Atomlab AtNo Nvalen Nzeta Nquant Ang  IP       exp1     exp2   coeff1   coeff2
 
-    atomParam = [
+    var atomParam = [
         "H        1      1      1     1     s  -13.600   1.3000   0.0000   1.0000   0.0000",
         "HE       2      2      1     1     s  -23.400   1.6880   0.0000   1.0000   0.0000",
         "LI       3      1      1     2     s   -5.400   0.6500   0.0000   1.0000   0.0000",
