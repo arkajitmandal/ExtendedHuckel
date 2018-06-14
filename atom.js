@@ -127,7 +127,7 @@ class molecule {
             for (var j=i+1;j<N;j++){
                 Hij[i][j] = this.K*((Hij[i][i] + Hij[j][j])/2.0) * this.Sij[i][j]
                 // symmetry
-                Hji[i][j] = Hij[i][j];
+                Hij[j][i] = Hij[i][j];
             }
         }
         this.Hij = Hij;
