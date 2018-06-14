@@ -5,9 +5,10 @@ class atom {
         this.x = x;
         this.y = y;
         this.z = z;
-        [this.color,this.radius] = colorSize(S);
+        this.color = colorSize(Sym);
         this.Basis = constructBasis(Sym,atomParam);
         this.eStructure = getEStructure(Sym,eStructure);
+        this.radius = getRadius(Sym,atomRadius);
     }
 
    
@@ -40,6 +41,14 @@ class atom {
         }
     }
 
+    var getRadius = function(S,radData){
+        for (var i = 0; i<radData.length;i++){
+            if (radData[i][0].toUpperCase() == S.toUpperCase()){
+                return radData[i][1];
+            }
+        }
+
+    }
     //;Atomlab AtNo Nvalen Nzeta Nquant Ang  IP       exp1     exp2   coeff1   coeff2
 
     var atomParam = [
@@ -345,6 +354,107 @@ class atom {
     ]
 
 
+
+
+
+
+var atomRadius = [['H',0.25],
+['He',0.31],
+['Li',1.45],
+['Be',1.05],
+['B',0.85],
+['C',0.7],
+['N',0.65],
+['O',0.6],
+['F',0.5],
+['Ne',0.38],
+['Na',1.8],
+['Mg',1.5],
+['Al',1.25],
+['Si',1.1],
+['P',1],
+['S',1],
+['Cl',1],
+['Ar',0.71],
+['K',2.2],
+['Ca',1.8],
+['Sc',1.6],
+['Ti',1.4],
+['V',1.35],
+['Cr',1.4],
+['Mn',1.4],
+['Fe',1.4],
+['Co',1.35],
+['Ni',1.35],
+['Cu',1.35],
+['Zn',1.35],
+['Ga',1.3],
+['Ge',1.25],
+['As',1.15],
+['Se',1.15],
+['Br',1.15],
+['Kr',0.88],
+['Rb',2.35],
+['Sr',2],
+['Y',1.85],
+['Zr',1.55],
+['Nb',1.45],
+['Mo',1.45],
+['Tc',1.35],
+['Ru',1.3],
+['Rh',1.35],
+['Pd',1.4],
+['Ag',1.6],
+['Cd',1.55],
+['In',1.55],
+['Sn',1.45],
+['Sb',1.45],
+['Te',1.4],
+['I',1.4],
+['Xe',1.08],
+['Cs',2.6],
+['Ba',2.15],
+['La',1.95],
+['Ce',1.85],
+['Pr',1.85],
+['Nd',1.85],
+['Pm',1.85],
+['Sm',1.85],
+['Eu',1.85],
+['Gd',1.8],
+['Tb',1.75],
+['Dy',1.75],
+['Ho',1.75],
+['Er',1.75],
+['Tm',1.75],
+['Yb',1.75],
+['Lu',1.75],
+['Hf',1.55],
+['Ta',1.45],
+['W',1.35],
+['Re',1.35],
+['Os',1.3],
+['Ir',1.35],
+['Pt',1.35],
+['Au',1.35],
+['Hg',1.5],
+['Tl',1.9],
+['Pb',1.8],
+['Bi',1.6],
+['Po',1.9],
+['At',1.27],
+['Rn',1.2],
+['Fr',2.15],
+['Ra',2.15],
+['Ac',1.95],
+['Th',1.8],
+['Pa',1.8],
+['U',1.75],
+['Np',1.75],
+['Pu',1.75],
+['Am',1.75],
+['Cm',1.75]
+];
 
 var eStructure= [
         ["H",["1s1"]],

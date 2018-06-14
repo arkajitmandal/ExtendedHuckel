@@ -33,6 +33,12 @@ document.getElementById('CanDivEl').innerHTML="<h2>Your Browser Does not support
   var directionalLight = new THREE.DirectionalLight(0xffffff);
   directionalLight.position.set(1, 3, 1).normalize();
   scene.add(directionalLight);
+  var directionalLight2 = new THREE.DirectionalLight(0x939393);
+  directionalLight2.position.set(-1, 0, 0).normalize();
+  scene.add(directionalLight2);
+  var directionalLight3 = new THREE.DirectionalLight(0x939393);
+  directionalLight3.position.set(0, -1, 0).normalize();
+  scene.add(directionalLight3);
   axes = new THREE.AxisHelper( 10 );
   axes.position.set(-7.5,-7.5,-7.5)
   scene.add( axes );
@@ -80,36 +86,37 @@ function showatoms(){
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
     for (var i =0;  i<xyzData.length;i++){
-        let xyz = xyzData[i].split(" ");
+        let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         let cs = colorSize(xyz[0]);
-        showatom(xyz[1],xyz[2],xyz[3],cs[0],cs[1]);
+        let rad = getRadius(xyz[0],atomRadius);
+        showatom(xyz[1],xyz[2],xyz[3],rad,cs);
     }
 }
 
 
 function colorSize(S){
     if (S === "H"){
-        return [0.5,0xbdc3c7]
+        return 0xbdc3c7
     }
     else if (S === "He"){
-        return [0.5,0x7f8c8d]
+        return 0x7f8c8d
     }
     else if (S === "Li"){
-        return [0.8,0xf1c40f]
+        return 0xf1c40f
     }
     else if (S === "Be"){
-        return [0.76,0xf39c12]
+        return 0xf39c12
     }
     else if (S === "B"){
-        return [0.9,0xd35400]
+        return 0xd35400
     }
     else if (S === "C"){
-        return [0.9,0x2c3e50]
+        return 0x2c3e50
     }
     else if (S === "O"){
-        return [0.95,0xe74c3c]
+        return 0xe74c3c
     }
     else {
-    return [1.0,0xcd3333]
+    return 0xcd3333
     }
 }
