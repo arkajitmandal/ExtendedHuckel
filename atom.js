@@ -53,15 +53,19 @@ class molecule {
             }
         }
         this.AOs = AOs;
+        this.N = this.AOs.length;
+        let N  = this.N;
+        // K value
+        this.K = 1.75
         // Overlap matrix
         // initialize Sij
-        let Sij =  new Array(this.AOs.length);
-        for (var i = 0; i < this.AOs.length; i++) {
-          Sij[i] = new Array(this.AOs.length);
+        let Sij =  new Array(N);
+        for (var i = 0; i < N; i++) {
+          Sij[i] = new Array(N);
         }
         // Calculate Sij
-        for (var i=0;i<this.AOs.length;i++){
-            for (var j=i;j<this.AOs.length;j++){
+        for (var i=0;i<N;i++){
+            for (var j=i;j<N;j++){
                 //Diagonal
                 if (i==j){
                     Sij[i][i] = 1.0;
@@ -107,7 +111,26 @@ class molecule {
         }
 
         this.Sij = Sij;
-
+        // Create Hamiltonian
+        // Empty Matrix 
+        let Hij =  new Array(N);
+        for (var i = 0; i < N; i++) {
+          Hij[i] = new Array(N);
+        }
+        // Get values of Hij
+        // Diagonal
+        for (var i=0;i<N;i++){
+            Hij[i][i] = this.AOs[i][0][7];
+        }
+        // off diagonal
+        for (var i=0;i<N;i++){
+            for (var j=i+1;j<N;j++){
+                Hij[i][j] = K*((Hij[i][i] + Hij[j][j])/2.0) * this.Sij[i][j]
+                // symmetry
+                Hji[i][j] = Hij[i][j];
+            }
+        }
+        this.Hij = Hij;
     }
 }
 
