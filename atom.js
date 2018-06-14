@@ -9,6 +9,14 @@ class atom {
         this.Basis = constructBasis(Sym,atomParam);
         this.eStructure = getEStructure(Sym,eStructure);
         this.radius = getRadius(Sym,atomRadius);
+        this.Z = this.Basis[0][1];
+        //zeff 
+        let zeff = []
+        for (var i=0;i<this.Basis.length;i++){
+            //console.log(this.Basis[i][4]+this.Basis[i][5]);
+            zeff.push(calZeff(1,this.Basis[i][4]+this.Basis[i][5],this.eStructure));
+        }
+        this.zeff = zeff;
     }
 
    
@@ -30,12 +38,13 @@ class atom {
                 Basis.push(B);
             }
         }
+        
         return Basis;
     }
 
     var getEStructure= function(S,eS){
         for (var i = 0; i<eS.length;i++){
-            if (eS[i][0] == S.toUpperCase()){
+            if (eS[i][0].toUpperCase() == S.toUpperCase()){
                 return eS[i][1];
             }
         }
@@ -479,5 +488,7 @@ var eStructure= [
         ["Ca",["1s2","2s2","2p6","3s2","3p6","4s2"]],
         ["Sc",["1s2","2s2","2p6","3s2","3p6","3d1","4s2"]],
         ["Ti",["1s2","2s2","2p6","3s2","3p6","3d2","4s2"]],
-        ["V",["1s2","2s2","2p6","3s2","3p6","3d3","4s2"]]
+        ["V",["1s2","2s2","2p6","3s2","3p6","3d3","4s2"]],
+        ["Cr",["1s2","2s2","2p6","3s2","3p6","3d4","4s2"]],
+        ["Mn",["1s2","2s2","2p6","3s2","3p6","3d4","4s2"]]
     ];

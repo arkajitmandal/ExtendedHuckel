@@ -89,7 +89,7 @@ function showatoms(){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         let cs = colorSize(xyz[0]);
         let rad = getRadius(xyz[0],atomRadius);
-        showatom(xyz[1],xyz[2],xyz[3],rad,cs);
+        showatom(xyz[1],xyz[2],xyz[3],rad*1.2,cs);
     }
 }
 
