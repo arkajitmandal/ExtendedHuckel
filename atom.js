@@ -52,6 +52,34 @@ class molecule {
                 AOs.push([AO[j],atoms[i].S]);
             }
         }
+        // Overlap matrix
+        // initialize Sij
+        let Sij =  new Array(this.AOs.length);
+        for (var i = 0; i < this.AOs.length; i++) {
+          Sij[i] = new Array(this.AOs.length);
+        }
+        // Calculate Sij
+        for (var i=0;i<this.AOs.length;i++){
+            for (var j=i;j<this.AOs.length;j++){
+                //Diagonal
+                if (i==j){
+                    Sij[i][i] = 1.0;
+                }
+                //Off diagonal
+                else {
+                    ao1 = this.AOs[i];
+                    ao2 = this.AOs[j];
+                    // get coordinate of AOi
+                    x1  = ao1[4];
+                    y1  = ao1[5];
+                    z1  = ao1[6];
+                    // Center AOi at origin
+                    // Calculate relative position 
+                    // of AOj
+                    
+                }
+            }
+        }
         this.AOs = AOs;
 
     }
