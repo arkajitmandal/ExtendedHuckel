@@ -56,6 +56,7 @@ class molecule {
         this.N = this.AOs.length;
         let N  = this.N;
         // K value
+        // Wolfsberg-Helmholtz constant
         this.K = 1.75
         // Overlap matrix
         // initialize Sij
@@ -134,6 +135,12 @@ class molecule {
     }
 }
 
+
+var Diagonalization = function(Hij,Sij){
+    let invSij = numeric.inv(Sij);
+    
+    return Hij
+}
 
 
     function createAndPrint(){
