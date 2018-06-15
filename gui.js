@@ -161,7 +161,7 @@ async function Calculate(){
     prgwidth = 100;
     // Organize the result
     let E = Result[0]
-    let Psi = Result[0]
+    let Psi = Result[1]
     let sortE = [];
     let sortPsi = [];
     let minid = 0; // id 
