@@ -166,6 +166,7 @@ async function Calculate(){
     let sortPsi = [];
     let minid = 0; // id 
     // Sorting
+    
     while (E.length !=0){
         for (var k=0;k<E.length;k++){
             if (parseFloat(E[minid]) > parseFloat(E[k]) ){
