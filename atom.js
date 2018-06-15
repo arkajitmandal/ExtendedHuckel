@@ -627,3 +627,7 @@ var eStructure= [
         ["Fe",["1s2","2s2","2p6","3s2","3p6","3d6","4s2"]],
         ["Co",["1s2","2s2","2p6","3s2","3p6","3d6","4s2"]]
     ];
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
