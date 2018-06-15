@@ -115,18 +115,20 @@ function CenterOfMass(xyzData){
 }
 
 function Calculate(){
+    let A = 1.889725989;
+    showatoms();
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
     // get all atoms
     var allAtoms = []
     for (var i =0;  i<xyzData.length;i++){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
-        allAtoms.push(new atom(xyz[0],xyz[1],xyz[2],xyz[3]));
+        allAtoms.push(new atom(xyz[0],parseFloat(xyz[1])*A,parseFloat(xyz[2])*A,parseFloat(xyz[3])*A));
     }
     // make molecule
     mol = new molecule(allAtoms);
-    Result = Diagonalization(mol.Hij,mol.Sij);
-    console.log(Result[0]);
+    Result = Diagonalization(mol.Hij,mol.Sij);    
+    document.getElementById("Answers").innerHTML = Result[0].join("<br>");
 }
 
 function colorSize(S){
@@ -155,3 +157,4 @@ function colorSize(S){
     return 0xcd3333
     }
 }
+

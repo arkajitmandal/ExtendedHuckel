@@ -49,7 +49,7 @@ class molecule {
         for (var i=0;i<this.atoms.length;i++){
             let AO = atoms[i].AO;
             for (var j=0;j<AO.length;j++){
-                AOs.push([AO[j],atoms[i].S]);
+                AOs.push([AO[j],i]);
             }
         }
         this.AOs = AOs;
