@@ -160,35 +160,12 @@ async function Calculate(){
         }
     prgwidth = 100;
     // Organize the result
-<<<<<<< HEAD
     var E = new Array();
     var Psi = new Array();
     E = Result[0];
     Psi = Result[0];
     sortE = E.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
     sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
-
-
-    // let minid = 0; // id 
-=======
-    let E = Result[0]
-    let Psi = Result[1]
-    let sortE = [];
-    let sortPsi = [];
-    let minid = 0; // id 
->>>>>>> 694e64b434508673d8cfd16eb2ae91a8705e9e81
-    // Sorting
-    
-    
-    // while (E.length !=0){
-    //     for (var k=0;k<E.length;k++){
-    //         if (parseFloat(E[minid]) > parseFloat(E[k]) ){
-    //             minid = k;
-    //         }
-    //     }
-    //     sortE.push(E.pop(minid));
-    //     sortPsi.push(Psi.pop(minid));
-    // }
     
 
     // Show results
