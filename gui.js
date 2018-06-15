@@ -114,7 +114,9 @@ function CenterOfMass(xyzData){
     return [X,Y,Z]
 }
 
-function Calculate(){
+async function Calculate(){
+    var elem = document.getElementById("myBar");
+    var prgwidth = 1;
     let A = 1.889725989;
     showatoms();
     var xyzText = document.getElementById("xyzText").value;
@@ -125,9 +127,18 @@ function Calculate(){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         allAtoms.push(new atom(xyz[0],parseFloat(xyz[1])*A,parseFloat(xyz[2])*A,parseFloat(xyz[3])*A));
     }
+    prgwidth = 20;
+    elem.style.width = prgwidth + '%'
+    await sleep(500)
+    
     // make molecule
     mol = new molecule(allAtoms);
+    prgwidth = 50;
+    elem.style.width = prgwidth + '%'
+    await sleep(500)
     Result = Diagonalization(mol.Hij,mol.Sij);    
+    prgwidth = 100;
+    elem.style.width = prgwidth + '%'
     document.getElementById("Answers").innerHTML = Result[0].join("<br>");
 }
 
