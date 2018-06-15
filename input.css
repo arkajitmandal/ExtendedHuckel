@@ -1,0 +1,98 @@
+* {
+    outline:none;
+      border:none;
+      margin:0px;
+      padding:0px;
+      font-family:Courier, monospace;
+  }
+  
+  #paper {
+      color:#FFF;
+      font-size:20px;
+  }
+  #margin {
+      margin-left:12px;
+      margin-bottom:20px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -o-user-select: none;
+      user-select: none; 
+  }
+  
+  #wrapper {
+      width:700px;
+      height:auto;
+      margin-left:auto;
+      margin-right:auto;
+      margin-top:24px;
+      margin-bottom:100px;
+  }
+
+  .NormalButton {
+
+    background: #0098ca;
+    border: 0 none;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      color: #fff;
+      line-height: 22px;
+      outline: none;
+      padding: 9px 20px;
+      text-shadow: none;
+      filter: none;
+      -webkit-transition: background .2s linear, color .2s linear;
+      transition: background .2s linear, color .2s linear;
+      white-space: normal;
+      width:60px;
+      display: inline-block;
+      text-align: center;
+      margin-left:20px;
+    }
+    #myProgress {
+        width: 100%;
+        background-color: #ddd;
+      }
+      
+      #myBar {
+        width: 1%;
+        height: 30px;
+        background-color: #4CAF50;
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+       
+      li {
+        font: 200 15px/1.5 Helvetica, Verdana, sans-serif;
+        border-bottom: 1px solid #ccc;
+      }
+       
+      li:last-child {
+        border: none;
+      }
+       
+      li a {
+        text-decoration: none;
+        color: #000;
+        display: block;
+        width: 200px;
+       
+        -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+        -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+        -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+        -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+        transition: font-size 0.3s ease, background-color 0.3s ease;
+      }
+       
+      li a:hover {
+        font-size: 20px;
+        background: #f6f6f6;
+      }

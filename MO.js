@@ -68,7 +68,7 @@ function tlm(a, l1, m1, l2, m2,theta,phi){
 }
 
 function doubleSumTlm(a, l1, m1, l2, m2,theta,phi){
-    console.log("function has been calleeeed");
+    //console.log("function has been calleeeed");
     var sum = 0;
     var y1 = Math.abs(m1);
     var y2 = Math.abs(m2);
@@ -185,7 +185,9 @@ function tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12){
     return sum;
 }
 function mooverlap(n1, l1, m1, n2, l2, m2, s, s1, r, theta, phi){
-   return sumOfFunction(0, Math.min(l1, l2),function(a1){return tlm(a1, l1, m1, l2, m2, theta, phi)*
+    // error fix for same position.
+    if (r==0.0){r = 0.0000001;} 
+    return sumOfFunction(0, Math.min(l1, l2),function(a1){return tlm(a1, l1, m1, l2, m2, theta, phi)*
         overlap(n1, l1, n2, l2, a1, s, s1, r)});
 }
 
@@ -226,9 +228,9 @@ function G(a,b, l1,a1,l2){
 
         for(i = 0; i <= a1; i++){
             sum = sum + Math.pow(-1,i)*binomial(a1,i)*D(a+(2*a1)-(2*i),l1,a1);
-            console.log(D(a+(2*a1)-(2*i),l1,a1),D(b,l2,a1))
+            //console.log(D(a+(2*a1)-(2*i),l1,a1),D(b,l2,a1))
         }
-        console.log(D(b,l2,a1)*sum);
+        //console.log(D(b,l2,a1)*sum);
         return D(b,l2,a1)*sum;
     }
 
@@ -268,7 +270,7 @@ function sumOfFunction(start, end, sigmaFunction){
     var sum = 0;
     
 
-    console.log(sigmaFunction);
+    //console.log(sigmaFunction);
     for (var i = start; i <= end; i++){
         sum += (sigmaFunction(i));
     }

@@ -1,0 +1,65 @@
+<html>
+    <head>
+            <script type="text/javascript" src="http://calistry.org/THREE/js/three/three.js"></script>
+            <script type="text/javascript" src="http://calistry.org/THREE/js/three/examples/controls/OrbitControls.js"></script>
+            <script type="text/javascript" src="gui.js"/></script>
+            <script type="text/javascript" src="atom.js"/></script>
+            <script type="text/javascript" src="zEff.js"/></script>
+            <script type="text/javascript" src="MO.js"/></script>
+            <script type="text/javascript" src="Lib/numeric-1.2.6.js"/></script>
+            <link rel="stylesheet" type="text/css" href="input.css?x=234">
+    </head>
+
+    <body>
+
+
+            <div id='CanDivEl' >  
+                <canvas style="width:60%;height:50%;border-radius: 10px;margin:10px;float: left;"></canvas>
+                
+                    <form id="paper" method="get" action="">            
+                        <textarea placeholder="H 1.0 1.0 1.0" id="xyzText" name="text" rows="8" style="overflow: hidden; word-wrap: break-word; resize: none; height: 260px; overflow-y: scroll; overflow-x: scroll;margin:20px;width:30% ;   background-color: #f1f1f1;border-radius: 5px;    padding: 7px;"></textarea>  
+                            <br>       
+                    </form>
+                  <!-- <span> <a class="NormalButton" onclick=" showatoms()"> Show </a></span> -->
+                  <span> <input type="file" id="openfile" /></span>
+                   <span> <a class="NormalButton" onclick=" Calculate()" style= "width:100px;"> Calculate </a></span>
+
+            </div>
+            <div id="myProgress" style="clear:both;">
+                <div id="myBar"></div>
+            </div>
+
+
+            <br>
+            <h2  id = "energy" style="display:none;margin:20px;">Energy (eV)</h2>
+            <div id ="Answers" style="clear:both;margin:20px;height:100px;overflow-x:scroll;background-color: #f1f1f1;
+            padding: 5px;display:none;">
+                    
+
+            </div>
+
+            <script type="text/javascript" >
+                document.getElementById("openfile").addEventListener("change", function(){
+
+                var fr = new FileReader();
+                fr.onload = function() {
+                filelines = this.result.split("\n");
+                for (var j=0;j<filelines.length;j++){
+                    filelines[j] = filelines[j].replace(/  +/g, ' ');
+                    //console.log(filelines)
+                }
+                let N = parseInt(filelines[0])
+                let xyzText = filelines.slice(2,2+N).join("\n");
+
+                document.getElementById("xyzText").value =xyzText;
+                }
+
+                fr.readAsText(this.files[0]);
+                }
+
+                )
+            </script>
+    </body>
+
+
+</html>
