@@ -87,11 +87,12 @@ function showatoms(){
     xyzData = xyzText.split("\n");
     let X ,Y ,Z;
     [X,Y,Z] = CenterOfMass(xyzData);
+    
     for (var i =0;  i<xyzData.length;i++){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         let cs = colorSize(xyz[0]);
         let rad = getRadius(xyz[0],atomRadius);
-        showatom(xyz[1]-X,xyz[2]-Y,xyz[3]-Z,rad*1.2,cs);
+        showatom(parseFloat(xyz[1])-X,parseFloat(xyz[2])-Y,parseFloat(xyz[3])-Z,rad*1.2,cs);
     }
 }
 
@@ -101,9 +102,11 @@ function CenterOfMass(xyzData){
     let Z = 0.0;
     for (var i =0;  i<xyzData.length;i++){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
-        X+= xyz[1];
-        Y+= xyz[2];
-        Z+= xyz[3];
+        
+        X+= parseFloat(xyz[1]);
+        Y+= parseFloat(xyz[2]);
+        Z+= parseFloat(xyz[3]);
+
     }
     X = X/xyzData.length;
     Y = Y/xyzData.length;

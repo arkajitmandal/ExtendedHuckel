@@ -14,7 +14,7 @@ class atom {
         let zeff = [];
         for (var i=0;i<this.Basis.length;i++){
             //console.log(this.Basis[i][4]+this.Basis[i][5]);
-            zeff.push(calZeff(1,this.Basis[i][4]+this.Basis[i][5],this.eStructure));
+            zeff.push(calZeff(this.Z,this.Basis[i][4]+this.Basis[i][5],this.eStructure));
         }
         this.zeff = zeff;
         //orbitals
@@ -99,12 +99,23 @@ class molecule {
                     y2 -= y1;
                     z2 -= z1;
                     // Convert to spherical coordinate 
-                    let r = Math.pow(x2*x2 +y2*y2 +z2*z2, 0.5 );
-                    let theta = Math.atan(y2/x2);
-                    let phi = Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
-                    
+                    //same atom
+                    console.log(ao1[1]==ao2[1])
+                    let r,theta,phi
+                    if (ao1[1]==ao2[1]){
+                        r = 0.0;
+                        theta = 0.0;
+                        phi = 0.0;
+                    }
+                    //other atom
+                    else {
+                        r = Math.pow(x2*x2 +y2*y2 +z2*z2, 0.5 );
+                        theta = Math.atan(y2/x2);
+                        phi = Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
+                    }
                     // get Sij
                     let thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1,zeff2,r,theta,phi);
+                    console.log(n1,l1,m1,n2,l2,m2,zeff1,zeff2);
                     Sij[i][j] = thisSij;
                     Sij[j][i] = thisSij;
                 }
