@@ -217,9 +217,30 @@ function colorSize(S){
         // Ujala Blue
         return 0x3867d6
     }
+    else if (S === "Na"){
+        // Sea Grean
+        return 0xbcbba
+    }
     else {
     return 0xcd3333
     
     }
 }
 
+function sortEigPsi(Eig,Psi){
+    // Copy
+    Ec = [] ;
+    PsiC = [];
+    for (var i=0; i<Eig.length; i++){
+        Ec.push(Eig[i]);
+        PsiC.push(Psi[i])
+    } 
+    // Sorting
+    Es = [];
+    PsiS = [];
+    while (Ec.length!==0){
+        for (var i=0; i<Ec.length; i++){
+            console.log("Working");
+        }
+    }
+}
