@@ -85,14 +85,31 @@ function showatoms(){
     removeAtoms();
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
+    let X ,Y ,Z;
+    [X,Y,Z] = CenterOfMass(xyzData);
     for (var i =0;  i<xyzData.length;i++){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         let cs = colorSize(xyz[0]);
         let rad = getRadius(xyz[0],atomRadius);
-        showatom(xyz[1],xyz[2],xyz[3],rad*1.2,cs);
+        showatom(xyz[1]-X,xyz[2]-Y,xyz[3]-Z,rad*1.2,cs);
     }
 }
 
+function CenterOfMass(xyzData){
+    let X = 0.0;
+    let Y = 0.0;
+    let Z = 0.0;
+    for (var i =0;  i<xyzData.length;i++){
+        let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+        X+= xyz[1];
+        Y+= xyz[2];
+        Z+= xyz[3];
+    }
+    X = X/xyzData.length;
+    Y = Y/xyzData.length;
+    Z = Y/xyzData.length;
+    return [X,Y,Z]
+}
 
 function Calculate(){
     var xyzText = document.getElementById("xyzText").value;
