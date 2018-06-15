@@ -146,9 +146,16 @@ class molecule {
 }
 
 
-var Diagonalization = function(Hij,Sij){
+function Diagonalization(Hij,Sij){
+    //var elem = document.getElementById("myBar");
     let invSij = numeric.inv(Sij);
+    //var prgwidth = 65;
+    //elem.style.width = prgwidth + '%'
+    //await sleep(500)
     let invSxH =  numeric.dot(invSij, Hij);
+    // var prgwidth = 70;
+    // elem.style.width = prgwidth + '%'
+    // await sleep(500)
     let diag = numeric.eig(invSxH);
     let E = diag.lambda.x;
     let psi = diag.E;
@@ -622,7 +629,7 @@ var eStructure= [
         ["Ca",["1s2","2s2","2p6","3s2","3p6","4s2"]],
         ["Sc",["1s2","2s2","2p6","3s2","3p6","3d1","4s2"]],
         ["Ti",["1s2","2s2","2p6","3s2","3p6","3d2","4s2"]],
-        ["V",["1s2","2s2","2p6","3s2","3p6","3d3","4s2"]],
+        ["V", ["1s2","2s2","2p6","3s2","3p6","3d3","4s2"]],
         ["Cr",["1s2","2s2","2p6","3s2","3p6","3d4","4s2"]],
         ["Mn",["1s2","2s2","2p6","3s2","3p6","3d5","4s2"]],
         ["Fe",["1s2","2s2","2p6","3s2","3p6","3d6","4s2"]],

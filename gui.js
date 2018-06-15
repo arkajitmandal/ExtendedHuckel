@@ -136,10 +136,52 @@ async function Calculate(){
     prgwidth = 50;
     elem.style.width = prgwidth + '%'
     await sleep(500)
-    Result = Diagonalization(mol.Hij,mol.Sij);    
+    // Diagonalization part write here
+    var here = 1; // ask diagonalization or do it here
+    if (here == 1){
+        // S-1 calculation
+        let invSij = numeric.inv(mol.Sij);
+        prgwidth = 65;
+        elem.style.width = prgwidth + '%'
+        await sleep(500)
+        // S-1 x H
+        let invSxH =  numeric.dot(invSij, mol.Hij);
+        var prgwidth = 70;
+        elem.style.width = prgwidth + '%'
+        await sleep(500)
+        // Final Diagonalization
+        let diag = numeric.eig(invSxH);
+        let E = diag.lambda.x;
+        let psi = diag.E;
+        Result = [E,psi]
+        }
+    else {
+        Result = Diagonalization(mol.Hij,mol.Sij);   
+        }
     prgwidth = 100;
-    elem.style.width = prgwidth + '%'
-    document.getElementById("Answers").innerHTML = Result[0].join("<br>");
+    // Organize the result
+    let E = Result[0]
+    let Psi = Result[0]
+    let sortE = [];
+    let sortPsi = [];
+    let minid = 0; // id 
+    // Sorting
+    while (E.length !=0){
+        for (var k=0;k<E.length;k++){
+            if (parseFloat(E[minid]) > parseFloat(E[k]) ){
+                minid = k;
+            }
+        }
+        sortE.push(E.pop(minid));
+        sortPsi.push(Psi.pop(minid));
+    }
+    
+
+    // Show results
+    elem.style.width = prgwidth + '%';
+    document.getElementById("energy").style.display = "block";
+    document.getElementById("Answers").style.display = "block";
+    document.getElementById("Answers").innerHTML = "<ul><li><a href=\"#\">" + sortE.join("</a></li><li><a href=\"#\">") + "</li></ul>";
 }
 
 function colorSize(S){

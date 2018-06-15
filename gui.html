@@ -28,29 +28,37 @@
             <div id="myProgress" style="clear:both;">
                 <div id="myBar"></div>
             </div>
-            <div id ="Answers" style="clear:both;margin:20px">
-                    <script type="text/javascript" >
-                        document.getElementById("openfile").addEventListener("change", function(){
 
-                        var fr = new FileReader();
-                        fr.onload = function() {
-                        filelines = this.result.split("\n");
-                        for (var j=0;j<filelines.length;j++){
-                            filelines[j] = filelines[j].replace(/  +/g, ' ');
-                            //console.log(filelines)
-                        }
-                        let N = parseInt(filelines[0])
-                        let xyzText = filelines.slice(2,2+N).join("\n");
 
-                        document.getElementById("xyzText").value =xyzText;
-                        }
+            <br>
+            <h2  id = "energy" style="display:none;margin:20px;">Energy (eV)</h2>
+            <div id ="Answers" style="clear:both;margin:20px;height:100px;overflow-x:scroll;background-color: #f1f1f1;
+            padding: 5px;display:none;">
+                    
 
-                        fr.readAsText(this.files[0]);
-                        }
-
-                        )
-                    </script>
             </div>
+
+            <script type="text/javascript" >
+                document.getElementById("openfile").addEventListener("change", function(){
+
+                var fr = new FileReader();
+                fr.onload = function() {
+                filelines = this.result.split("\n");
+                for (var j=0;j<filelines.length;j++){
+                    filelines[j] = filelines[j].replace(/  +/g, ' ');
+                    //console.log(filelines)
+                }
+                let N = parseInt(filelines[0])
+                let xyzText = filelines.slice(2,2+N).join("\n");
+
+                document.getElementById("xyzText").value =xyzText;
+                }
+
+                fr.readAsText(this.files[0]);
+                }
+
+                )
+            </script>
     </body>
 
 
