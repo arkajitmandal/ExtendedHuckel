@@ -1,7 +1,7 @@
 var model; 
 var renderer,scene,camera; 
 var atomX,atomY,atomZ,atomRad;
-
+var mol, Eig, MOs;
 function init() {  
   var canv = document.getElementsByTagName("canvas")[0];
   var w = canv.clientWidth;
@@ -93,6 +93,21 @@ function showatoms(){
     }
 }
 
+
+function Calculate(){
+    var xyzText = document.getElementById("xyzText").value;
+    xyzData = xyzText.split("\n");
+    // get all atoms
+    var allAtoms = []
+    for (var i =0;  i<xyzData.length;i++){
+        let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
+        allAtoms.push(new atom(xyz[0],xyz[1],xyz[2],xyz[3]));
+    }
+    // make molecule
+    mol = new molecule(allAtoms);
+    Result = Diagonalization(mol.Hij,mol.Sij);
+    console.log(Result[0]);
+}
 
 function colorSize(S){
     if (S === "H"){

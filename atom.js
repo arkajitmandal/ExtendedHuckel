@@ -138,8 +138,11 @@ class molecule {
 
 var Diagonalization = function(Hij,Sij){
     let invSij = numeric.inv(Sij);
-    
-    return Hij
+    let invSxH =  numeric.dot(invSij, Hij);
+    let diag = numeric.eig(invSxH);
+    let E = diag.lambda.x;
+    let psi = diag.E;
+    return [E,psi];
 }
 
 

@@ -73,7 +73,7 @@
       -webkit-transition: background .2s linear, color .2s linear;
       transition: background .2s linear, color .2s linear;
       white-space: normal;
-    width:60px;
+      width:60px;
       display: inline-block;
       text-align: center;
       margin-left:20px;
