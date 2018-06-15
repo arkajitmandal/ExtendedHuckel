@@ -165,6 +165,7 @@ async function Calculate(){
     E = Result[0];
     Psi = Result[0];
     sortE = E.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
+    // Wrong 
     sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
     
 
@@ -177,28 +178,44 @@ async function Calculate(){
 
 function colorSize(S){
     if (S === "H"){
+        //grey
         return 0xbdc3c7
     }
     else if (S === "He"){
+        // dark grey
         return 0x7f8c8d
     }
     else if (S === "Li"){
+        // Yellow
         return 0xf1c40f
     }
     else if (S === "Be"){
+        //Orange-Yeollowish
         return 0xf39c12
     }
     else if (S === "B"){
+        //Orange Reddish
         return 0xd35400
     }
     else if (S === "C"){
+        // Very Dark Blue
         return 0x2c3e50
     }
     else if (S === "O"){
+        // Red
         return 0xe74c3c
     }
     else if (S === "N"){
+        // Blue
         return 0x0fbcf9
+    }
+    else if (S === "F"){
+        // Green
+        return 0x2ecc71
+    }
+    else if (S === "Ne"){
+        // Ujala Blue
+        return 0x3867d6
     }
     else {
     return 0xcd3333
