@@ -39,9 +39,9 @@ document.getElementById('CanDivEl').innerHTML="<h2>Your Browser Does not support
   var directionalLight3 = new THREE.DirectionalLight(0x939393);
   directionalLight3.position.set(0, -1, 0).normalize();
   scene.add(directionalLight3);
-  axes = new THREE.AxisHelper( 10 );
-  axes.position.set(-7.5,-7.5,-7.5)
-  scene.add( axes );
+  //axes = new THREE.AxisHelper( 10 );
+  //axes.position.set(-7.5,-7.5,-7.5)
+  //scene.add( axes );
   var clock = new THREE.Clock();
   var render = function() {
     var dt = clock.getDelta();
