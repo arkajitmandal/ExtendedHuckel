@@ -160,22 +160,27 @@ async function Calculate(){
         }
     prgwidth = 100;
     // Organize the result
-    let E = Result[0]
-    let Psi = Result[0]
-    let sortE = [];
-    let sortPsi = [];
-    let minid = 0; // id 
+    var E = new Array();
+    var Psi = new Array();
+    E = Result[0];
+    Psi = Result[0];
+    sortE = E.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
+    sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
+
+
+    // let minid = 0; // id 
     // Sorting
     
-    while (E.length !=0){
-        for (var k=0;k<E.length;k++){
-            if (parseFloat(E[minid]) > parseFloat(E[k]) ){
-                minid = k;
-            }
-        }
-        sortE.push(E.pop(minid));
-        sortPsi.push(Psi.pop(minid));
-    }
+    
+    // while (E.length !=0){
+    //     for (var k=0;k<E.length;k++){
+    //         if (parseFloat(E[minid]) > parseFloat(E[k]) ){
+    //             minid = k;
+    //         }
+    //     }
+    //     sortE.push(E.pop(minid));
+    //     sortPsi.push(Psi.pop(minid));
+    // }
     
 
     // Show results
@@ -207,8 +212,12 @@ function colorSize(S){
     else if (S === "O"){
         return 0xe74c3c
     }
+    else if (S === "N"){
+        return 0x0fbcf9
+    }
     else {
     return 0xcd3333
+    
     }
 }
 
