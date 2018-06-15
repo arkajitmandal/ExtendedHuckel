@@ -100,7 +100,6 @@ class molecule {
                     z2 -= z1;
                     // Convert to spherical coordinate 
                     //same atom
-                    console.log(ao1[1]==ao2[1])
                     let r,theta,phi
                     if (ao1[1]==ao2[1]){
                         r = 0.0;
@@ -115,7 +114,6 @@ class molecule {
                     }
                     // get Sij
                     let thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1,zeff2,r,theta,phi);
-                    console.log(n1,l1,m1,n2,l2,m2,zeff1,zeff2);
                     Sij[i][j] = thisSij;
                     Sij[j][i] = thisSij;
                 }
