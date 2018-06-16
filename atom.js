@@ -159,6 +159,7 @@ function Diagonalization(Hij,Sij){
     let diag = numeric.eig(invSxH);
     let E = diag.lambda.x;
     let psi = diag.E;
+    GlobalJob = 1;
     return [E,psi];
 }
 

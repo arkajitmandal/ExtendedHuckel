@@ -6,6 +6,7 @@ function init() {
   var canv = document.getElementsByTagName("canvas")[0];
   var w = canv.clientWidth;
   var h = canv.clientHeight;
+  var GlobalJob;
 
 try{  renderer = new THREE.WebGLRenderer({canvas:canv}); }
 catch(err){
@@ -54,7 +55,7 @@ document.getElementById('CanDivEl').innerHTML="<h2>Your Browser Does not support
 }
   
 window.onload = init;
-window.onresize = init;
+//window.onresize = init;
 
 
 var sphere=[];
@@ -115,6 +116,8 @@ function CenterOfMass(xyzData){
 }
 
 async function Calculate(){
+    GlobalJob = 0;
+    var waitTime = 100;
     var elem = document.getElementById("myBar");
     var prgwidth = 1;
     let A = 1.889725989;
@@ -129,13 +132,13 @@ async function Calculate(){
     }
     prgwidth = 20;
     elem.style.width = prgwidth + '%'
-    await sleep(500)
+    await sleep(waitTime)
     
     // make molecule
     mol = new molecule(allAtoms);
     prgwidth = 50;
     elem.style.width = prgwidth + '%'
-    await sleep(500)
+    await sleep(waitTime)
     // Diagonalization part write here
     var here = 1; // ask diagonalization or do it here
     if (here == 1){
@@ -143,12 +146,12 @@ async function Calculate(){
         let invSij = numeric.inv(mol.Sij);
         prgwidth = 65;
         elem.style.width = prgwidth + '%'
-        await sleep(500)
+        await sleep(waitTime)
         // S-1 x H
         let invSxH =  numeric.dot(invSij, mol.Hij);
         var prgwidth = 70;
         elem.style.width = prgwidth + '%'
-        await sleep(500)
+        await sleep(waitTime)
         // Final Diagonalization
         let diag = numeric.eig(invSxH);
         let E = diag.lambda.x;
@@ -156,25 +159,27 @@ async function Calculate(){
         Result = [E,psi]
         }
     else {
-        Result = Diagonalization(mol.Hij,mol.Sij);   
+        Result =  Diagonalization(mol.Hij,mol.Sij);   
         }
     prgwidth = 100;
+    console.log(Result);
     // Organize the result
     var E = new Array();
     var Psi = new Array();
     E = Result[0];
     Psi = Result[1];
-    //sortE = E.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
-    // Wrong 
-    //sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
+    // Save global variables
+    
     [sortE,sortPsi]= sortEigPsi(E,Psi.x);
-
+    // Save global variables
+    mol.Eig = numeric.clone(sortE);
+    mol.MOs = numeric.clone(sortPsi);
 
     // Show results
     elem.style.width = prgwidth + '%';
     document.getElementById("energy").style.display = "block";
     document.getElementById("Answers").style.display = "block";
-    document.getElementById("Answers").innerHTML = "<ul><li><a href=\"#\">" + sortE.join("</a></li><li><a href=\"#\">") + "</li></ul>";
+    document.getElementById("Answers").innerHTML = "<ul><li><a href=\"#\">" + mol.Eig.join("</a></li><li><a href=\"#\">") + "</li></ul>";
 }
 
 function colorSize(S){
@@ -228,13 +233,13 @@ function colorSize(S){
     }
 }
 
-function sortEigPsi(Eig,Psi){
+function sortEigPsi(Ei,Psi){
     // Copy
     let Ec = [] ;
     let PsiC = numeric.clone(Psi);
     PsiC=numeric.transpose(PsiC);
-    for (var i=0; i<Eig.length; i++){
-        Ec.push(Eig[i]);
+    for (var i=0; i<Ei.length; i++){
+        Ec.push(Ei[i]);
     } 
     
     // Sorting
