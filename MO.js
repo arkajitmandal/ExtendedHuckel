@@ -185,6 +185,7 @@ function tripleSumOverlap( n1, l1, n2, l2, a1, s, s1, r, p, t, n, a11 ,a12){
     return sum;
 }
 function mooverlap(n1, l1, m1, n2, l2, m2, s, s1, r, theta, phi){
+    
     // error fix for same position.
     if (r==0.0){r = 0.0000001;} 
     return sumOfFunction(0, Math.min(l1, l2),function(a1){return tlm(a1, l1, m1, l2, m2, theta, phi)*

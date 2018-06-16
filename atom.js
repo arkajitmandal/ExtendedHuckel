@@ -2,9 +2,9 @@ class atom {
     
     constructor(Sym, x=0,y=0,z=0){
         this.S = Sym;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = parseFloat(x);
+        this.y = parseFloat(y);
+        this.z = parseFloat(z);
         this.color = colorSize(Sym);
         this.Basis = constructBasis(Sym,atomParam);
         this.eStructure = getEStructure(Sym,eStructure);
@@ -27,7 +27,7 @@ class atom {
             else if (lsym == "p"){var l = 1;}
             else if (lsym == "d"){var l = 2;}
             else if (lsym == "f"){var l = 3;}
-            let orbitalZeff = this.zeff[i];
+            let orbitalZeff  =  [[parseFloat(this.Basis[i][7]),parseFloat(this.Basis[i][9])],[parseFloat(this.Basis[i][8]),parseFloat(this.Basis[i][10])]]; //this.zeff[i];
             let orbitalEnergy = parseFloat(this.Basis[i][6]);
             for(var mm=0;mm<2*l+1;mm++){
                 let m = mm - l;
@@ -110,11 +110,25 @@ class molecule {
                     //other atom
                     else {
                         r = Math.pow(x2*x2 +y2*y2 +z2*z2, 0.5 );
-                        theta = Math.atan(y2/x2);
-                        phi = Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
+                        theta = Math.acos(z2 / r)//Math.atan(y2/x2);
+                        if (r ==0.0){
+                            theta = 0.0;
+                        }
+                        phi = Math.atan2(y2, x2); // Math.atan(Math.pow(x2*x2 +y2*y2,0.5)/z2);
                     }
+                    let thisSij;
                     // get Sij
-                    let thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1,zeff2,r,theta,phi);
+                    if ((zeff1[0][1] == 1.0 ) && (zeff2[0][1] == 1.0)){
+                        thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
+                    }
+                    else{
+                        let sij11 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
+                        let sij22 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[1][0],zeff2[1][0],r,theta,phi);
+                        let sij12 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[1][0],r,theta,phi);
+                        let sij21 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[1][0],zeff2[0][0],r,theta,phi);
+                        thisSij = sij11 * zeff1[0][1] *zeff2[0][1] + sij12 * zeff1[0][1] *zeff2[1][1] ;
+                        thisSij = thisSij + sij21 * zeff1[1][1] *zeff2[0][1] + sij22 * zeff1[1][1] *zeff2[1][1] ;
+                    }
                     Sij[i][j] = thisSij;
                     Sij[j][i] = thisSij;
                 }
