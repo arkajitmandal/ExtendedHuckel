@@ -92,7 +92,7 @@ class molecule {
                     let m2 = ao2[0][2];
                     // zeff
                     let zeff1 = ao1[0][3];
-                    let zeff2 = ao2[0][3]
+                    let zeff2 = ao2[0][3];
                     // Center AOi at origin
                     // Calculate relative position 
                     // of AOj
@@ -214,7 +214,8 @@ function Diagonalization(Hij,Sij){
         }
 
     }
-    //;Atomlab AtNo Nvalen Nzeta Nquant Ang  IP       exp1     exp2   coeff1   coeff2
+    //; Atomlab AtNo Nvalen Nzeta Nquant Ang  IP       exp1     exp2   coeff1   coeff2
+    //      0    1     2      3     4     5    6        7        8       9        10 
 
     var atomParam = [
         "H        1      1      1     1     s  -13.600   1.3000   0.0000   1.0000   0.0000",

@@ -227,6 +227,30 @@ function colorSize(S){
         // Sea Grean
         return 0xbcbba
     }
+    else if (S === "Mg"){
+        // red
+        return 0xE91E63
+    }
+    else if (S === "Al"){
+        // Grey
+        return 0x9E9E9E
+    }
+    else if (S === "Si"){
+        // dark black
+        return 0x3d3d3d
+    }
+    else if (S === "P"){
+        // pink
+        return 0xffcccc
+    }
+    else if (S === "S"){
+        // high yeollow
+        return 0xfff200
+    }
+    else if (S === "Cl"){
+        // light violet
+        return 0xc56cf0
+    }
     else {
     return 0xcd3333
     
