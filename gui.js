@@ -169,6 +169,7 @@ async function Calculate(){
     //sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
     [sortE,sortPsi]= sortEigPsi(E,Psi);
 
+    
     // Show results
     elem.style.width = prgwidth + '%';
     document.getElementById("energy").style.display = "block";
