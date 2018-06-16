@@ -163,11 +163,11 @@ async function Calculate(){
     var E = new Array();
     var Psi = new Array();
     E = Result[0];
-    Psi = Result[0];
-    sortE = E.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
+    Psi = Result[1];
+    //sortE = E.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
     // Wrong 
-    sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
-    
+    //sortPsi = Psi.sort(function(a, b){return parseFloat(a) - parseFloat(b)});
+    [sortE,sortPsi]= sortEigPsi(E,Psi);
 
     // Show results
     elem.style.width = prgwidth + '%';
@@ -229,18 +229,28 @@ function colorSize(S){
 
 function sortEigPsi(Eig,Psi){
     // Copy
-    Ec = [] ;
-    PsiC = [];
+    let Ec = [] ;
+    let PsiC = numeric.clone(Psi);
+    PsiC=numeric.transpose(PsiC);
     for (var i=0; i<Eig.length; i++){
         Ec.push(Eig[i]);
-        PsiC.push(Psi[i])
     } 
+    
     // Sorting
     Es = [];
     PsiS = [];
     while (Ec.length!==0){
+        minid = 0;
+        
         for (var i=0; i<Ec.length; i++){
-            console.log("Working");
+           // console.log(Ec[minid],Ec[i],parseFloat(Ec[minid])>parseFloat(Ec[i]));
+            if (Ec[minid] > Ec[i]){
+                minid = i;
+           // console.log("true");
+            }
         }
+        Es.push(Ec.splice(minid,1)[0]);
+        PsiS.push(PsiC.splice(minid,1)[0]);
     }
+    return [Es,numeric.transpose(PsiS)]
 }
