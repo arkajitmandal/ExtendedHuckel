@@ -124,6 +124,7 @@ async function Calculate(){
     GlobalJob = 0;
     var waitTime = 100;
     var elem = document.getElementById("myBar");
+    elem.style.backgroundColor = "#4CAF50";
     var prgwidth = 1;
     let A = 1.889725989;
     showatoms();
@@ -195,6 +196,7 @@ async function Calculate(){
     ansEl +=  "</ul>"
 
     document.getElementById("Answers").innerHTML = ansEl;
+    elem.style.backgroundColor = "#3498db";
 }
 
 function colorSize(S){

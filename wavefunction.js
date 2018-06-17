@@ -90,6 +90,7 @@ function box(Mol){
 async function sampleDensity(Mol,Nth,points =1000){
     var elem = document.getElementById("myBar");
     var prgwidth = 0.0;
+    elem.style.backgroundColor = "#4CAF50";
     removeDensity();
     let Box = box(Mol);
     let scale = 1.0
@@ -159,4 +160,5 @@ async function sampleDensity(Mol,Nth,points =1000){
             i += 1;    
         }
     }
+    elem.style.backgroundColor = "#3498db";
 }
