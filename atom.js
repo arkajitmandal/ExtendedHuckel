@@ -10,6 +10,12 @@ class atom {
         this.eStructure = getEStructure(Sym,eStructure);
         this.radius = getRadius(Sym,atomRadius);
         this.Z = this.Basis[0][1];
+        //Valence Electron
+        let valenceElectrons = 0;
+        for (var j = 0; j<this.Basis.length;j++){
+            valenceElectrons = Math.max(valenceElectrons,this.Basis[j][2]);
+        }
+        this.valenceElectrons = valenceElectrons;
         //zeff 
         //let zeff = [];
         //for (var i=0;i<this.Basis.length;i++){
@@ -55,6 +61,12 @@ class molecule {
         this.AOs = AOs;
         this.N = this.AOs.length;
         let N  = this.N;
+        // total electrons
+        let totalElec = 0;
+        for (var i=0;i<this.atoms.length;i++){
+            totalElec+=this.atoms[i].valenceElectrons;
+        }
+        this.totalElectrons = totalElec;
         // K value
         // Wolfsberg-Helmholtz constant
         this.K = 1.75

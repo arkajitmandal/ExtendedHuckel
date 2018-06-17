@@ -188,9 +188,22 @@ async function Calculate(){
 
     // Construct Answer Element
     let ansEl = "<ul>"
+    let totalEl = mol.totalElectrons; 
+    var occ ; // occupency 
     for (var ith=0;ith<mol.Eig.length;ith++){
-        ansEl +="<li><a href=\"#\"><b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
-                ith.toString()+ ")'>Show Wavefunction</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
+        totalEl-=2;
+        if (totalEl>=0){
+            occ = "&uarr;&darr;&nbsp;";
+        }
+        else if (totalEl==-1){
+            occ = "&uarr;&nbsp;&nbsp;";
+        }
+        else {
+            occ = "&nbsp;&nbsp;&nbsp;";
+        }
+
+        ansEl +="<li><a href=\"#\"> "+ occ +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
+                ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
                 + " </a> </li>";
     }
     ansEl +=  "</ul>"
