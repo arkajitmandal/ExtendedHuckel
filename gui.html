@@ -53,6 +53,14 @@
                 let xyzText = filelines.slice(2,2+N).join("\n");
 
                 document.getElementById("xyzText").value =xyzText;
+                try{
+                    removeAtoms();
+                    removeDensity();
+                    }
+                catch(err){
+                    console.log("Error Happend!")
+                }
+                showatoms();
                 }
 
                 fr.readAsText(this.files[0]);

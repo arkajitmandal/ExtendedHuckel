@@ -88,6 +88,8 @@ function box(Mol){
 
 // sample density of Nth MO of Molecule
 async function sampleDensity(Mol,Nth,points =1000){
+    var elem = document.getElementById("myBar");
+    var prgwidth = 0.0;
     removeDensity();
     let Box = box(Mol);
     let scale = 1.0
@@ -151,6 +153,8 @@ async function sampleDensity(Mol,Nth,points =1000){
 
         showDensity(xp -Xm,yp -Ym ,zp-Zm ,P*scale);
         if (P*scale>0.1){
+            prgwidth += 100/points;
+            elem.style.width = prgwidth + '%'
             await sleep(15);
             i += 1;    
         }

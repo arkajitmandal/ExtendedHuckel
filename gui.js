@@ -86,6 +86,7 @@ function removeAtoms(){
 
 function showatoms(){
     removeAtoms();
+    removeDensity();
     let A = 1.889725989;
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
@@ -96,7 +97,7 @@ function showatoms(){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         let cs = colorSize(xyz[0]);
         let rad = getRadius(xyz[0],atomRadius);
-        console.log((parseFloat(xyz[1])-X)*A);
+        //console.log((parseFloat(xyz[1])-X)*A);
         showatom((parseFloat(xyz[1])-X)*A,(parseFloat(xyz[2])-Y)*A,(parseFloat(xyz[3])-Z)*A,rad*1.2,cs);
     }
 }
@@ -185,9 +186,13 @@ async function Calculate(){
     document.getElementById("Answers").style.display = "block";
 
     // Construct Answer Element
-    let ansEl = "<ul><li><a href=\"#\">"
-    ansEl += mol.Eig.join("</a> </li><li><a href=\"#\">") ; 
-    ansEl +=  "</li></ul>"
+    let ansEl = "<ul>"
+    for (var ith=0;ith<mol.Eig.length;ith++){
+        ansEl +="<li><a href=\"#\"><b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
+                ith.toString()+ ")'>Show Wavefunction</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
+                + " </a> </li>";
+    }
+    ansEl +=  "</ul>"
 
     document.getElementById("Answers").innerHTML = ansEl;
 }
