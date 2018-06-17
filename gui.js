@@ -148,7 +148,7 @@ async function Calculate(){
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
         // S-1 x H
-        let invSxH =  numeric.dot(invSij, mol.Hij);
+        let invSxH =  numeric.dot(invSij,mol.Hij);
         var prgwidth = 70;
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
@@ -250,6 +250,10 @@ function colorSize(S){
     else if (S === "Cl"){
         // light violet
         return 0xc56cf0
+    }
+    else if (S === "Ar"){
+        // light light blue
+        return 0x7efff5
     }
     else {
     return 0xcd3333

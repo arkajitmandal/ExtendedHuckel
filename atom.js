@@ -129,6 +129,9 @@ class molecule {
                         thisSij = sij11 * zeff1[0][1] *zeff2[0][1] + sij12 * zeff1[0][1] *zeff2[1][1] ;
                         thisSij = thisSij + sij21 * zeff1[1][1] *zeff2[0][1] + sij22 * zeff1[1][1] *zeff2[1][1] ;
                     }
+                    if (isNaN(thisSij)){
+                        thisSij = 0.0
+                    }
                     Sij[i][j] = thisSij;
                     Sij[j][i] = thisSij;
                 }
@@ -166,7 +169,7 @@ function Diagonalization(Hij,Sij){
     //var prgwidth = 65;
     //elem.style.width = prgwidth + '%'
     //await sleep(500)
-    let invSxH =  numeric.dot(invSij, Hij);
+    let invSxH =  numeric.dot(invSij ,Hij);
     // var prgwidth = 70;
     // elem.style.width = prgwidth + '%'
     // await sleep(500)
