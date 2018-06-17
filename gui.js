@@ -1,5 +1,5 @@
 var model; 
-var renderer,scene,camera; 
+var renderer,densityscene,camera; 
 var atomX,atomY,atomZ,atomRad;
 var mol, Eig, MOs;
 function init() {  
@@ -59,7 +59,7 @@ window.onload = init;
 
 
 var sphere=[];
-
+var density = [];
 function showatom(a,b,c,d,col = 0xcd3333){
 
     var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
@@ -71,10 +71,12 @@ function showatom(a,b,c,d,col = 0xcd3333){
     scene.add(sphere[sphere.length-1]);
     //render();
     }
-    function removeAtoms(){
-        for (var i=0;i<sphere.length;i=i+1){
-        scene.remove(sphere[i]);}
+function removeAtoms(){
+    for (var i=0;i<sphere.length;i=i+1){
+        scene.remove(sphere[i]);
     }
+    sphere = [];
+}
 
 
     function render() {
@@ -84,6 +86,7 @@ function showatom(a,b,c,d,col = 0xcd3333){
 
 function showatoms(){
     removeAtoms();
+    let A = 1.889725989;
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
     let X ,Y ,Z;
@@ -93,7 +96,8 @@ function showatoms(){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         let cs = colorSize(xyz[0]);
         let rad = getRadius(xyz[0],atomRadius);
-        showatom(parseFloat(xyz[1])-X,parseFloat(xyz[2])-Y,parseFloat(xyz[3])-Z,rad*1.2,cs);
+        console.log((parseFloat(xyz[1])-X)*A);
+        showatom((parseFloat(xyz[1])-X)*A,(parseFloat(xyz[2])-Y)*A,(parseFloat(xyz[3])-Z)*A,rad*1.2,cs);
     }
 }
 
@@ -111,7 +115,7 @@ function CenterOfMass(xyzData){
     }
     X = X/xyzData.length;
     Y = Y/xyzData.length;
-    Z = Y/xyzData.length;
+    Z = Z/xyzData.length;
     return [X,Y,Z]
 }
 
@@ -162,7 +166,7 @@ async function Calculate(){
         Result =  Diagonalization(mol.Hij,mol.Sij);   
         }
     prgwidth = 100;
-    console.log(Result);
+    //console.log(Result);
     // Organize the result
     var E = new Array();
     var Psi = new Array();
@@ -179,7 +183,13 @@ async function Calculate(){
     elem.style.width = prgwidth + '%';
     document.getElementById("energy").style.display = "block";
     document.getElementById("Answers").style.display = "block";
-    document.getElementById("Answers").innerHTML = "<ul><li><a href=\"#\">" + mol.Eig.join("</a></li><li><a href=\"#\">") + "</li></ul>";
+
+    // Construct Answer Element
+    let ansEl = "<ul><li><a href=\"#\">"
+    ansEl += mol.Eig.join("</a> </li><li><a href=\"#\">") ; 
+    ansEl +=  "</li></ul>"
+
+    document.getElementById("Answers").innerHTML = ansEl;
 }
 
 function colorSize(S){
@@ -287,4 +297,29 @@ function sortEigPsi(Ei,Psi){
         PsiS.push(PsiC.splice(minid,1)[0]);
     }
     return [Es,numeric.transpose(PsiS)]
+}
+
+function showDensity(x,y,z,P){
+    if (Math.abs(P)>0.1){
+        if (P < 0.0 ){
+            col = 0x4cd137;
+        }
+        else {
+            col = 0xe74c3c;
+        }
+
+        var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide,transparent: true, opacity: Math.abs(P)} );
+        density.push( new THREE.Mesh(new THREE.SphereGeometry(0.07, 5, 5), material ));
+        density[density.length-1].overdraw = true;
+        density[density.length-1].position.set( x , y, z  );
+        scene.add(density[density.length-1]);
+    }
+}
+
+
+function removeDensity(){
+    for (var i=0;i<density.length;i=i+1){
+        scene.remove(density[i]);
+    }
+    density = [];
 }

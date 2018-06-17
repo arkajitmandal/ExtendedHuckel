@@ -181,11 +181,6 @@ function Diagonalization(Hij,Sij){
 }
 
 
-    function createAndPrint(){
-            hydrogen = new atom("h", ["1s"]);
-            console.log(hydrogen.Symbol);
-
-    }
 
     function constructBasis(S,Param){
         let Basis = [];

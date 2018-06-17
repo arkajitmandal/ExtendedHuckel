@@ -3,10 +3,10 @@
 function aoProb(x,y,z,AO){
     //probability density at xyz
     // of a particular AO
-    let n1 = 1.0;
-    let l1 = 0.0;
-    let z1 = 0.0;
-    let zeff = 5.0;
+    let n1 = 1;
+    let l1 = 0;
+    let m1 = 0;
+    let zeff = 25.0;
     let n2 = AO[0];
     let l2 = AO[1];
     let m2 = AO[2];
@@ -29,11 +29,130 @@ function aoProb(x,y,z,AO){
     // Calculate mooverlap
     let thisSij;
     if (zeff2[0][1] == 1.0){
-        thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
+        thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff,zeff2[0][0],r,theta,phi);
     }
     else {
         thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff,zeff2[0][0],r,theta,phi) * zeff2[0][1];
         thisSij += mooverlap(n1,l1,m1,n2,l2,m2,zeff,zeff2[1][0],r,theta,phi) * zeff2[1][1];
     }
     return thisSij;
+}
+
+// get  dimentions
+// Center of Mass
+// min max
+function box(Mol){
+    allAtoms = Mol.atoms;
+    let Xt = 0.0 ;
+    let Yt = 0.0 ;
+    let Zt = 0.0 ;
+    let Xmax = allAtoms[0].x;
+    let Ymax = allAtoms[0].y;
+    let Zmax = allAtoms[0].z;
+    let Xmin = allAtoms[0].x;
+    let Ymin = allAtoms[0].y;
+    let Zmin = allAtoms[0].z;
+    for (var j=0; j< allAtoms.length;j++){
+        Xt += allAtoms[j].x;
+        Yt += allAtoms[j].y;
+        Zt += allAtoms[j].z;
+        // Max 
+        if (Xmax < allAtoms[j].x){
+            Xmax  = allAtoms[j].x;
+        }
+        if (Ymax < allAtoms[j].y){
+            Ymax  = allAtoms[j].y;
+        }
+        if (Zmax < allAtoms[j].z){
+            Zmax  = allAtoms[j].z;
+        }
+
+        //Min
+        if (Xmin > allAtoms[j].x){
+            Xmin  = allAtoms[j].x;
+        }
+        if (Ymin > allAtoms[j].y){
+            Ymin  = allAtoms[j].y;
+        }
+        if (Zmin > allAtoms[j].z){
+            Zmin  = allAtoms[j].z;
+        }
+
+    }
+    let Xm = Xt/ allAtoms.length;
+    let Ym = Yt/ allAtoms.length;
+    let Zm = Zt/ allAtoms.length;
+    let f = 3.0;
+    return [[Xm,Ym,Zm],[Xmax*f +f,Ymax*f + f,Zmax*f + f],[Xmin*f - f,Ymin*f - f,Zmin*f - f]];
+}
+
+// sample density of Nth MO of Molecule
+async function sampleDensity(Mol,Nth,points =1000){
+    removeDensity();
+    let Box = box(Mol);
+    let scale = 1.0
+    // find scale by doing a sample of 100 points
+    let maxP = 0.0;
+    for (var i=0; i<100; i++){
+        // Center Coordinate
+        let Xm = Box[0][0];
+        let Ym = Box[0][1];
+        let Zm = Box[0][2];
+        MOs = Mol.MOs;
+        AOs = Mol.AOs;
+        // box dimension
+        let lx = Box[1][0]- Box[2][0];
+        let ly = Box[1][1]- Box[2][1];
+        let lz = Box[1][2]- Box[2][2];
+        // get a random point
+        let xp = (Math.random()-0.5)*lx + Xm;
+        let yp = (Math.random()-0.5)*ly + Ym;
+        let zp = (Math.random()-0.5)*lz + Zm;
+        let p = [];
+        
+        for (var k =0;k<AOs.length;k++){
+            p.push(aoProb(xp,yp,zp,AOs[k][0]));
+        }
+        // Now calculate for a specific Nth MO
+        P = 0.0 
+        for (var k =0;k<MOs.length;k++){
+            P += MOs[k][Nth] * p[k];
+        }
+        maxP = Math.max(Math.abs(P),maxP);
+    }
+    scale = 1.0/maxP
+    // DO the real one
+    i = 0;
+    while (i<points){
+        // Center Coordinate
+        let Xm = Box[0][0];
+        let Ym = Box[0][1];
+        let Zm = Box[0][2];
+        MOs = Mol.MOs;
+        AOs = Mol.AOs;
+        // box dimension
+        let lx = Box[1][0]- Box[2][0];
+        let ly = Box[1][1]- Box[2][1];
+        let lz = Box[1][2]- Box[2][2];
+        // get a random point
+        let xp = (Math.random()-0.5)*lx + Xm;
+        let yp = (Math.random()-0.5)*ly + Ym;
+        let zp = (Math.random()-0.5)*lz + Zm;
+        let p = [];
+        
+        for (var k =0;k<AOs.length;k++){
+            p.push(aoProb(xp,yp,zp,AOs[k][0]));
+        }
+        // Now calculate for a specific Nth MO
+        P = 0.0 
+        for (var k =0;k<MOs.length;k++){
+            P += MOs[k][Nth] * p[k];
+        }
+
+        showDensity(xp -Xm,yp -Ym ,zp-Zm ,P*scale);
+        if (P*scale>0.1){
+            await sleep(15);
+            i += 1;    
+        }
+    }
 }
