@@ -159,6 +159,7 @@ async function sampleDensity(Mol,Nth,points =1400){
             await sleep(10);
             i += 1;    
         }
+        
     }
     elem.style.backgroundColor = "#3498db";
 }
