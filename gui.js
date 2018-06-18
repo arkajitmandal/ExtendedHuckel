@@ -329,7 +329,7 @@ function showDensity(x,y,z,P){
         }
 
         var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide,transparent: true, opacity: Math.abs(P)} );
-        density.push( new THREE.Mesh(new THREE.SphereGeometry(0.07, 5, 5), material ));
+        density.push( new THREE.Mesh(new THREE.SphereGeometry(0.1, 5, 5), material ));
         density[density.length-1].overdraw = true;
         density[density.length-1].position.set( x , y, z  );
         scene.add(density[density.length-1]);

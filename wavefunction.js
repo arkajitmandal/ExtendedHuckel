@@ -87,7 +87,7 @@ function box(Mol){
 }
 
 // sample density of Nth MO of Molecule
-async function sampleDensity(Mol,Nth,points =1000){
+async function sampleDensity(Mol,Nth,points =1400){
     var elem = document.getElementById("myBar");
     var prgwidth = 0.0;
     elem.style.backgroundColor = "#4CAF50";
@@ -138,9 +138,9 @@ async function sampleDensity(Mol,Nth,points =1000){
         let ly = Box[1][1]- Box[2][1];
         let lz = Box[1][2]- Box[2][2];
         // get a random point
-        let xp = (Math.random()-0.5)*lx + Xm;
-        let yp = (Math.random()-0.5)*ly + Ym;
-        let zp = (Math.random()-0.5)*lz + Zm;
+        let xp = (Math.random()-0.5)*lx*2.0 + Xm;
+        let yp = (Math.random()-0.5)*ly*2.0 + Ym;
+        let zp = (Math.random()-0.5)*lz*2.0 + Zm;
         let p = [];
         
         for (var k =0;k<AOs.length;k++){
@@ -156,7 +156,7 @@ async function sampleDensity(Mol,Nth,points =1000){
         if (P*scale>0.1){
             prgwidth += 100/points;
             elem.style.width = prgwidth + '%'
-            await sleep(15);
+            await sleep(10);
             i += 1;    
         }
     }
