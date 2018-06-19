@@ -134,7 +134,8 @@ async function sampleDensity(Mol,Nth,points =1000){
     scale = 1.1/maxP
     let boxSize = lx * ly * lz ;
     //console.log(boxSize);
-    points = Math.min(4000,parseInt(boxSize * points/3000.0))
+    points = Math.min(5000,parseInt(boxSize * points/3000.0))
+    points = Math.max(points,400);
     // DO the real one
     i = 0;
     let trials = 0
