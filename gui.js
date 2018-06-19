@@ -201,10 +201,17 @@ async function Calculate(){
         else {
             occ = "&nbsp;&nbsp;&nbsp;";
         }
-
+        // HOMO
+        let homolumo = ""
+        if (totalEl<=0 && totalEl>-2){
+            homolumo = "&nbsp;&nbsp;HOMO";
+        }
+        else if(totalEl <= -2 && totalEl>-3){
+            homolumo = "&nbsp;&nbsp;LUMO";
+        }
         ansEl +="<li><a href=\"#\"> "+ occ +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
                 ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
-                + " </a> </li>";
+                +  homolumo+ " </a> </li>";
     }
     ansEl +=  "</ul>"
 
