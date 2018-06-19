@@ -94,7 +94,7 @@ function box(Mol){
 }
 
 // sample density of Nth MO of Molecule
-async function sampleDensity(Mol,Nth,points =1400){
+async function sampleDensity(Mol,Nth,points =1000){
     var elem = document.getElementById("myBar");
     var prgwidth = 0.0;
     elem.style.backgroundColor = "#4CAF50";
@@ -102,18 +102,19 @@ async function sampleDensity(Mol,Nth,points =1400){
     let Box = box(Mol);
     let scale = 1.0
     // find scale by doing a sample of 100 points
+    // box dimension
+    let lx = Box[1][0]- Box[2][0];
+    let ly = Box[1][1]- Box[2][1];
+    let lz = Box[1][2]- Box[2][2];
     let maxP = 0.0;
-    for (var i=0; i<100; i++){
-        // Center Coordinate
-        let Xm = Box[0][0];
-        let Ym = Box[0][1];
-        let Zm = Box[0][2];
-        MOs = Mol.MOs;
-        AOs = Mol.AOs;
-        // box dimension
-        let lx = Box[1][0]- Box[2][0];
-        let ly = Box[1][1]- Box[2][1];
-        let lz = Box[1][2]- Box[2][2];
+    // Center Coordinate
+    let Xm = Box[0][0];
+    let Ym = Box[0][1];
+    let Zm = Box[0][2];
+    
+    let MOs = Mol.MOs;
+    let AOs = Mol.AOs;
+    for (var i=0; i<110; i++){
         // get a random point
         let xp = (Math.random()-0.5)*lx + Xm;
         let yp = (Math.random()-0.5)*ly + Ym;
@@ -130,21 +131,14 @@ async function sampleDensity(Mol,Nth,points =1400){
         }
         maxP = Math.max(Math.abs(P),maxP);
     }
-    scale = 1.0/maxP
+    scale = 1.1/maxP
+    let boxSize = lx * ly * lz ;
+    //console.log(boxSize);
+    points = Math.min(4000,parseInt(boxSize * points/3000.0))
     // DO the real one
     i = 0;
     let trials = 0
     while (i<points){
-        // Center Coordinate
-        let Xm = Box[0][0];
-        let Ym = Box[0][1];
-        let Zm = Box[0][2];
-        MOs = Mol.MOs;
-        AOs = Mol.AOs;
-        // box dimension
-        let lx = Box[1][0]- Box[2][0];
-        let ly = Box[1][1]- Box[2][1];
-        let lz = Box[1][2]- Box[2][2];
         // get a random point
         let xp = (Math.random()-0.5)*lx*2.0 + Xm;
         let yp = (Math.random()-0.5)*ly*2.0 + Ym;
@@ -167,7 +161,7 @@ async function sampleDensity(Mol,Nth,points =1400){
             await sleep(10);
             i += 1;    
         }
-        if (trials%50 == 0){
+        if (trials%200 == 0){
             await sleep(20);
         }
         trials++

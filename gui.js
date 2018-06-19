@@ -322,14 +322,16 @@ function sortEigPsi(Ei,Psi){
 function showDensity(x,y,z,P){
     if (Math.abs(P)>0.1){
         if (P < 0.0 ){
-            col = 0x4cd137;
+            //col = 0x4cd137;
+            col = 0x00CDFF;
         }
         else {
-            col = 0xe74c3c;
+            //col = 0xe74c3c;
+            col = 0xCF000F;
         }
 
         var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide,transparent: true, opacity: Math.abs(P)} );
-        density.push( new THREE.Mesh(new THREE.SphereGeometry(0.1, 5, 5), material ));
+        density.push( new THREE.Mesh(new THREE.SphereGeometry(0.12, 5, 5), material ));
         density[density.length-1].overdraw = true;
         density[density.length-1].position.set( x , y, z  );
         scene.add(density[density.length-1]);
