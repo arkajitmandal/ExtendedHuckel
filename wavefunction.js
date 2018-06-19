@@ -82,8 +82,15 @@ function box(Mol){
     let Xm = Xt/ allAtoms.length;
     let Ym = Yt/ allAtoms.length;
     let Zm = Zt/ allAtoms.length;
-    let f = 3.0;
-    return [[Xm,Ym,Zm],[Xmax*f +f,Ymax*f + f,Zmax*f + f],[Xmin*f - f,Ymin*f - f,Zmin*f - f]];
+    let f = 1.2;
+
+    //find biggest atom
+    let e = Mol.atoms[0].radius; 
+    for (var i =1;i<Mol.atoms.length;i++){
+        e = Math.max(e,  Mol.atoms[i].radius);
+    }
+    e *= 5;
+    return [[Xm,Ym,Zm],[Xmax*f +e,Ymax*f + e,Zmax*f + e],[Xmin*f - e,Ymin*f - e,Zmin*f - e]];
 }
 
 // sample density of Nth MO of Molecule
@@ -126,6 +133,7 @@ async function sampleDensity(Mol,Nth,points =1400){
     scale = 1.0/maxP
     // DO the real one
     i = 0;
+    let trials = 0
     while (i<points){
         // Center Coordinate
         let Xm = Box[0][0];
@@ -159,7 +167,10 @@ async function sampleDensity(Mol,Nth,points =1400){
             await sleep(10);
             i += 1;    
         }
-        
+        if (trials%50 == 0){
+            await sleep(20);
+        }
+        trials++
     }
     elem.style.backgroundColor = "#3498db";
 }
