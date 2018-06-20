@@ -203,10 +203,10 @@ async function Calculate(){
         }
         // HOMO
         let homolumo = ""
-        if (totalEl<=0 && totalEl>-2){
+        if (totalEl==0){
             homolumo = "&nbsp;&nbsp;HOMO";
         }
-        else if(totalEl <= -2 && totalEl>-3){
+        else if(totalEl == -2 ){
             homolumo = "&nbsp;&nbsp;LUMO";
         }
         ansEl +="<li><a href=\"#\"> "+ occ +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
