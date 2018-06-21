@@ -1,4 +1,4 @@
-function occupy(mol,pE = 0.1){
+function occupy(mol,pE = 0.02){
     let totalElectron = mol.totalElectron;
     let E = mol.Eig;
     let econfig = new Array(E.length);
@@ -6,16 +6,33 @@ function occupy(mol,pE = 0.1){
         //find the lowest
         let L =  getLUMO(econfig);
         let S = getSOMO(econfig);
-        if (L!=false){
-
+        // easiest case
+        if (L!=false && S==false){
+            econfig[L] += 1
+            totalElectron -=1
         }
-        else if (S !=false){
-            
+        // 1 0 type of case, considering pairing energy
+        else if (L!=false && S!=false){
+            // if pairing is costlier
+            if ((E[L] - E[S]) < pE ){
+                econfig[S] += 1
+                totalElectron -=1
+            }
+            // if pairing is simpler
+            else {
+                econfig[L] += 1
+                totalElectron -=1
+            }
+        }
+        else if (L==false && S!=false){
+            econfig[S] += 1
+            totalElectron -=1
         }
         else {
             return false;
         }
     }
+    return econfig;
 }
 //get LUMO
 function getLUMO(econfig){

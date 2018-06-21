@@ -190,26 +190,11 @@ async function Calculate(){
     let ansEl = "<ul>"
     let totalEl = mol.totalElectrons; 
     var occ ; // occupency 
+    occ = occupy(mol);
     for (var ith=0;ith<mol.Eig.length;ith++){
-        totalEl-=2;
-        if (totalEl>=0){
-            occ = "&uarr;&darr;&nbsp;";
-        }
-        else if (totalEl==-1){
-            occ = "&uarr;&nbsp;&nbsp;";
-        }
-        else {
-            occ = "&nbsp;&nbsp;&nbsp;";
-        }
-        // HOMO
-        let homolumo = ""
-        if (totalEl==0){
-            homolumo = "&nbsp;&nbsp;HOMO";
-        }
-        else if(totalEl == -2 ){
-            homolumo = "&nbsp;&nbsp;LUMO";
-        }
-        ansEl +="<li><a href=\"#\"> "+ occ +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
+        let  homolumo = "";
+        let el = "";
+        ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
                 ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
                 +  homolumo+ " </a> </li>";
     }
