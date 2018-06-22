@@ -194,6 +194,28 @@ async function Calculate(){
     for (var ith=0;ith<mol.Eig.length;ith++){
         let  homolumo = "";
         let el = "";
+        // Filled
+        if (occ[ith]==2){
+            el = "&uarr;&darr;&nbsp;";
+        } 
+        // singly filled
+        else if (occ[ith]==1){
+            el = "&uarr;&nbsp;&nbsp;";
+        }
+        // HOMO  
+        if (occ[ith]==2 && occ[ith+1]==0 ){
+            homolumo = "&nbsp;&nbsp;HOMO";
+        }
+        // LUMO
+        else if (occ[ith]==0 && occ[ith-1]==2 ){
+            homolumo = "&nbsp;&nbsp;LUMO";
+        }
+        // SOMO
+        else if (occ[ith]==1){
+            homolumo = "&nbsp;&nbsp;SOMO";
+        }
+
+
         ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
                 ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
                 +  homolumo+ " </a> </li>";
