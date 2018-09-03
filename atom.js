@@ -735,4 +735,24 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-// Asyncronous Sij and Hij Function
+
+// Mulliken Population
+function mullikenPopulation(mol){
+    let MOs = mol.MOs;
+    let AOs = mol.AOs;
+    let occ = occupy(mol)
+    let popAtom = new Array(mol.atoms.length);
+    for (var i=0;i< popAtom.length;i++){
+        popAtom[i] = 0.0;
+        // Calculate on ith Atom
+        for (var n=0;n< AOs.length;n++){
+            if (AOs[n][1] === i){
+                // nth AO belong to the ith atom
+                for (var k =0;k<MOs.length;k++){
+                    popAtom[i] += MOs[n][k]*MOs[n][k]*occ[i];
+                }
+            }
+        }
+    }
+    return popAtom;
+}
