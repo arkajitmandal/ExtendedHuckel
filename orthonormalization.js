@@ -27,10 +27,10 @@ function gramSmidth(mol){
     // https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process
     for (var i = 0; i < N; i++) {
         let uk = numeric.transpose(AO)[i];
-        for (var j = 0; j< i-1; j++){
+        for (var j = 0; j< i; j++){
             let proj = projection(orthoAOs[j], uk, Sij);
-            for (var k = 0; k< N; k++){
-                uk[k] = uk[k] - proj[k]; 
+            for (var l = 0; l< N; l++){
+                uk[l] = uk[l] - proj[l]; 
                 }
             }
         // Normalize
