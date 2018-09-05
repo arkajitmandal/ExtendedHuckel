@@ -164,23 +164,54 @@ async function Calculate(){
         let psi = diag.E;
         Result = [E,psi]
         }
+    // Correct Diagonalization;
+    if (here == 2){
+        // orthonormalization by Gram Smidth
+        mol.orthoAOs = gramSmidth(mol);
+        prgwidth = 65;
+        elem.style.width = prgwidth + '%';
+        await sleep(waitTime)
+        // construct the Hij in orthogonal Basis
+        mol.orthoHij = orthoHij(mol);
+        prgwidth = 70;
+        elem.style.width = prgwidth + '%';
+        await sleep(waitTime)
+        // diagonalization
+        let diag = numeric.eig(mol.orthoHij);
+        let E = diag.lambda.x;
+        let psi = diag.E;
+        prgwidth = 85;
+        elem.style.width = prgwidth + '%';
+        await sleep(waitTime)
+        // sort
+        Result = sortEigPsi(E,psi.x);
+        sortE = numeric.clone(Result[0]);
+        sortPsi = numeric.clone(Result[1]);
+        prgwidth = 87;
+        elem.style.width = prgwidth + '%';
+        await sleep(waitTime)
+        // rotate MO to AO basis
+        mol.Eig = numeric.clone(sortE);
+        mol.MOs = numeric.clone(atomicMO(sortPsi,mol.orthoAO));
+        }
     else {
         Result =  Diagonalization(mol.Hij,mol.Sij);   
         }
     prgwidth = 100;
     //console.log(Result);
     // Organize the result
-    var E = new Array();
-    var Psi = new Array();
-    E = Result[0];
-    Psi = Result[1];
-    // Save global variables
-    
-    [sortE,sortPsi]= sortEigPsi(E,Psi.x);
-    // Save global variables
-    mol.Eig = numeric.clone(sortE);
-    mol.MOs = numeric.clone(sortPsi);
-
+    if (here !== 2){
+        var E = new Array();
+        var Psi = new Array();
+        E = Result[0];
+        Psi = Result[1];
+        // Save global variables
+        
+        [sortE,sortPsi]= sortEigPsi(E,Psi.x);
+        // Save global variables
+        mol.Eig = numeric.clone(sortE);
+        mol.MOs = numeric.clone(sortPsi);
+    }
     // Show results
     elem.style.width = prgwidth + '%';
     document.getElementById("energy").style.display = "block";

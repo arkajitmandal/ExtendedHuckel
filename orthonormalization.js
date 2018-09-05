@@ -47,7 +47,7 @@ function gramSmidth(mol){
         orthoAOs[i] = uk ;
     }
     orthoAOs = numeric.transpose(orthoAOs);
-    mol.orthoAOs= orthoAOs;
+    // mol.orthoAOs= orthoAOs;
     return orthoAOs;
 }
 
@@ -92,7 +92,7 @@ function orthoHij(mol){
             }
         }
     }
-    mol.orthoHij = oHij;
+    //mol.orthoHij = oHij;
     return oHij;
 }
 // Ortho MO to MO
