@@ -105,7 +105,7 @@ function atomicMO(orthoMO,orthoAO){
         // ith MO
         for (var j = 0; j < N; j++){
             for (var k = 0; k < N; k++){
-                MO[k][i] += orthoMO[j][i] * orthoAO[j][k];
+                MO[k][i] += orthoMO[j][i] * orthoAO[k][j];
             }
         }
     }
