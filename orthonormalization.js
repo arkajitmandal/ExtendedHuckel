@@ -72,3 +72,30 @@ function projection(A,B,Sij){
     }
     return proj;
 }
+// Construct Hamiltonian in Orthogonal Basis
+function orthoHij(mol){
+    let Hij = mol.Hij;
+    let gsAO = mol.orthoAOs;
+    let N = mol.N;
+    let oHij = new Array(N);
+    for (var i = 0; i < N; i++) {
+        oHij[i] = new Array(N);
+    }
+
+    for (var i = 0; i < N; i++) {
+        for (var j = 0; j < N; j++) {
+            oHij[j][i] =0.0
+            for (var m = 0; m < N; m++) {
+                for (var n = 0; n < N; n++) {
+                    oHij[j][i] += Hij[n][m] * gsAO[m][i] * gsAO[n][j];
+                }
+            }
+        }
+    }
+    mol.orthoHij = oHij;
+    return oHij;
+}
+// Ortho MO to MO
+function atomicMO(orthoMO,orthoAO){
+    
+}
