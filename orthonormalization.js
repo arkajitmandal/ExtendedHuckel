@@ -97,5 +97,18 @@ function orthoHij(mol){
 }
 // Ortho MO to MO
 function atomicMO(orthoMO,orthoAO){
-    
+    let MO = new Array(N);
+    for (var i = 0; i < N; i++) {
+        MO[i] = new Array(N);
+    }
+    for (var i = 0; i < N; i++) {
+        // ith MO
+        for (var j = 0; j < N; j++){
+            MO[j][i] = 0.0;
+            for (var k = 0; k < N; k++){
+                MO[k][i] += orthoMO[j][i] * orthoAO[k][j];
+            }
+        }
+    }
+    return MO; 
 }

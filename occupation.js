@@ -6,7 +6,6 @@ function occupy(mol,pE = 0.02){
         //find the lowest
         let L =  getLUMO(econfig);
         let S = getSOMO(econfig);
-        console.log(L,S,totalElectron,econfig);
         // easiest case
         if (L!==false && S===false){
             econfig[L] += 1
