@@ -146,7 +146,7 @@ async function Calculate(){
     elem.style.width = prgwidth + '%'
     await sleep(waitTime)
     // Diagonalization part write here
-    var here = 1; // ask diagonalization or do it here
+    var here = 2; // ask diagonalization or do it here
     if (here == 1){
         // S-1 calculation
         let invSij = numeric.inv(mol.Sij);
@@ -164,54 +164,35 @@ async function Calculate(){
         let psi = diag.E;
         Result = [E,psi]
         }
-    // Correct Diagonalization;
+    // Native Diagonalization;
     if (here == 2){
-        // orthonormalization by Gram Smidth
-        mol.orthoAOs = gramSmidth(mol);
+        // S-1 calculation
+        let invSij = numeric.inv(mol.Sij);
         prgwidth = 65;
-        elem.style.width = prgwidth + '%';
+        elem.style.width = prgwidth + '%'
         await sleep(waitTime)
-        // construct the Hij in orthogonal Basis
-        mol.orthoHij = orthoHij(mol);
-        prgwidth = 70;
-        elem.style.width = prgwidth + '%';
+        // S-1 x H
+        let invSxH =  numeric.dot(invSij,mol.Hij);
+        var prgwidth = 70;
+        elem.style.width = prgwidth + '%'
         await sleep(waitTime)
-        // diagonalization
-        let diag = numeric.eig(mol.orthoHij);
-        let E = diag.lambda.x;
-        let psi = diag.E;
-        prgwidth = 85;
-        elem.style.width = prgwidth + '%';
-        await sleep(waitTime)
-        // sort
-        Result = sortEigPsi(E,psi.x);
-        sortE = numeric.clone(Result[0]);
-        sortPsi = numeric.clone(Result[1]);
-        prgwidth = 87;
-        elem.style.width = prgwidth + '%';
-        await sleep(waitTime)
-        // rotate MO to AO basis
-        mol.Eig = numeric.clone(sortE);
-        mol.MOs = numeric.clone(atomicMO(sortPsi,mol.orthoAO));
-        }
-    else {
-        Result =  Diagonalization(mol.Hij,mol.Sij);   
-        }
-    prgwidth = 100;
-    //console.log(Result);
-    // Organize the result
-    if (here !== 2){
+        // Final Diagonalization
+        let Out = diag(invSxH);
+        let E = Out[0];
+        let psi = Out[1];
+        Result = [E,psi];
         var E = new Array();
         var Psi = new Array();
         E = Result[0];
         Psi = Result[1];
         // Save global variables
-        
-        [sortE,sortPsi]= sortEigPsi(E,Psi.x);
-        // Save global variables
-        mol.Eig = numeric.clone(sortE);
-        mol.MOs = numeric.clone(sortPsi);
-    }
+        mol.Eig = numeric.clone(E);
+        mol.MOs = numeric.clone(Psi);
+        //console.log(Result);
+        }
+
+    prgwidth = 100;
+    //console.log(Result);
     // Show results
     elem.style.width = prgwidth + '%';
     document.getElementById("energy").style.display = "block";
