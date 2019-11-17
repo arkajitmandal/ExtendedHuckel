@@ -3,3 +3,8 @@
 url : https://arkajitmandal.github.io/ExtendedHuckel/
 <img src="Demo.png" >
 
+# Developers
+Arkajit Mandal
+Shreif Alsaid
+
+PI : Pengfei Huo
