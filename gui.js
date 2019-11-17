@@ -177,7 +177,7 @@ async function Calculate(){
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
         // Final Diagonalization
-        let Out = diag(invSxH);
+        let Out = diag(invSxH,1E-7);
         let E = Out[0];
         let Psi = Out[1];
         console.log(E);
