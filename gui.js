@@ -179,16 +179,11 @@ async function Calculate(){
         // Final Diagonalization
         let Out = diag(invSxH);
         let E = Out[0];
-        let psi = Out[1];
-        Result = [E,psi];
-        var E = new Array();
-        var Psi = new Array();
-        E = Result[0];
-        Psi = Result[1];
+        let Psi = Out[1];
+        console.log(E);
         // Save global variables
         mol.Eig = numeric.clone(E);
         mol.MOs = numeric.clone(Psi);
-        //console.log(Result);
         }
 
     prgwidth = 100;

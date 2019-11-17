@@ -146,6 +146,7 @@ var sorting = function(E, S){
         for (var j = 0; j<E.length;j++){
             if (E[j] < minE){
                 minID = j ; 
+                minE = E[minID];
             }
         }
         Ef[i] = E.splice(minID,1);
