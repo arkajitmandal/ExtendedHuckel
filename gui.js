@@ -224,7 +224,7 @@ async function Calculate(){
 
 
         ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
-                ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  mol.Eig[ith].toString() 
+                ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith] + mol.Vnn).toString(); 
                 +  homolumo+ " </a> </li>";
     }
     ansEl +=  "</ul>"
