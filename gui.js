@@ -185,7 +185,65 @@ async function Calculate(){
         mol.Eig = numeric.clone(E);
         mol.MOs = numeric.clone(Psi);
         }
-
+    // Native Diagonalization with Unfreeze for large systems N>10;
+    if (here == 3){
+        // S-1 calculation
+        let invSij = numeric.inv(mol.Sij);
+        prgwidth = 65;
+        elem.style.width = prgwidth + '%'
+        await sleep(waitTime)
+        // S-1 x H
+        let invSxH =  numeric.dot(invSij,mol.Hij);
+        var prgwidth = 70;
+        elem.style.width = prgwidth + '%'
+        await sleep(waitTime)
+        // Native Diagonalization
+        //let Out = diag(invSxH,1E-7);
+        //======== DIAG =================
+        var Nstate = invSxH.length; 
+        var Ei = Array(Nstate);
+        var e0 =  Math.abs(convergence / Nstate)
+        // initial vector
+        var Sij = Array(N);
+        for (var i = 0; i<N;i++){
+            Sij[i] = Array(N) 
+        }
+        // Sij is Identity Matrix
+        for (var i = 0; i<N;i++){
+            for (var j = 0; j<N;j++){
+                Sij[i][j] = (i===j)*1.0;
+            }
+        }
+        // initial error
+        var Vab = getAij(invSxH); 
+        //  jacobi iterations
+        while (Math.abs(Vab[1]) >= Math.abs(e0)){
+            // block index to be rotated
+            var i =  Vab[0][0];
+            var j =  Vab[0][1];
+            // get theta
+            var psi = getTheta(invSxH[i][i], invSxH[j][j], invSxH[i][j]); 
+            // Givens matrix
+            var Gij =  Rij(i,j,psi,N);
+            // rotate Hamiltonian using Givens
+            invSxH = unitary(Gij,invSxH); 
+            // Update vectors
+            Sij = AxB(Sij,Gij); 
+            // update error 
+            var Vab = getAij(invSxH); 
+        }
+        for (var i = 0; i<N;i++){
+                Ei[i] = invSxH[i][i]; 
+        }
+        var Out = sorting(Ei , Sij)
+        // ------------------------------
+        let E = Out[0];
+        let Psi = Out[1];
+        console.log(E);
+        // Save global variables
+        mol.Eig = numeric.clone(E);
+        mol.MOs = numeric.clone(Psi);
+        }
     prgwidth = 100;
     //console.log(Result);
     // Show results
