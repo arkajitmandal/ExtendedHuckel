@@ -136,13 +136,13 @@ async function Calculate(){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         allAtoms.push(new atom(xyz[0],parseFloat(xyz[1])*A,parseFloat(xyz[2])*A,parseFloat(xyz[3])*A));
     }
-    prgwidth = 20;
+    prgwidth = 15;
     elem.style.width = prgwidth + '%'
     await sleep(waitTime)
     
     // make molecule
     mol = new molecule(allAtoms);
-    prgwidth = 50;
+    prgwidth = 18;
     elem.style.width = prgwidth + '%'
     await sleep(waitTime)
     // Diagonalization part write here
@@ -150,12 +150,12 @@ async function Calculate(){
     if (here == 1){
         // S-1 calculation
         let invSij = numeric.inv(mol.Sij);
-        prgwidth = 65;
+        prgwidth = 45;
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
         // S-1 x H
         let invSxH =  numeric.dot(invSij,mol.Hij);
-        var prgwidth = 70;
+        var prgwidth = 60;
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
         // Final Diagonalization
@@ -187,14 +187,15 @@ async function Calculate(){
         }
     // Native Diagonalization with Unfreeze for large systems N>10;
     if (here == 3){
+        var convergence = 1E-7;
         // S-1 calculation
         let invSij = numeric.inv(mol.Sij);
-        prgwidth = 65;
+        prgwidth = 20;
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
         // S-1 x H
         let invSxH =  numeric.dot(invSij,mol.Hij);
-        var prgwidth = 70;
+        var prgwidth = 25;
         elem.style.width = prgwidth + '%'
         await sleep(waitTime)
         // Native Diagonalization
@@ -204,46 +205,52 @@ async function Calculate(){
         var Ei = Array(Nstate);
         var e0 =  Math.abs(convergence / Nstate)
         // initial vector
-        var Sij = Array(N);
-        for (var i = 0; i<N;i++){
-            Sij[i] = Array(N) 
+        var Sij = Array(Nstate);
+        for (var i = 0; i<Nstate;i++){
+            Sij[i] = Array(Nstate) 
         }
         // Sij is Identity Matrix
-        for (var i = 0; i<N;i++){
-            for (var j = 0; j<N;j++){
+        for (var i = 0; i<Nstate;i++){
+            for (var j = 0; j<Nstate;j++){
                 Sij[i][j] = (i===j)*1.0;
             }
         }
         // initial error
         var Vab = getAij(invSxH); 
+        var prgstep = (70.0/Math.log(Math.abs(Vab[1])/Math.abs(e0)))
         //  jacobi iterations
         while (Math.abs(Vab[1]) >= Math.abs(e0)){
+            await sleep(waitTime/3.0)
             // block index to be rotated
             var i =  Vab[0][0];
             var j =  Vab[0][1];
             // get theta
-            var psi = getTheta(invSxH[i][i], invSxH[j][j], invSxH[i][j]); 
+            var phi = getTheta(invSxH[i][i], invSxH[j][j], invSxH[i][j]); 
             // Givens matrix
-            var Gij =  Rij(i,j,psi,N);
+            var Gij =  Rij(i,j,phi,Nstate);
             // rotate Hamiltonian using Givens
             invSxH = unitary(Gij,invSxH); 
+            await sleep(waitTime/3.0);
             // Update vectors
             Sij = AxB(Sij,Gij); 
+            await sleep(waitTime/3.0);
             // update error 
-            var Vab = getAij(invSxH); 
+            Vab = getAij(invSxH); 
+            console.log(Math.abs(Vab[1]));
+            prgwidth = 95 - (Math.log(Math.abs(Vab[1])/Math.abs(e0))) * prgstep;
+            elem.style.width = prgwidth + '%'
         }
-        for (var i = 0; i<N;i++){
+        for (var i = 0; i<Nstate;i++){
                 Ei[i] = invSxH[i][i]; 
         }
         var Out = sorting(Ei , Sij)
         // ------------------------------
         let E = Out[0];
         let Psi = Out[1];
-        console.log(E);
         // Save global variables
         mol.Eig = numeric.clone(E);
         mol.MOs = numeric.clone(Psi);
-        }
+    }
     prgwidth = 100;
     //console.log(Result);
     // Show results

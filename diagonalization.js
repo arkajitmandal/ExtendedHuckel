@@ -124,7 +124,7 @@ var diag = function(Hij, convergence = 1E-7){
         // Update vectors
         Sij = AxB(Sij,Gij); 
         // update error 
-        var Vab = getAij(Hij); 
+        Vab = getAij(Hij); 
     }
     for (var i = 0; i<N;i++){
         Ei[i] = Hij[i][i]; 
