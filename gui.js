@@ -126,7 +126,7 @@ async function Calculate(){
     var elem = document.getElementById("myBar");
     elem.style.backgroundColor = "#4CAF50";
     var prgwidth = 1;
-    let A = 1.889725989;
+    let A = 1.889725989; // Convering to Atomic Units
     showatoms();
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
