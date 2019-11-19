@@ -286,7 +286,8 @@ async function Calculate(){
         else if (occ[ith]==1){
             homolumo = "&nbsp;&nbsp;SOMO";
         }
-
+        // set Vnn = 0.0 
+        mol.Vnn = 0.0 ;
 
         ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
                 ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (parseFloat(mol.Eig[ith]) + parseFloat(mol.Vnn)).toString(); 
