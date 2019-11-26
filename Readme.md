@@ -9,4 +9,4 @@ Shreif Alsaid
 
 PI : Pengfei Huo
 
-<img src="logo.png" />
+<img src="logo.jpg" />
