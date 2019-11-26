@@ -4,9 +4,10 @@ url : https://arkajitmandal.github.io/ExtendedHuckel/
 <img src="Demo.png" >
 
 # Developers
-Arkajit Mandal
+Arkajit Mandal 
+
 Shreif Alsaid
 
-PI : Pengfei Huo
+PI : <b> Pengfei Huo </b>
 
-<img src="logo.jpg" />
+<img src="logo.jpg" width="250">
