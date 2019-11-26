@@ -8,3 +8,5 @@ Arkajit Mandal
 Shreif Alsaid
 
 PI : Pengfei Huo
+
+<img src="logo.png" />
