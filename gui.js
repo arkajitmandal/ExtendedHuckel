@@ -120,14 +120,16 @@ function CenterOfMass(xyzData){
     return [X,Y,Z]
 }
 
+function updateProgress(prc){
+    document.getElementById("progress").style.width = String(prc) + "%";
+}
+
 async function Calculate(){
+    document.getElementById("progressbar").className = "meter"
     GlobalJob = 0;
     var waitTime = 100;
-    var elem = document.getElementById("myBar");
-    elem.style.backgroundColor = "#4CAF50";
-    var prgwidth = 1;
     let A = 1.889725989; // Convering to Atomic Units
-    showatoms();
+    showatoms(); 
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
     // get all atoms
@@ -136,125 +138,49 @@ async function Calculate(){
         let xyz = xyzData[i].split(/(\s+)/).filter( function(e) { return e.trim().length > 0; } );
         allAtoms.push(new atom(xyz[0],parseFloat(xyz[1])*A,parseFloat(xyz[2])*A,parseFloat(xyz[3])*A));
     }
-    prgwidth = 15;
-    elem.style.width = prgwidth + '%'
-    await sleep(waitTime)
+    updateProgress(2);
+    await sleep(waitTime);
     
     // make molecule
     mol = new molecule(allAtoms);
-    prgwidth = 18;
-    elem.style.width = prgwidth + '%'
+    updateProgress(3);
+
+    //worker.postMessage({"cmd":"Start","mol":mol,"conv":conv})
+
     await sleep(waitTime)
     // Diagonalization part write here
-    var here = 2; // ask diagonalization or do it here
-    if (here == 1){
-        // S-1 calculation
-        let invSij = numeric.inv(mol.Sij);
-        prgwidth = 45;
-        elem.style.width = prgwidth + '%'
-        await sleep(waitTime)
-        // S-1 x H
-        let invSxH =  numeric.dot(invSij,mol.Hij);
-        var prgwidth = 60;
-        elem.style.width = prgwidth + '%'
-        await sleep(waitTime)
-        // Final Diagonalization
-        let diag = numeric.eig(invSxH);
-        let E = diag.lambda.x;
-        let psi = diag.E;
-        Result = [E,psi]
-        }
     // Native Diagonalization;
-    if (here == 2){
+    if (!(window.Worker)){
         // S-1 calculation
         let invSij = numeric.inv(mol.Sij);
-        prgwidth = 65;
-        elem.style.width = prgwidth + '%'
+        updateProgress(65);
         await sleep(waitTime)
         // S-1 x H
         let invSxH =  numeric.dot(invSij,mol.Hij);
-        var prgwidth = 70;
-        elem.style.width = prgwidth + '%'
+        updateProgress(70);
         await sleep(waitTime)
         // Final Diagonalization
         let Out = diag(invSxH,1E-7);
         let E = Out[0];
         let Psi = Out[1];
-        console.log(E);
+        //console.log(E);
         // Save global variables
         mol.Eig = numeric.clone(E);
         mol.MOs = numeric.clone(Psi);
         }
-    // Native Diagonalization with Unfreeze for large systems N>10;
-    if (here == 3){
-        var convergence = 1E-7;
-        // S-1 calculation
-        let invSij = numeric.inv(mol.Sij);
-        prgwidth = 20;
-        elem.style.width = prgwidth + '%'
-        await sleep(waitTime)
-        // S-1 x H
-        let invSxH =  numeric.dot(invSij,mol.Hij);
-        var prgwidth = 25;
-        elem.style.width = prgwidth + '%'
-        await sleep(waitTime)
-        // Native Diagonalization
-        //let Out = diag(invSxH,1E-7);
-        //======== DIAG =================
-        var Nstate = invSxH.length; 
-        var Ei = Array(Nstate);
-        var e0 =  Math.abs(convergence / Nstate)
-        // initial vector
-        var Sij = Array(Nstate);
-        for (var i = 0; i<Nstate;i++){
-            Sij[i] = Array(Nstate) 
-        }
-        // Sij is Identity Matrix
-        for (var i = 0; i<Nstate;i++){
-            for (var j = 0; j<Nstate;j++){
-                Sij[i][j] = (i===j)*1.0;
+    // webworker diagonalization
+    else {
+        // Webworker
+        worker = new Worker('calculation.js');
+        worker.postMessage({"cmd":"Start","mol":mol});
+        worker.onmessage = function (event) {
+            let msg =  event.data;
             }
         }
-        // initial error
-        var Vab = getAij(invSxH); 
-        var prgstep = (70.0/Math.log(Math.abs(Vab[1])/Math.abs(e0)))
-        //  jacobi iterations
-        while (Math.abs(Vab[1]) >= Math.abs(e0)){
-            await sleep(waitTime/3.0)
-            // block index to be rotated
-            var i =  Vab[0][0];
-            var j =  Vab[0][1];
-            // get theta
-            var phi = getTheta(invSxH[i][i], invSxH[j][j], invSxH[i][j]); 
-            // Givens matrix
-            var Gij =  Rij(i,j,phi,Nstate);
-            // rotate Hamiltonian using Givens
-            invSxH = unitary(Gij,invSxH); 
-            await sleep(waitTime/3.0);
-            // Update vectors
-            Sij = AxB(Sij,Gij); 
-            await sleep(waitTime/3.0);
-            // update error 
-            Vab = getAij(invSxH); 
-            console.log(Math.abs(Vab[1]));
-            prgwidth = 95 - (Math.log(Math.abs(Vab[1])/Math.abs(e0))) * prgstep;
-            elem.style.width = prgwidth + '%'
-        }
-        for (var i = 0; i<Nstate;i++){
-                Ei[i] = invSxH[i][i]; 
-        }
-        var Out = sorting(Ei , Sij)
-        // ------------------------------
-        let E = Out[0];
-        let Psi = Out[1];
-        // Save global variables
-        mol.Eig = numeric.clone(E);
-        mol.MOs = numeric.clone(Psi);
-    }
-    prgwidth = 100;
+    updateProgress(100);
+    document.getElementById("progressbar").className = "meterdone"
     //console.log(Result);
     // Show results
-    elem.style.width = prgwidth + '%';
     document.getElementById("energy").style.display = "block";
     document.getElementById("Answers").style.display = "block";
 

@@ -8,11 +8,11 @@
             <script type="text/javascript" src="zEff.js"></script>
             <script type="text/javascript" src="MO.js"></script>
             <script type="text/javascript" src="Vnn.js"></script>
-            <script type="text/javascript" src="Lib/numeric-1.2.6.js"></script>
             <script type="text/javascript" src="wavefunction.js"></script>
             <script type="text/javascript" src="occupation.js"></script>
             <script type="text/javascript" src="orthonormalization.js"></script>
             <link rel="stylesheet" type="text/css" href="input.css?x=234">
+            <link rel="stylesheet" type="text/css" href="progress.css">
     </head>
 
     <body>
@@ -30,10 +30,11 @@
                    <span> <a class="NormalButton" onclick=" Calculate()" style= "width:100px;"> Calculate </a></span>
 
             </div>
-            <div id="myProgress" style="clear:both;">
-                <div id="myBar"></div>
-            </div>
 
+
+            <div class="meter" id="progressbar" >
+                <span style="width: 0%" id="progress"></span>
+            </div>
 
             <br>
             <h2  id = "energy" style="display:none;margin:20px;">Energy (eV)</h2>
