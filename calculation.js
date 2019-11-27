@@ -113,8 +113,20 @@ var diag = function(Hij, convergence = 1E-7){
     }
     // initial error
     var Vab = getAij(Hij); 
+    postMessage({'msg':'Diagonalizing... (22% )','prg':22});
+    var minV = Vab[1];
+    var levelMax = Math.log(Math.abs(Vab[1])/Math.abs(e0));
+    var iter = 1;
     //  jacobi iterations
     while (Math.abs(Vab[1]) >= Math.abs(e0)){
+        if (Math.abs(Vab[1]) < Math.abs(minV) ){
+            minV = Vab[1];
+            var level = Math.log(Math.abs(Vab[1])/Math.abs(e0));
+            var prg = 70 - (level/levelMax) * 70.0 + 23;
+            //var prgd = 100 - (level/levelMax) * 100.0
+            iter += 1
+            postMessage({'msg':'Diagonalizing... ('+ String(Math.round(prg)) + '% )','prg':prg});
+        }
         // block index to be rotated
         var i =  Vab[0][0];
         var j =  Vab[0][1];
@@ -169,16 +181,18 @@ function main(mol){
     postMessage({'msg':'Computing S<sup>-1</sup>','prg':4});
     // S-1 calculation
     let invSij = numeric.inv(mol.Sij);
+    console.log(invSij);
     // S-1 x H
     postMessage({'msg':'Obtained H x S<sup>-1</sup>','prg':15});
     let invSxH =  numeric.dot(invSij,mol.Hij);
+    console.log(invSxH);
     postMessage({'msg':'Starting Diagonalization','prg':20});
     // Final Diagonalization
     let Out = diag(invSxH,1E-7);
     postMessage({'msg':'Diagonalization Done','prg':93});
     let E = Out[0];
     let Psi = Out[1];
-    //console.log(E);
+    console.log(E);
     // Save global variables
     mol.Eig = numeric.clone(E);
     mol.MOs = numeric.clone(Psi);

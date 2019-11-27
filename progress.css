@@ -1,7 +1,7 @@
 .meter { 
     height: 20px;  /* Can be anything */
     position: relative;
-    margin: 60px 0 20px 0; /* Just for demo spacing */
+    margin: 60px 0 0px 0; /* Just for demo spacing */
     background: #eaeaea;
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
@@ -111,7 +111,7 @@
 .meterdone { 
    height: 20px;  /* Can be anything */
    position: relative;
-   margin: 60px 0 20px 0; /* Just for demo spacing */
+   margin: 60px 0 0px 0; /* Just for demo spacing */
    background: #eaeaea;
    -moz-border-radius: 25px;
    -webkit-border-radius: 25px;
@@ -165,6 +165,17 @@
    content: "";
    position: absolute;
    top: 0; left: 0; bottom: 0; right: 0;
+   background-image: 
+       -moz-linear-gradient(
+         -45deg, 
+         rgba(255, 255, 255, .2) 25%, 
+         transparent 25%, 
+         transparent 50%, 
+         rgba(255, 255, 255, .2) 50%, 
+         rgba(255, 255, 255, .2) 75%, 
+         transparent 75%, 
+         transparent
+      );
    z-index: 1;
    -webkit-background-size: 50px 50px;
    -moz-background-size: 50px 50px;

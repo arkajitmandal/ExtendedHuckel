@@ -124,6 +124,10 @@ function updateProgress(prc){
     document.getElementById("progress").style.width = String(prc) + "%";
 }
 
+function status(msg){
+    document.getElementById("status").innerHTML = "<i>"+msg+"</i>";
+}
+
 async function Calculate(){
     document.getElementById("progressbar").className = "meter"
     GlobalJob = 0;
@@ -175,54 +179,65 @@ async function Calculate(){
         worker.postMessage({"cmd":"Start","mol":mol});
         worker.onmessage = function (event) {
             let msg =  event.data;
+            if (msg.msg !==undefined){
+                updateProgress(msg.prg);
+                status(msg.msg);
+            }
+            if (msg.cmd === 'done'){
+                updateProgress(100);
+                document.getElementById("progressbar").className = "meterdone";
+                mol = msg.mol;
+                // Show results
+                document.getElementById("energy").style.display = "block";
+                document.getElementById("Answers").style.display = "block";
+                    // Construct Answer Element
+                let ansEl = "<ul>"
+                let totalEl = mol.totalElectrons; 
+                var occ ; // occupency 
+                occ = occupy(mol);
+                for (var ith=0;ith<mol.Eig.length;ith++){
+                    let  homolumo = "";
+                    let el = "";
+                    // Filled
+                    if (occ[ith]==2){
+                        el = "&uarr;&darr;&nbsp;";
+                    } 
+                    // singly filled
+                    else if (occ[ith]==1){
+                        el = "&uarr;&nbsp;&nbsp;";
+                    }
+                    // HOMO  
+                    if (occ[ith]==2 && occ[ith+1]==0 ){
+                        homolumo = "&nbsp;&nbsp;HOMO";
+                    }
+                    // LUMO
+                    else if (occ[ith]==0 && occ[ith-1]==2 ){
+                        homolumo = "&nbsp;&nbsp;LUMO";
+                    }
+                    // SOMO
+                    else if (occ[ith]==1){
+                        homolumo = "&nbsp;&nbsp;SOMO";
+                    }
+                    // set Vnn = 0.0 
+                    mol.Vnn = 0.0 ;
+
+                    ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
+                            ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (parseFloat(mol.Eig[ith]) + parseFloat(mol.Vnn)).toString(); 
+                            +  homolumo+ " </a> </li>";
+                }
+                ansEl +=  "</ul>"
+
+                document.getElementById("Answers").innerHTML = ansEl;
+                elem.style.backgroundColor = "#3498db";
             }
         }
-    updateProgress(100);
-    document.getElementById("progressbar").className = "meterdone"
-    //console.log(Result);
-    // Show results
-    document.getElementById("energy").style.display = "block";
-    document.getElementById("Answers").style.display = "block";
-
-    // Construct Answer Element
-    let ansEl = "<ul>"
-    let totalEl = mol.totalElectrons; 
-    var occ ; // occupency 
-    occ = occupy(mol);
-    for (var ith=0;ith<mol.Eig.length;ith++){
-        let  homolumo = "";
-        let el = "";
-        // Filled
-        if (occ[ith]==2){
-            el = "&uarr;&darr;&nbsp;";
-        } 
-        // singly filled
-        else if (occ[ith]==1){
-            el = "&uarr;&nbsp;&nbsp;";
-        }
-        // HOMO  
-        if (occ[ith]==2 && occ[ith+1]==0 ){
-            homolumo = "&nbsp;&nbsp;HOMO";
-        }
-        // LUMO
-        else if (occ[ith]==0 && occ[ith-1]==2 ){
-            homolumo = "&nbsp;&nbsp;LUMO";
-        }
-        // SOMO
-        else if (occ[ith]==1){
-            homolumo = "&nbsp;&nbsp;SOMO";
-        }
-        // set Vnn = 0.0 
-        mol.Vnn = 0.0 ;
-
-        ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
-                ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (parseFloat(mol.Eig[ith]) + parseFloat(mol.Vnn)).toString(); 
-                +  homolumo+ " </a> </li>";
     }
-    ansEl +=  "</ul>"
+    //
+    //document.getElementById("progressbar").className = "meterdone"
+    //console.log(Result);
 
-    document.getElementById("Answers").innerHTML = ansEl;
-    elem.style.backgroundColor = "#3498db";
+
+
 }
 
 function colorSize(S){
