@@ -228,7 +228,6 @@ async function Calculate(){
                 ansEl +=  "</ul>"
 
                 document.getElementById("Answers").innerHTML = ansEl;
-                elem.style.backgroundColor = "#3498db";
             }
         }
     }
