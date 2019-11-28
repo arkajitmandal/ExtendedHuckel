@@ -107,7 +107,7 @@ async function sampleDensity(Mol,Nth,points =1000){
     if (Nth===2){
         suff = "rd"
     }
-    status("Computing " + String(Nth+1) + "th MO... (0% )");
+    status("Computing " + String(Nth+1) + suff + " MO... (0% )");
     document.getElementById("progressbar").className = "meter";
     removeDensity();
     let Box = box(Mol);
@@ -170,7 +170,7 @@ async function sampleDensity(Mol,Nth,points =1000){
         if (P*scale>0.1){
             prgwidth += 100/points;
             updateProgress(prgwidth);
-            status("Computing " + String(Nth) + "th MO... (" + String(Math.round(prgwidth)) + "% )" );
+            status("Computing " + String(Nth+1) + suff +" MO... (" + String(Math.round(prgwidth)) + "% )" );
             await sleep(10);
             i += 1;    
         }
@@ -180,5 +180,5 @@ async function sampleDensity(Mol,Nth,points =1000){
         trials++
     }
     document.getElementById("progressbar").className = "meterdone";
-    status("Showing " + String(Nth) + "th MO");
+    status("Showing " + String(Nth+1) + suff  + " MO");
 }
