@@ -97,6 +97,13 @@ function box(Mol){
 async function sampleDensity(Mol,Nth,points =1000){
     var prgwidth = 0;
     updateProgress(prgwidth);
+    var suff = "th"
+    if (Nth===1){
+        suff = "st"
+    }
+    if (Nth===2){
+        suff = "nd"
+    }
     status("Computing " + String(Nth) + "th MO... (0% )");
     document.getElementById("progressbar").className = "meter";
     removeDensity();
