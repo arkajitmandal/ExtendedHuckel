@@ -128,6 +128,13 @@ function status(msg){
     document.getElementById("status").innerHTML = "<i>"+msg+"</i>";
 }
 
+function stop(){
+    worker.terminate();
+    document.getElementById("stop").style.display = "none";
+    document.getElementById("progressbar").className = "meternot";
+    status("Job Cancelled!");
+}
+
 async function Calculate(){
     document.getElementById("progressbar").className = "meter"
     GlobalJob = 0;
@@ -182,8 +189,14 @@ async function Calculate(){
             if (msg.msg !==undefined){
                 updateProgress(msg.prg);
                 status(msg.msg);
+                if (msg.cmd!='done'){
+                    if  (document.getElementById("stop").style.display == "none"){
+                        document.getElementById("stop").style.display = "block";
+                    }
+                }
             }
             if (msg.cmd === 'done'){
+                document.getElementById("stop").style.display = "none";
                 updateProgress(100);
                 document.getElementById("progressbar").className = "meterdone";
                 mol = msg.mol;
