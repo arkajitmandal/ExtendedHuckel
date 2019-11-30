@@ -51,7 +51,7 @@ class molecule {
     constructor(atoms){
         this.atoms = atoms;
         // Compute Vnn (Nucler - Nuclear repulsion)
-        this.Vnn = Vnn(atoms);
+        //this.Vnn = Vnn(atoms);
         // Create AO basis for molecule 
         let AOs = [];
         for (var i=0;i<this.atoms.length;i++){

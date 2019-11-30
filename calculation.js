@@ -181,18 +181,18 @@ function main(mol){
     postMessage({'msg':'Computing S<sup>-1</sup>','prg':4});
     // S-1 calculation
     let invSij = numeric.inv(mol.Sij);
-    console.log(invSij);
+    //console.log(invSij);
     // S-1 x H
     postMessage({'msg':'Obtained H x S<sup>-1</sup>','prg':15});
     let invSxH =  numeric.dot(invSij,mol.Hij);
-    console.log(invSxH);
+    //console.log(invSxH);
     postMessage({'msg':'Starting Diagonalization','prg':20});
     // Final Diagonalization
     let Out = diag(invSxH,1E-7);
     postMessage({'msg':'Diagonalization Done','prg':93});
     let E = Out[0];
     let Psi = Out[1];
-    console.log(E);
+    //console.log(E);
     // Save global variables
     mol.Eig = numeric.clone(E);
     mol.MOs = numeric.clone(Psi);
