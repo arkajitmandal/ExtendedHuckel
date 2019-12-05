@@ -143,9 +143,11 @@ var diag = function(Hij, convergence = 1E-7){
         // Givens matrix
         var Gij =  Rij(i,j,psi,N);
         // rotate Hamiltonian using Givens
-        Hij = unitary(Gij,Hij); 
+        //Hij = unitary(Gij,Hij); 
+        Hij = numeric.dot( numeric.dot( numeric.transpose(Gij), Hij),Gij);
         // Update vectors
-        Sij = AxB(Sij,Gij); 
+        //Sij = AxB(Sij,Gij); 
+        Sij = numeric.dot( Sij,Gij);
         // update error 
         Vab = getAij(Hij); 
     }
