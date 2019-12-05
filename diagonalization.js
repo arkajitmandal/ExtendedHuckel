@@ -53,24 +53,47 @@ var getAij = function(Mij){
     return [maxIJ,maxMij]
 }
 // Unitary Rotation UT x H x U
-var unitary  = function(U,H){
+var unitary  = function(U,H,sym=true){
     var N = U.length;
     // empty NxN matrix
     var Mat = Array(N) 
     for (var i = 0; i<N;i++){
         Mat[i] = Array(N) 
     }
-    // compute element
-    for (var i = 0; i<N;i++){
-        for (var j = 0; j<N;j++){
-            Mat[i][j] =  0 
-            for (var k = 0; k<N;k++){
-                for (var l = 0; l<N;l++){
-                    Mat[i][j] = Mat[i][j] + U[k][i] * H[k][l] * U[l][j];
+    if (sym==false){
+        // compute element
+        for (var i = 0; i<N;i++){
+            for (var j = 0; j<N;j++){
+                Mat[i][j] =  0 
+                for (var k = 0; k<N;k++){
+                    for (var l = 0; l<N;l++){
+                        Mat[i][j] = Mat[i][j] + U[k][i] * H[k][l] * U[l][j];
+                    }
                 }
             }
         }
     }
+    else{
+        // compute element (symmetric)
+        for (var i = 0; i<N;i++){
+            Mat[i][i] =  0 
+            for (var k = 0; k<N;k++){
+                for (var l = 0; l<N;l++){
+                    Mat[i][i] = Mat[i][i] + U[k][i] * H[k][l] * U[l][i];
+                }
+            }
+            for (var j = i+1; j<N;j++){
+                Mat[i][j] =  0 
+                for (var k = 0; k<N;k++){
+                    for (var l = 0; l<N;l++){
+                        Mat[i][j] = Mat[i][j] + U[k][i] * H[k][l] * U[l][j];
+                    }
+                }
+                Mat[j][i] = Mat[i][j] ;
+            }
+        }
+    }
+    //console.log(Mat);
     return Mat;
 }
 

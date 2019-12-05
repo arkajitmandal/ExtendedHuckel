@@ -3,7 +3,9 @@ importScripts("./Lib/numeric-1.2.6.js")
 
 // Rotation Matrix
 var Rot = function(theta){
-    var Mat = [[Math.cos(theta),Math.sin(theta)],[-Math.sin(theta),Math.cos(theta)]];
+    var cs = Math.cos(theta);
+    var sn = Math.sin(theta);
+    var Mat = [[cs,sn],[-sn,cs]];
     return Mat
 }
 // Givens Matrix
@@ -32,7 +34,7 @@ var Rij = function(k,l,theta,N){
 var getTheta = function(aii,ajj,aij){
     var  th = 0.0 
     var denom = (ajj - aii);
-    if (Math.abs(denom) <= 1E-12){
+    if (Math.abs(denom) <= 1E-15){
         th = Math.PI/4.0
     }
     else {
@@ -56,7 +58,7 @@ var getAij = function(Mij){
     return [maxIJ,maxMij]
 }
 // Unitary Rotation UT x H x U
-var unitary  = function(U,H){
+var unitary  = function(U,H,sym=true){
     var N = U.length;
     // empty NxN matrix
     var Mat = Array(N) 
@@ -74,6 +76,7 @@ var unitary  = function(U,H){
             }
         }
     }
+    //console.log(Mat);
     return Mat;
 }
 
@@ -87,7 +90,7 @@ var AxB = function(A,B){
     }
     for (var i = 0; i<N;i++){
         for (var j = 0; j<N;j++){
-            Mat[i][j] =  0 
+            Mat[i][j] =  0 ;
             for (var k = 0; k<N;k++){
                 Mat[i][j] = Mat[i][j] + A[i][k] * B[k][j] ; 
             }
@@ -95,6 +98,8 @@ var AxB = function(A,B){
     }
     return Mat;
 }
+
+
 
 var diag = function(Hij, convergence = 1E-7){
     var N = Hij.length; 
@@ -135,9 +140,11 @@ var diag = function(Hij, convergence = 1E-7){
         // Givens matrix
         var Gij =  Rij(i,j,psi,N);
         // rotate Hamiltonian using Givens
-        Hij = unitary(Gij,Hij); 
+        //Hij = unitary(Gij,Hij); 
+        Hij = numeric.dot( numeric.dot( numeric.transpose(Gij), Hij),Gij);
         // Update vectors
-        Sij = AxB(Sij,Gij); 
+        //Sij = AxB(Sij,Gij); 
+        Sij = numeric.dot( Sij,Gij);
         // update error 
         Vab = getAij(Hij); 
     }
