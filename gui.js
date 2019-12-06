@@ -200,6 +200,7 @@ async function Calculate(){
                 updateProgress(100);
                 document.getElementById("progressbar").className = "meterdone";
                 mol = msg.mol;
+                worker.terminate();
                 // Show results
                 document.getElementById("energy").style.display = "block";
                 document.getElementById("Answers").style.display = "block";
