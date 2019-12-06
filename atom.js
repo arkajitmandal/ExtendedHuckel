@@ -85,7 +85,6 @@ class molecule {
                 if (i==j){
                     Sij[i][i] = 1.0;
                 }
-
                 //Off diagonal
                 else {
                     let ao1 = this.AOs[i];
@@ -133,7 +132,12 @@ class molecule {
                     let thisSij;
                     // get Sij
                     if ((zeff1[0][1] == 1.0 ) && (zeff2[0][1] == 1.0)){
-                        thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
+                        if (ao1[1]!=ao2[1]){
+                            thisSij = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
+                        }
+                        else {
+                            thisSij = 0.0;
+                        }
                     }
                     else{
                         let sij11 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);

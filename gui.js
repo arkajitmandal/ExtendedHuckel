@@ -136,6 +136,7 @@ function stop(){
 }
 
 async function Calculate(){
+    try{worker.terminate();}catch(err){console.log("Starting calculation")}
     document.getElementById("progressbar").className = "meter"
     GlobalJob = 0;
     var waitTime = 100;
