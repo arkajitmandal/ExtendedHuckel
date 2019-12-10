@@ -197,19 +197,24 @@ var diag = function(Hij, convergence = 1E-7,bar={'start':20,'end':90},sort=true)
     }
     // initial error
     var Vab = getAij(Hij); 
-    postMessage({'msg':'Diagonalizing... (22% )','prg':22});
     var minV = Vab[1];
     var levelMax = Math.log(Math.abs(Vab[1])/Math.abs(e0));
-    var iter = 1;
+    var prgold = bar.start;
+    var barlen = (bar.end-bar.start)
+    var barstep = barlen/20.0;
     //  jacobi iterations
     while (Math.abs(Vab[1]) >= Math.abs(e0)){
         if (Math.abs(Vab[1]) < Math.abs(minV) ){
             minV = Vab[1];
             var level = Math.log(Math.abs(Vab[1])/Math.abs(e0));
-            var prg = (bar.end) - (level/levelMax) * (bar.end-bar.start) ;
+            var prg = bar.end - (level/levelMax) * barlen ;
             //var prgd = 100 - (level/levelMax) * 100.0
-            iter += 1
-            postMessage({'msg':'Diagonalizing... ('+ String(Math.round(prg)) + '% )','prg':prg});
+            if ((prg-prgold)> barstep){
+                //console.log(prg)
+                prgold = prg;
+                postMessage({'prg':prg});
+            }
+             
         }
         // block index to be rotated
         var i =  Vab[0][0];
@@ -238,7 +243,7 @@ var diag = function(Hij, convergence = 1E-7,bar={'start':20,'end':90},sort=true)
 var sqMat= function(Mat,convergence=1E-7,bar={'start':0,'end':20}){
     let N = Mat.length;
     Mat = numeric.clone(Mat);
-    bar.end = bar.end * 0.98;
+    bar.end = bar.end;
     // diagonalize Sij
     let Si = diag(Mat, convergence,bar,false)
     let Qd = Si[1]; // Unitary matrix that diagonalizes Si
@@ -261,7 +266,7 @@ function genDiag(Hij,Sij, convergence=1E-7,bar={'start':0,'end':90}){
     Hij = numeric.clone(Hij);
     Sij = numeric.clone(Sij);
     // progress bar
-    bar.end = bar.end/2;
+    bar.end = bar.end/2 ;
     // finding sqrt of overlap
     let S05 = sqMat(Sij,convergence,bar);
     // inverse of S05
@@ -273,7 +278,6 @@ function genDiag(Hij,Sij, convergence=1E-7,bar={'start':0,'end':90}){
     bar.start = bar.end+bar.start;
     bar.end = bar.end*2;
     let Ans = diag(Hij2, convergence, bar, true);
-    console.log(JSON.stringify(Hij2))
     let Ei = Ans[0];
     // eigenvectors
     let Uij =  numeric.dot(S05Tinv,Ans[1]);
@@ -286,7 +290,7 @@ function genDiag(Hij,Sij, convergence=1E-7,bar={'start':0,'end':90}){
 function main(mol){
     console.log("started main code")
     //console.log(invSxH);
-    postMessage({'msg':'Starting Diagonalization','prg':10});
+    postMessage({'msg':'diagonalizing...','prg':10});
     // Final Diagonalization
     let Out = genDiag(mol.Hij,mol.Sij, 1E-9, {'start':10,'end':95});
     postMessage({'msg':'Diagonalization Done','prg':98});

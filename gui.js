@@ -169,19 +169,21 @@ async function Calculate(){
     // webworker diagonalization
     else {
         // Webworker
+        var oldmsg = "";
         worker = new Worker('calculation.js');
         worker.postMessage({"cmd":"Start","mol":mol});
         worker.onmessage = function (event) {
             let msg =  event.data;
-            if (msg.msg !==undefined){
+            if (msg.prg !==undefined){
                 updateProgress(msg.prg);
-                status(msg.msg);
+                if (msg.msg !==undefined){status(msg.msg);oldmsg=msg.msg;}
+                else{status(oldmsg);}
                 if (msg.cmd!='done'){
                     if  (document.getElementById("stop").style.display == "none"){
                         document.getElementById("stop").style.display = "block";
                     }
                 }
-            }
+            } 
             if (msg.cmd === 'done'){
                 document.getElementById("stop").style.display = "none";
                 updateProgress(100);
