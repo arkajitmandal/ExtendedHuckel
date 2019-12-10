@@ -163,22 +163,8 @@ async function Calculate(){
     // Diagonalization part write here
     // Native Diagonalization;
     if (!(window.Worker)){
-        // S-1 calculation
-        let invSij = numeric.inv(mol.Sij);
-        updateProgress(65);
-        await sleep(waitTime)
-        // S-1 x H
-        let invSxH =  numeric.dot(invSij,mol.Hij);
-        updateProgress(70);
-        await sleep(waitTime)
-        // Final Diagonalization
-        let Out = diag(invSxH,1E-7);
-        let E = Out[0];
-        let Psi = Out[1];
-        //console.log(E);
-        // Save global variables
-        mol.Eig = numeric.clone(E);
-        mol.MOs = numeric.clone(Psi);
+        stop();
+        status("Please install a modern browser!");
         }
     // webworker diagonalization
     else {
@@ -201,7 +187,7 @@ async function Calculate(){
                 updateProgress(100);
                 document.getElementById("progressbar").className = "meterdone";
                 mol = msg.mol;
-                worker.terminate();
+                //worker.terminate();
                 // Show results
                 document.getElementById("energy").style.display = "block";
                 document.getElementById("Answers").style.display = "block";
