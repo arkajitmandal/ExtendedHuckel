@@ -1,0 +1,100 @@
+
+
+body {
+    margin:0px;
+}
+
+img {
+    max-height: 100%;
+}
+
+.wrapper{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 10fr 2fr 2fr 0.4fr; 
+}
+
+#main {
+    display: grid;
+    grid-template-columns: 6.5fr 3.5fr; 
+    border-radius: 20px;
+}
+
+#footer {
+    background-color:#6c5ce7;
+    color: white;
+    text-align: right;
+    font-size: small;
+    font-family: 'Courier New', Courier Bold, monospace;  
+    display: grid;
+    grid-template-columns: 1fr 2fr 0.2fr ; 
+    
+}
+#github {
+    padding-right: 10px;
+    padding-left: 10px;
+    text-align: left;
+    background-color:#4c4679;
+}
+
+#author {
+    padding-right: 10px;
+}
+
+#author > a:hover, a:visited, a:link, a:active {
+    color: white;
+    text-decoration: none;
+    outline: none !important;
+}
+#viewer {
+    background-color:#34495e;
+}
+#panel {
+    background-color:white;
+    border-left: solid 5px;
+    border-left-color: #1c2935;
+}
+#affiliation{
+    background-color:#f1f2f6;
+}
+#progress {
+        background-color:#f1f2f6;
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper{
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 15fr 1fr 1fr 0.6fr; 
+    }
+    #main {
+        display: grid;
+        grid-template-columns:auto;
+        grid-template-rows: 5fr 5fr; 
+        
+    }
+    #panel {
+        background-color:white;
+        border-left: solid 0px;
+    }
+}
+
+@media (orientation: portrait) {
+    .wrapper{
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-rows: 15fr 1fr 1fr 0.4fr; 
+    }
+    #main {
+        display: grid;
+        grid-template-columns:auto;
+        grid-template-rows: 5fr 5fr; 
+    }
+    #panel {
+        background-color:white;
+        border-left: solid 0px;
+    }
+}
