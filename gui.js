@@ -227,7 +227,7 @@ async function Calculate(){
                     //mol.Vnn = 0.0 ;
 
                     ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
-                            ith.toString()+ ",mol,iso= 0.004,res=12)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString(); 
+                            ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString(); 
                             +  homolumo+ " </a> </li>";
                 }
                 ansEl +=  "</ul>"
@@ -408,7 +408,7 @@ function generateOrbitals(Nth,mol,iso= -0.001,res=10){
     showSurface(Dat2.positions,Dat2.cells,bound[0],0xCF000F);
 }
 
-function generateOrbitalsWorker(Nth,mol,iso= 0.002,res=10){
+function generateOrbitalsWorker(Nth,mol,iso= 0.002,res=12){
     updateProgress(0);
     document.getElementById("progressbar").className = "meter";
     removeSurface();

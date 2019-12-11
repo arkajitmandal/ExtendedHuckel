@@ -89,7 +89,7 @@ function box(Mol){
     for (var i =1;i<Mol.atoms.length;i++){
         e = Math.max(e,  Mol.atoms[i].radius);
     }
-    e *= 5;
+    e *= 8;
     return [[Xm,Ym,Zm],[Xmax*f +e,Ymax*f + e,Zmax*f + e],[Xmin*f - e,Ymin*f - e,Zmin*f - e]];
 }
 
