@@ -93,6 +93,23 @@ function box(Mol){
     return [[Xm,Ym,Zm],[Xmax*f +e,Ymax*f + e,Zmax*f + e],[Xmin*f - e,Ymin*f - e,Zmin*f - e]];
 }
 
+
+function moProb(Mol,Nth,x,y,z){
+    let p =[];
+    let MOs = Mol.MOs;
+    let AOs = Mol.AOs;
+    for (var k =0;k<AOs.length;k++){
+        p.push(aoProb(x,y,z,AOs[k][0]));
+    }
+    // Now calculate for a specific Nth MO
+    P = 0.0 
+    for (var k =0;k<MOs.length;k++){
+        P += MOs[k][Nth] * p[k];
+    }
+    return P;
+}
+
+
 // sample density of Nth MO of Molecule
 async function sampleDensity(Mol,Nth,points =1000){
     var prgwidth = 0;

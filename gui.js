@@ -60,6 +60,7 @@ window.onload = init;
 
 var sphere=[];
 var density = [];
+var surfaces = [];
 function showatom(a,b,c,d,col = 0xcd3333){
 
     var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
@@ -87,6 +88,7 @@ function removeAtoms(){
 function showatoms(){
     removeAtoms();
     removeDensity();
+    removeSurface();
     let A = 1.889725989;
     var xyzText = document.getElementById("xyzText").value;
     xyzData = xyzText.split("\n");
@@ -137,7 +139,7 @@ function stop(){
 
 async function Calculate(){
     try{worker.terminate();}catch(err){console.log("Starting calculation")}
-    document.getElementById("progressbar").className = "meter"
+    document.getElementById("progressbar").className = "meter";
     GlobalJob = 0;
     var waitTime = 100;
     let A = 1.889725989; // Convering to Atomic Units
@@ -189,7 +191,7 @@ async function Calculate(){
                 updateProgress(100);
                 document.getElementById("progressbar").className = "meterdone";
                 mol = msg.mol;
-                //worker.terminate();
+                worker.terminate();
                 // Show results
                 document.getElementById("energy").style.display = "block";
                 document.getElementById("Answers").style.display = "block";
@@ -224,8 +226,8 @@ async function Calculate(){
                     // set Vnn = 0.0 
                     //mol.Vnn = 0.0 ;
 
-                    ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'sampleDensity(mol,"+ 
-                            ith.toString()+ ")'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString(); 
+                    ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
+                            ith.toString()+ ",mol,iso= 0.004,res=12)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString(); 
                             +  homolumo+ " </a> </li>";
                 }
                 ansEl +=  "</ul>"
@@ -350,3 +352,108 @@ function removeDensity(){
     density = [];
 }
 
+
+
+function removeSurface(){
+    for (var i=0;i<surfaces.length;i=i+1){
+        scene.remove(surfaces[i]);
+    }
+    surfaces = [];
+}
+
+
+function addTriangle(v1,v2,v3,boundMid,col){
+    let Xm = boundMid[0];
+    let Ym = boundMid[1];
+    let Zm = boundMid[2];
+    var geom = new THREE.Geometry();
+    var v1 = new THREE.Vector3(v1[0]-Xm,v1[1]-Ym,v1[2]-Zm);
+    var v2 = new THREE.Vector3(v2[0]-Xm,v2[1]-Ym,v2[2]-Zm);
+    var v3 = new THREE.Vector3(v3[0]-Xm,v3[1]-Ym,v3[2]-Zm);
+    var triangle = new THREE.Triangle(v1, v2, v3);
+    var normal = triangle.normal();
+    geom.vertices.push(triangle.a);
+    geom.vertices.push(triangle.b);
+    geom.vertices.push(triangle.c);
+    var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
+    geom.faces.push(new THREE.Face3(0, 1, 2, normal));
+    var mesh = new THREE.Mesh(geom,material);
+    scene.add(mesh);
+    surfaces.push(mesh);
+}
+
+function showSurface(points,cells,boundMid,col){
+
+    for (var i =0; i<cells.length; i++){
+        var corner = cells[i];
+        addTriangle(points[corner[0]],points[corner[1]],points[corner[2]],boundMid,col);
+    }
+    return 0;
+}
+
+function generateOrbitals(Nth,mol,iso= -0.001,res=10){
+    removeSurface();
+    let bound = box(mol);
+    //console.log(bound);
+    let Dat1 = marchingCubes([res,res,res],
+        function(x,y,z) {
+          return moProb(mol,Nth,x,y,z) - iso;
+        }, [bound[2],bound[1]]);
+    //console.log(Dat);
+    showSurface(Dat1.positions,Dat1.cells,bound[0],0x00CDFF);
+    let Dat2 = marchingCubes([res,res,res],
+        function(x,y,z) {
+          return moProb(mol,Nth,x,y,z) + iso;
+        }, [bound[2],bound[1]]);
+    showSurface(Dat2.positions,Dat2.cells,bound[0],0xCF000F);
+}
+
+function generateOrbitalsWorker(Nth,mol,iso= 0.002,res=10){
+    updateProgress(0);
+    document.getElementById("progressbar").className = "meter";
+    removeSurface();
+    let bound = box(mol);
+    //console.log(bound);
+    var oldmsg = "Creating Surfaces..."
+    owork1= new Worker('marchingWorker.js');
+    owork1.postMessage({"cmd":"Start","mol":mol,'Nth':Nth,'iso':iso,'res':res,'bound':bound});
+    var prg1 = 0;
+    var prg2 = 0;
+    var donwork = 0;
+    owork1.onmessage = function (event) {
+        let msg =  event.data;
+        if (msg.prg !==undefined){
+            prg1 = msg.prg;
+            updateProgress(prg1+prg2);
+            if (msg.msg !==undefined){status(msg.msg);oldmsg=msg.msg;}
+            else{status(oldmsg);}
+        } 
+        if (msg.cmd == 'done'){
+            let Dat = msg.Dat;
+            showSurface(Dat.positions,Dat.cells,bound[0],0x00CDFF);
+            owork1.terminate();
+            donwork +=1;
+            if (donwork==2){updateProgress(100);status("done!");document.getElementById("progressbar").className = "meterdone";}
+        }
+    }
+
+    owork2= new Worker('marchingWorker.js');
+    owork2.postMessage({"cmd":"Start","mol":mol,'Nth':Nth,'iso':-iso,'res':res,'bound':bound});
+    owork2.onmessage = function (event) {
+        let msg =  event.data;
+        if (msg.prg !==undefined){
+            prg2 = msg.prg;
+            updateProgress(prg1+prg2);
+            if (msg.msg !==undefined){status(msg.msg);oldmsg=msg.msg;}
+            else{status(oldmsg);}
+        } 
+        if (msg.cmd == 'done'){
+            let Dat = msg.Dat;
+            showSurface(Dat.positions,Dat.cells,bound[0],0xCF000F);
+            owork2.terminate();
+            donwork +=1;
+            if (donwork==2){updateProgress(100);status("done!");document.getElementById("progressbar").className = "meterdone";}
+        }
+    }
+    
+}
