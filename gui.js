@@ -50,6 +50,8 @@ document.getElementById('CanDivEl').innerHTML="<h2>Your Browser Does not support
   };
 
   requestAnimationFrame(render);
+  //try{showatoms();}
+  //catch(err){}
 }
   
 window.onload = init;
@@ -178,59 +180,17 @@ async function Calculate(){
                 updateProgress(msg.prg);
                 if (msg.msg !==undefined){status(msg.msg);oldmsg=msg.msg;}
                 else{status(oldmsg);}
-                if (msg.cmd!='done'){
-                    if  (document.getElementById("stop").style.display == "none"){
-                        document.getElementById("stop").style.display = "block";
-                    }
-                }
             } 
             if (msg.cmd === 'done'){
-                document.getElementById("stop").style.display = "none";
                 updateProgress(100);
                 document.getElementById("progressbar").className = "meterdone";
                 mol = msg.mol;
                 worker.terminate();
                 // Show results
-                document.getElementById("energy").style.display = "block";
-                document.getElementById("Answers").style.display = "block";
-                    // Construct Answer Element
-                let ansEl = "<ul>"
-                let totalEl = mol.totalElectrons; 
-                var occ ; // occupency 
-                occ = occupy(mol);
-                for (var ith=0;ith<mol.Eig.length;ith++){
-                    let  homolumo = "";
-                    let el = "";
-                    // Filled
-                    if (occ[ith]==2){
-                        el = "&uarr;&darr;&nbsp;";
-                    } 
-                    // singly filled
-                    else if (occ[ith]==1){
-                        el = "&uarr;&nbsp;&nbsp;";
-                    }
-                    // HOMO  
-                    if (occ[ith]==2 && occ[ith+1]==0 ){
-                        homolumo = "&nbsp;&nbsp;HOMO";
-                    }
-                    // LUMO
-                    else if (occ[ith]==0 && occ[ith-1]==2 ){
-                        homolumo = "&nbsp;&nbsp;LUMO";
-                    }
-                    // SOMO
-                    else if (occ[ith]==1){
-                        homolumo = "&nbsp;&nbsp;SOMO";
-                    }
-                    // set Vnn = 0.0 
-                    //mol.Vnn = 0.0 ;
-
-                    ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
-                            ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString(); 
-                            +  homolumo+ " </a> </li>";
-                }
-                ansEl +=  "</ul>"
-
-                document.getElementById("Answers").innerHTML = ansEl;
+                thisTab(2);
+                // Construct Answer Element
+                ansEl =    formatAns(mol)
+                document.getElementById("tab2").innerHTML = ansEl;
             }
         }
     }
@@ -454,4 +414,46 @@ function generateOrbitalsWorker(Nth,mol,iso= 0.002,res=12){
         }
     }
     
+}
+
+
+
+
+function formatAns(mol) {
+    let ansEl = "<ul>"
+    let totalEl = mol.totalElectrons; 
+    var occ ; // occupency 
+    occ = occupy(mol);
+    for (var ith=0;ith<mol.Eig.length;ith++){
+        let  homolumo = "";
+        let el = "";
+        // Filled
+        if (occ[ith]==2){
+            el = "&uarr;&darr;&nbsp;";
+        } 
+        // singly filled
+        else if (occ[ith]==1){
+            el = "&uarr;&nbsp;&nbsp;";
+        }
+        // HOMO  
+        if (occ[ith]==2 && occ[ith+1]==0 ){
+            homolumo = "&nbsp;&nbsp;HOMO";
+        }
+        // LUMO
+        else if (occ[ith]==0 && occ[ith-1]==2 ){
+            homolumo = "&nbsp;&nbsp;LUMO";
+        }
+        // SOMO
+        else if (occ[ith]==1){
+            homolumo = "&nbsp;&nbsp;SOMO";
+        }
+        // set Vnn = 0.0 
+        //mol.Vnn = 0.0 ;
+
+        ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
+                ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString() 
+                +  homolumo+ " </a> </li>";
+    }
+    ansEl +=  "</ul>"
+    return ansEl;
 }

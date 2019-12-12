@@ -30,7 +30,7 @@ img {
     background-color:#6c5ce7;
     color: white;
     text-align: right;
-    font-size: 0.5rem;
+    font-size: small;
     font-family: 'Courier New', Courier Bold, monospace;  
     display: grid;
     grid-template-columns: 1fr 2fr 0.2fr ; 
@@ -40,6 +40,10 @@ img {
 #upPanel {
     display: grid;
     grid-template-columns: repeat(4,1fr); 
+}
+
+#upPanel > div {
+    cursor: pointer;
 }
 
 #affiliation {
@@ -103,7 +107,9 @@ textarea{
     width: 90%;
     margin:5% 5% 5% 5%;
     padding: 2%;
-
+    font-size: medium;
+    word-spacing: 1rem;
+    line-height: 1.6rem;
 }
 
 #lowPanel > div {
@@ -144,7 +150,6 @@ textarea{
         grid-template-columns: auto  ;
         grid-template-rows: repeat(4,1fr); 
     }
-    
 }
 
 @media (orientation: portrait) {
@@ -269,7 +274,7 @@ input[type="file"] {
 
 .normalButton, .stopButton{
     font-size: large;
-    margin:5% ;
+    margin:10% ;
     font-family: 'Courier New', Courier Bold, monospace;  
     color: white;
     padding: 0.3rem;
