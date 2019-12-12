@@ -235,14 +235,21 @@ canvas {
     width: 100%;
 }
 
+#tab2 {
+    color: grey;
+    font-size: large;
+    grid-template-rows: 1fr; 
+}
 
 #tab1 {
+    font-family: 'Courier New', Courier Bold, monospace;  
     position: absolute;
     display: grid;
     grid-template-rows: 1fr 5fr; 
 }
 
 #tab2, #tab3, #tab4 {
+    font-family: 'Courier New', Courier Bold, monospace;  
     position: absolute;
     display: none;
 }
@@ -304,3 +311,18 @@ input[type="file"] {
 .stopButton:hover {
     background-color: rgb(184, 68, 77);
 }
+
+li {
+ color:black;
+}
+
+ul {
+    position: absolute;
+    list-style-type: none;
+    margin: 5%;
+}
+
+#energyResults{
+    overflow:scroll;
+}
+

@@ -190,7 +190,7 @@ async function Calculate(){
                 thisTab(2);
                 // Construct Answer Element
                 ansEl =    formatAns(mol)
-                document.getElementById("tab2").innerHTML = ansEl;
+                document.getElementById("energyResults").innerHTML = ansEl;
             }
         }
     }
@@ -426,7 +426,7 @@ function formatAns(mol) {
     occ = occupy(mol);
     for (var ith=0;ith<mol.Eig.length;ith++){
         let  homolumo = "";
-        let el = "";
+        let el = "&nbsp;&nbsp;&nbsp;";
         // Filled
         if (occ[ith]==2){
             el = "&uarr;&darr;&nbsp;";
@@ -449,10 +449,18 @@ function formatAns(mol) {
         }
         // set Vnn = 0.0 
         //mol.Vnn = 0.0 ;
-
-        ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
-                ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString() 
-                +  homolumo+ " </a> </li>";
+        var EiStrLen = 8;
+        var EiStr = (mol.Eig[ith]).toString().substring(0, EiStrLen) ;
+        if (EiStr.length<EiStrLen){
+            for (var k=0;k<(EiStrLen-EiStr.length);k++){
+                EiStr += "&nbsp;"
+            }
+        }
+        ansEl +="<li>"+ el + "&nbsp;&nbsp;&nbsp;&nbsp;" + EiStr +  homolumo+ "</li>";
+        //ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
+        //ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString() 
+        //+  homolumo+ " </a> </li>";
+        
     }
     ansEl +=  "</ul>"
     return ansEl;
