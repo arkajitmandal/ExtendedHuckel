@@ -111,6 +111,12 @@ textarea{
     height:100%;
 }
 
+#controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+}
+
+
 @media screen and (max-width: 600px) {
     .wrapper{
         height: 100%;
@@ -255,5 +261,41 @@ input[type="file"] {
 }
 
 .custom-file-upload:hover {
+    background-color: rgb(184, 68, 77);
+}
+
+
+
+
+.normalButton, .stopButton{
+    font-size: large;
+    margin:5% ;
+    font-family: 'Courier New', Courier Bold, monospace;  
+    color: white;
+    padding: 0.3rem;
+    cursor: pointer;
+    min-height: 40px;
+}
+
+.normalButton {
+    background-color: rgb(81, 155, 224);
+    background-image: url(assets/play.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+.stopButton {
+    background-color: rgb(224, 81, 93);
+    background-image: url(assets/stop.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+
+.normalButton:hover {
+    background-color: rgb(61, 115, 165);
+}
+.stopButton:hover {
     background-color: rgb(184, 68, 77);
 }
