@@ -6,13 +6,14 @@ body {
 
 img {
     max-height: 100%;
+    display: block;
 }
 
 .wrapper{
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: 10fr 2fr 2fr 0.4fr; 
+    grid-template-rows: 13fr 1fr 2fr 0.4fr; 
 }
 
 #main {
@@ -31,6 +32,19 @@ img {
     grid-template-columns: 1fr 2fr 0.2fr ; 
     
 }
+
+#upPanel {
+    display: grid;
+    grid-template-columns: repeat(4,1fr); 
+}
+
+#affiliation {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
 #github {
     padding-right: 10px;
     padding-left: 10px;
@@ -51,23 +65,34 @@ img {
     background-color:#34495e;
 }
 #panel {
-    background-color:white;
+    background-color:#f1f2f6;
     border-left: solid 5px;
     border-left-color: #1c2935;
+    display: grid;
+    grid-template-rows: 1fr 5fr  ; 
 }
 #affiliation{
-    background-color:#f1f2f6;
+    background-color:white;
 }
-#progress {
+#progressbar {
         background-color:#f1f2f6;
 }
+
+.inactiveButton{
+    background-color: white;
+    background-blend-mode: luminosity;
+}
+.activeButton {
+    background-color: #f1f2f6;
+}
+
 
 @media screen and (max-width: 600px) {
     .wrapper{
         height: 100%;
         width: 100%;
         display: grid;
-        grid-template-rows: 15fr 1fr 1fr 0.6fr; 
+        grid-template-rows: 15fr 1fr 1.5fr 0.6fr; 
     }
     #main {
         display: grid;
@@ -76,9 +101,22 @@ img {
         
     }
     #panel {
-        background-color:white;
         border-left: solid 0px;
+        grid-template-rows: auto  ;
+        grid-template-columns: 1fr 5fr; 
     }
+    #affiliation {
+        padding: 0px;
+    }
+    #githublink img {
+        max-height: 40%;
+    }
+    #upPanel {
+        display: grid;
+        grid-template-columns: auto  ;
+        grid-template-rows: repeat(4,1fr); 
+    }
+    
 }
 
 @media (orientation: portrait) {
@@ -86,15 +124,54 @@ img {
         height: 100%;
         width: 100%;
         display: grid;
-        grid-template-rows: 15fr 1fr 1fr 0.4fr; 
+        grid-template-rows: 15fr 1fr 1.5fr 0.6fr; 
     }
     #main {
         display: grid;
         grid-template-columns:auto;
         grid-template-rows: 5fr 5fr; 
+        
     }
     #panel {
-        background-color:white;
         border-left: solid 0px;
+        grid-template-rows: auto  ;
+        grid-template-columns: 1fr 5fr; 
     }
+    #affiliation {
+        padding: 0px;
+    }
+    #githublink img {
+        max-height: 40%;
+    }
+    #upPanel {
+        display: grid;
+        grid-template-columns: auto  ;
+        grid-template-rows: repeat(4,1fr); 
+    }
+}
+
+
+#button1{
+    background-image: url(assets/input.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+#button2{
+    background-image: url(assets/energies.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+#button3{
+    background-image: url(assets/mo.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+#button4{
+    background-image: url(assets/settings.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
 }

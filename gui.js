@@ -10,8 +10,6 @@ function init() {
 
 try{  renderer = new THREE.WebGLRenderer({canvas:canv}); }
 catch(err){
-document.getElementById('allcontgrolss').innerHTML='';
-document.getElementById('allcontgrols').innerHTML='';
 document.getElementById('CanDivEl').innerHTML="<h2>Your Browser Does not support this application. We recommend firefox (latest) from a PC</h2>"}
   renderer.setSize( w, h );
   renderer.setClearColor(new THREE.Color(0x34495e), 1);
