@@ -44,7 +44,7 @@ img {
 
 #affiliation {
     display: grid;
-    grid-template-columns: 5fr 1fr 1fr 1fr 5fr; 
+    grid-template-columns: 5fr 1fr 1fr 1fr; 
 }
 
 
@@ -247,7 +247,13 @@ input[type="file"] {
 .custom-file-upload {
     font-size: medium;
     margin-left:5% ;
-    background-color: rgb(162, 153, 153);
+    background-color: rgb(224, 81, 93);
+    font-family: 'Courier New', Courier Bold, monospace;  
     color: white;
-    padding: 0.2rem;
+    padding: 0.3rem;
+    cursor: pointer;
+}
+
+.custom-file-upload:hover {
+    background-color: rgb(184, 68, 77);
 }
