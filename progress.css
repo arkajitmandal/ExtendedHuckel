@@ -1,5 +1,5 @@
 .meter { 
-    height: 20px;  /* Can be anything */
+    height: 1.6rem;  /* Can be anything */
     position: relative;
     margin: 20px 0 0px 0; /* Just for demo spacing */
     background: #eaeaea;
@@ -109,7 +109,7 @@
 
 
 .meterdone { 
-   height: 20px;  /* Can be anything */
+   height: 1.6rem;  /* Can be anything */
    position: relative;
    margin: 20px 0 0px 0; /* Just for demo spacing */
    background: #eaeaea;
@@ -197,7 +197,7 @@
 
 
 .meternot { 
-   height: 20px;  /* Can be anything */
+   height: 1.6rem;  /* Can be anything */
    position: relative;
    margin: 20px 0 0px 0; /* Just for demo spacing */
    background: #eaeaea;

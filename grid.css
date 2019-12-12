@@ -30,7 +30,7 @@ img {
     background-color:#6c5ce7;
     color: white;
     text-align: right;
-    font-size: 14px;
+    font-size: 0.5rem;
     font-family: 'Courier New', Courier Bold, monospace;  
     display: grid;
     grid-template-columns: 1fr 2fr 0.2fr ; 
@@ -96,10 +96,20 @@ textarea{
     resize: none; 
     overflow-y: scroll; 
     overflow-x: scroll;  
-    background-color: white;
+    background-color:#e1e1e4;
+    position: absolute;
+    border:0px;
+    height: 90%;
+    width: 90%;
+    margin:5% 5% 5% 5%;
+    padding: 2%;
 
 }
 
+#lowPanel > div {
+    width: 100%; 
+    height:100%;
+}
 
 @media screen and (max-width: 600px) {
     .wrapper{
@@ -191,22 +201,53 @@ textarea{
     background-repeat:no-repeat;
     background-position: center center;
     background-size: contain;
+    cursor: pointer;
 }
 #huoGroup{
     background-image: url(assets/huoGroup.png);
     background-repeat:no-repeat;
     background-position: center center;
     background-size: contain;
+    cursor: pointer;
 }
 #NSF{
     background-image: url(assets/NSF.png);
     background-repeat:no-repeat;
     background-position: center center;
     background-size: contain;
+    cursor: pointer;
 }
 
 canvas {
     position: absolute;
     height: 100%;
     width: 100%;
+}
+
+
+#tab1 {
+    position: absolute;
+    display: grid;
+    grid-template-rows: 1fr 5fr; 
+}
+
+#tab2, #tab3, #tab4 {
+    position: absolute;
+    display: none;
+}
+input[type="file"] {
+    display: none;
+}
+
+#input {
+    padding: 5px;
+    margin-top:2rem;
+}
+
+.custom-file-upload {
+    font-size: medium;
+    margin-left:5% ;
+    background-color: rgb(162, 153, 153);
+    color: white;
+    padding: 0.2rem;
 }
