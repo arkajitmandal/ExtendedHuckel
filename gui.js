@@ -189,8 +189,12 @@ async function Calculate(){
                 // Show results
                 thisTab(2);
                 // Construct Answer Element
-                ansEl =    formatAns(mol)
+                var ansEl =    formatAnsE(mol);
                 document.getElementById("energyResults").innerHTML = ansEl;
+                ansEl = formatAnsV(mol);
+                document.getElementById("orbitalResult").innerHTML = ansEl;
+                molNo();
+                moList();
             }
         }
     }
@@ -333,7 +337,18 @@ function addTriangle(v1,v2,v3,boundMid,col){
     geom.vertices.push(triangle.a);
     geom.vertices.push(triangle.b);
     geom.vertices.push(triangle.c);
-    var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
+   
+    var matType = document.getElementById("moStyle").value;
+    if (matType=="transparent"){
+        var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide,transparent: true, opacity: 0.6} );
+    }
+    if (matType=="solid") {
+        var material = new THREE.MeshLambertMaterial( { color: col, side: THREE.DoubleSide} );
+    } 
+    if (matType=="mesh") {
+        var material = new THREE.MeshBasicMaterial({color: col, wireframe: true} );
+    } 
+    
     geom.faces.push(new THREE.Face3(0, 1, 2, normal));
     var mesh = new THREE.Mesh(geom,material);
     scene.add(mesh);
@@ -366,7 +381,13 @@ function generateOrbitals(Nth,mol,iso= -0.001,res=10){
     showSurface(Dat2.positions,Dat2.cells,bound[0],0xCF000F);
 }
 
-function generateOrbitalsWorker(Nth,mol,iso= 0.002,res=12){
+function generateOrbitalsWorker(Nth,mol,iso= 0.002){
+    var resQuality = document.getElementById("resolution").value;
+    var res = 12;
+    if (resQuality=="low"){res = 15}
+    if (resQuality=="medium"){res = 20}
+    if (resQuality=="high"){res = 30}
+
     updateProgress(0);
     document.getElementById("progressbar").className = "meter";
     removeSurface();
@@ -419,13 +440,13 @@ function generateOrbitalsWorker(Nth,mol,iso= 0.002,res=12){
 
 
 
-function formatAns(mol) {
+function formatAnsE(mol) {
     let ansEl = "<ul>"
     let totalEl = mol.totalElectrons; 
     var occ ; // occupency 
     occ = occupy(mol);
     for (var ith=0;ith<mol.Eig.length;ith++){
-        let  homolumo = "";
+        let  homolumo = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
         let el = "&nbsp;&nbsp;&nbsp;";
         // Filled
         if (occ[ith]==2){
@@ -451,12 +472,14 @@ function formatAns(mol) {
         //mol.Vnn = 0.0 ;
         var EiStrLen = 8;
         var EiStr = (mol.Eig[ith]).toString().substring(0, EiStrLen) ;
+        trail = parseInt(EiStrLen-EiStr.length)
         if (EiStr.length<EiStrLen){
-            for (var k=0;k<(EiStrLen-EiStr.length);k++){
+            for (var k=0;k<trail;k++){
                 EiStr += "&nbsp;"
             }
         }
-        ansEl +="<li>"+ el + "&nbsp;&nbsp;&nbsp;&nbsp;" + EiStr +  homolumo+ "</li>";
+        var showMO = "<b class='red' onclick = 'generateOrbitalsWorker("+ ith.toString()+ ",mol,iso= 0.004)'>&nbsp;&nbsp;Show MO</b>";
+        ansEl +="<li>"+ el + "&nbsp;&nbsp;&nbsp;&nbsp;" + EiStr +  homolumo+ showMO +"</li>";
         //ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
         //ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString() 
         //+  homolumo+ " </a> </li>";
@@ -464,4 +487,67 @@ function formatAns(mol) {
     }
     ansEl +=  "</ul>"
     return ansEl;
+}
+
+
+
+function formatAnsV(mol) {
+    var MOs = mol.MOs;
+    var N = mol.MOs.length;
+    let ansEl = "";
+    for (var i=0;i<N;i++){
+        var showMO = "<b class='red' onclick = 'generateOrbitalsWorker("+ i.toString()+ ",mol,iso= 0.004)'>(Show)</b>&nbsp;&nbsp;";
+        ansEl += "<ul id='MOans" + String(i)+ "'>"
+        // ith MO
+        var ci = String(decimals(MOs[0][i],8)) ;
+        var ciLen = 8;
+        var ciStr = (ci.substring(0, ciLen));
+        var trail = parseInt(ciLen-ci.length)
+        if (ciStr.length<ciLen){
+            for (var k=0;k<trail;k++){
+                ciStr += "&nbsp;"
+            }
+        }
+        //var AOstr = "&Phi;<sub></sub>";
+        ansEl += "<li> &Psi;<sub>" + String(i) + "</sub>" + showMO;//+ ciStr +  "</li>";
+        var count =0;
+        for (var ia=0;ia<N;ia++){
+            var space = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+            if (count==0){space = ""}
+            var ci = String(decimals(MOs[ia][i],8)) ;
+            if (ci !=="0"){
+                var ciLen = 8;
+                var ciStr = (ci.substring(0, ciLen));
+                var trail = parseInt(ciLen-ci.length)
+                if (ciStr.length<ciLen){
+                    for (var k=0;k<trail;k++){
+                        ciStr += "&nbsp;"
+                    }
+                }
+                var atomSym = mol.atoms[mol.AOs[ia][1]].S;
+                var atomNum = String(mol.AOs[ia][1]+1) ; 
+                var aoNum =  String(mol.AOs[ia][0][0]);
+                var aoSymN = mol.AOs[ia][0][1];
+                var aoSyms = ["s","p","d","f"];
+                var aoSym  = aoSyms[aoSymN];
+                var mSym = "";
+                if (aoSym=="p"){ 
+                    let xyz = ["y","z","x"]
+                    mSym = String(xyz[mol.AOs[ia][0][2]+1]); 
+                }
+                var AOstr = "&Phi;<sub>" + aoNum + aoSym + mSym +"</sub>(" + atomNum + atomSym + ")";
+                ansEl += space +  " = " + ciStr +" " + AOstr + "</li><li>";
+                count++
+            }
+        }
+        ansEl += "</li></ul>"
+    }
+    return ansEl;
+}
+
+
+function decimals(n,points=8){
+    var val =  parseInt(n * Math.pow(10,points+1))/Math.pow(10,points+1);
+    if (Math.abs(val)<Math.pow(10,-points)){return "0"}
+    else {return String(val);}
 }

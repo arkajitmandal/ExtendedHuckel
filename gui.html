@@ -25,24 +25,69 @@
                 </div>
                 <div id='panel'>
                     <div id="upPanel">
-                        <div class="activeButton" id="button1" onclick="thisTab(1);"></div>
-                        <div class="inactiveButton" id="button2" onclick="thisTab(2);"></div>
-                        <div class="inactiveButton" id="button3" onclick="thisTab(3);"></div>
-                        <div class="inactiveButton" id="button4" onclick="thisTab(4);"></div>
+                        <div class="activeButton" id="button1" onclick="thisTab(1);" onmouseover="status('Molecular geomtry')" onmouseout="status('')"></div>
+                        <div class="inactiveButton" id="button2" onclick="thisTab(2);" onmouseover="status('Outputs')" onmouseout="status('')"></div>
+                        <div class="inactiveButton" id="button3" onclick="thisTab(3);" onmouseover="status('Settings')" onmouseout="status('')"></div>
+                        <div class="inactiveButton" id="button4" onclick="thisTab(4);" onmouseover="status('Help')" onmouseout="status('')"></div>
                     </div>
                     <div id="lowPanel">
-                        <div id="tab1">
+                        <div id="tab1" >
                             <div id="input">
                                 
-                                <label for="openfile" class="custom-file-upload">
+                                <label for="openfile" class="custom-file-upload" onmouseover="status('upload a .xyz file')" onmouseout="status('')">
                                         <input type="file" id="openfile" />
                                         upload .xyz
                                 </label>
                             </div>
-                            <div><textarea placeholder="H 1.0 1.0 1.0" id="xyzText" name="text"  ></textarea> </div>
+                            <div><textarea placeholder="H 1.0 1.0 1.0" id="xyzText" name="text"  onmouseover="status('write xyz coordinates')" onmouseout="status('')"></textarea> </div>
                         </div>
-                        <div id="tab2"> <div id ="energyResults"></br > Nothing to show here! </br >Perform a calculation first. </div></div>
-                        <div id="tab3">3</div>
+                        <div id="tab2"> 
+                            <div id ="controlResults">
+                                <div id="blankRow4"></div>
+                                    <div></div>
+                                    <div>
+                                        <select id="resultType" onchange="resultType()">
+                                            <option value="E" selected>MO Energies</option>
+                                            <option value="V">MO Wavefunction</option>
+                                          </select>
+                                    </div>
+                                    <div id='moType'>
+                                        <select id="moNum" onchange="molNo();">
+                                            <option value="1" selected>--</option>
+                                          </select>
+                                    </div>
+                                    <div></div>
+                                <div id="blankRow4"></div>
+                            </div>
+                            <div id ="energyResults">     
+                                </br >  &nbsp; &nbsp;Nothing to show here! 
+                                </br > &nbsp; &nbsp;Perform a calculation first.
+                            </div>
+                            <div id ="orbitalResult">
+                                </br >  &nbsp; &nbsp;Nothing to show here! 
+                                </br > &nbsp; &nbsp;Perform a calculation first.
+                            </div>
+                        </div>
+                        <div id="tab3">
+                            <div></div><div></div>
+                            <div></div>
+                            <div>                                 
+                                <select id="resolution" >
+                                <option value="low" selected>low resolution</option>
+                                <option value="medium"> medium resolution</option>
+                                <option value="high"> high resolution</option>
+                              </select>
+                            </div>
+                            <div></div>
+                            <div >
+                                <select id="moStyle" >
+                                    <option value="transparent" selected>transparent</option>
+                                    <option value="solid"> solid</option>
+                                    <option value="mesh"> mesh</option>
+                                  </select>
+                            </div>
+                            <div></div>
+                        </div>
                         <div id="tab4">4</div>    
                     </div>
                 </div>

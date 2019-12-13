@@ -189,19 +189,19 @@ textarea{
     background-size: contain;
 }
 #button2{
-    background-image: url(assets/energies.png);
-    background-repeat:no-repeat;
-    background-position: center center;
-    background-size: contain;
-}
-#button3{
     background-image: url(assets/mo.png);
     background-repeat:no-repeat;
     background-position: center center;
     background-size: contain;
 }
-#button4{
+#button3{
     background-image: url(assets/settings.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+#button4{
+    background-image: url(assets/help.png);
     background-repeat:no-repeat;
     background-position: center center;
     background-size: contain;
@@ -238,7 +238,7 @@ canvas {
 #tab2 {
     color: grey;
     font-size: large;
-    grid-template-rows: 1fr; 
+    grid-template-rows: 1fr 4fr; 
 }
 
 #tab1 {
@@ -246,6 +246,11 @@ canvas {
     position: absolute;
     display: grid;
     grid-template-rows: 1fr 5fr; 
+}
+
+#tab3 {
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: repeat(10,1fr); 
 }
 
 #tab2, #tab3, #tab4 {
@@ -319,10 +324,39 @@ li {
 ul {
     position: absolute;
     list-style-type: none;
-    margin: 5%;
 }
 
-#energyResults{
+#energyResults , #orbitalResult{
+    display: block;
     overflow:scroll;
+}
+
+#orbitalResult{
+    display: none;
+}
+
+.red  {
+    color:#fa8181;
+    cursor: pointer;
+}
+
+#controlResults {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 1fr 0.2fr; 
+    grid-template-rows: 0.5fr 1fr 0.1fr; 
+}
+
+#blankRow4 {
+    grid-column-start: 1; 
+    grid-column-end: 5; 
+}
+
+select {
+    background: white;
+    outline: none;
+}
+
+#moType {
+    display: none;
 }
 
