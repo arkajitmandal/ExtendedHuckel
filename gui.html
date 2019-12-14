@@ -69,24 +69,27 @@
                             </div>
                         </div>
                         <div id="tab3">
-                            <div></div><div></div>
+                            <div class="column" id='left'></div>
                             <div></div>
-                            <div>                                 
+                            <div>Wolfsberg-Helmholtz constant (K): <input type="text" value="1.75" id="Kconstant"> </div>
+                            <div> Resolution of orbitals:                                 
                                 <select id="resolution" >
                                 <option value="low" selected>low resolution</option>
                                 <option value="medium"> medium resolution</option>
                                 <option value="high"> high resolution</option>
                               </select>
                             </div>
-                            <div></div>
                             <div >
+                                How the orbitals look:
                                 <select id="moStyle" >
                                     <option value="transparent" selected>transparent</option>
                                     <option value="solid"> solid</option>
                                     <option value="mesh"> mesh</option>
                                   </select>
                             </div>
-                            <div></div>
+                            <div> Iso value for the orbitals: <input type="text" value="0.004" id="isovalue"> </div>
+                            <div> Predict and Show bonds: <input type="checkbox" /> </div>
+                            <div class="column" id='right'></div>
                         </div>
                         <div id="tab4">4</div>    
                     </div>

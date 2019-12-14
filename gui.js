@@ -195,6 +195,8 @@ async function Calculate(){
                 document.getElementById("orbitalResult").innerHTML = ansEl;
                 molNo();
                 moList();
+                document.getElementById("resultType").value = "E";
+                resultType();
             }
         }
     }
@@ -478,7 +480,8 @@ function formatAnsE(mol) {
                 EiStr += "&nbsp;"
             }
         }
-        var showMO = "<b class='red' onclick = 'generateOrbitalsWorker("+ ith.toString()+ ",mol,iso= 0.004)'>&nbsp;&nbsp;Show MO</b>";
+        var iso = document.getElementById("isovalue").value;
+        var showMO = "<b class='red' onclick = 'generateOrbitalsWorker("+ ith.toString()+ ",mol,iso="+ iso + ")'>&nbsp;&nbsp;Show MO</b>";
         ansEl +="<li>"+ el + "&nbsp;&nbsp;&nbsp;&nbsp;" + EiStr +  homolumo+ showMO +"</li>";
         //ansEl +="<li><a href=\"#\"> "+ el +"&nbsp;<b style=\"color:red\" onclick = 'generateOrbitalsWorker("+ 
         //ith.toString()+ ",mol,iso= 0.004,res=15)'>Show &Psi;</b>&nbsp;&nbsp;&nbsp;&nbsp;" +  (mol.Eig[ith]).toString() 
@@ -495,8 +498,9 @@ function formatAnsV(mol) {
     var MOs = mol.MOs;
     var N = mol.MOs.length;
     let ansEl = "";
+    var iso = document.getElementById("isovalue").value;
     for (var i=0;i<N;i++){
-        var showMO = "<b class='red' onclick = 'generateOrbitalsWorker("+ i.toString()+ ",mol,iso= 0.004)'>(Show)</b>&nbsp;&nbsp;";
+        var showMO = "<b class='red' onclick = 'generateOrbitalsWorker("+ i.toString()+ ",mol,iso= "+ iso +")'>(Show)</b>&nbsp;&nbsp;";
         ansEl += "<ul id='MOans" + String(i)+ "'>"
         // ith MO
         var ci = String(decimals(MOs[0][i],8)) ;
@@ -534,6 +538,10 @@ function formatAnsV(mol) {
                 if (aoSym=="p"){ 
                     let xyz = ["y","z","x"]
                     mSym = String(xyz[mol.AOs[ia][0][2]+1]); 
+                }
+                if (aoSym=="d"){ 
+                    let xyz = ["xy","xz","z2","yz","x2-y2"]
+                    mSym = String(xyz[mol.AOs[ia][0][2]+2]); 
                 }
                 var AOstr = "&Phi;<sub>" + aoNum + aoSym + mSym +"</sub>(" + atomNum + atomSym + ")";
                 ansEl += space +  " = " + ciStr +" " + AOstr + "</li><li>";

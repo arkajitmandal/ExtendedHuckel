@@ -249,8 +249,9 @@ canvas {
 }
 
 #tab3 {
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 0.1fr 1fr 0.1fr; 
     grid-template-rows: repeat(10,1fr); 
+    font-size: small;
 }
 
 #tab2, #tab3, #tab4 {
@@ -360,3 +361,15 @@ select {
     display: none;
 }
 
+.column {
+    grid-row-start: 1; 
+    grid-row-end: 11; 
+}
+.column#left{
+    grid-column-start: 1; 
+    grid-column-end: 2; 
+}
+.column#right{
+    grid-column-start: 3; 
+    grid-column-end: 4; 
+}
