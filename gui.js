@@ -131,8 +131,10 @@ function status(msg){
 }
 
 function stop(){
-    worker.terminate();
-    document.getElementById("stop").style.display = "none";
+    try {worker.terminate();} catch (error) {  }
+    try {owork1.terminate();} catch (error) {  }
+    try {owork2.terminate();} catch (error) {  }
+    //document.getElementById("stop").style.display = "none";
     document.getElementById("progressbar").className = "meternot";
     status("Job Cancelled!");
 }
@@ -389,6 +391,7 @@ function generateOrbitalsWorker(Nth,mol,iso= 0.002){
     if (resQuality=="low"){res = 15}
     if (resQuality=="medium"){res = 20}
     if (resQuality=="high"){res = 30}
+    if (resQuality=="veryhigh"){res = 50}
 
     updateProgress(0);
     document.getElementById("progressbar").className = "meter";
