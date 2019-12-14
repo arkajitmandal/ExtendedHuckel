@@ -140,12 +140,16 @@ class molecule {
                         }
                     }
                     else{
-                        let sij11 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
-                        let sij22 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[1][0],zeff2[1][0],r,theta,phi);
-                        let sij12 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[1][0],r,theta,phi);
-                        let sij21 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[1][0],zeff2[0][0],r,theta,phi);
-                        thisSij = sij11 * zeff1[0][1] *zeff2[0][1] + sij12 * zeff1[0][1] *zeff2[1][1] ;
-                        thisSij = thisSij + sij21 * zeff1[1][1] *zeff2[0][1] + sij22 * zeff1[1][1] *zeff2[1][1] ;
+                        if (ao1[1]!=ao2[1]){
+                            let sij11 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[0][0],r,theta,phi);
+                            let sij22 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[1][0],zeff2[1][0],r,theta,phi);
+                            let sij12 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[0][0],zeff2[1][0],r,theta,phi);
+                            let sij21 = mooverlap(n1,l1,m1,n2,l2,m2,zeff1[1][0],zeff2[0][0],r,theta,phi);
+                            thisSij = sij11 * zeff1[0][1] *zeff2[0][1] + sij12 * zeff1[0][1] *zeff2[1][1] ;
+                            thisSij = thisSij + sij21 * zeff1[1][1] *zeff2[0][1] + sij22 * zeff1[1][1] *zeff2[1][1] ;
+                        }else {
+                            thisSij = 0.0;
+                        }
                     }
                     if (isNaN(thisSij)){
                         thisSij = 0.0
