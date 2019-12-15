@@ -310,6 +310,21 @@ input[type="file"] {
     background-size: contain;
 }
 
+.inactiveStart {
+    font-size: large;
+    margin:10% ;
+    font-family: 'Courier New', Courier Bold, monospace;  
+    color: white;
+    padding: 0.3rem;
+    cursor: pointer;
+    min-height: 40px;
+    background-color: rgb(167, 200, 231);
+    background-image: url(assets/play.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
 
 .normalButton:hover {
     background-color: rgb(61, 115, 165);

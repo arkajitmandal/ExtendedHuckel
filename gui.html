@@ -39,7 +39,7 @@
                                         upload .xyz
                                 </label>
                             </div>
-                            <div><textarea placeholder="H 1.0 1.0 1.0" id="xyzText" name="text"  onmouseover="status('write xyz coordinates')" onmouseout="status('')"></textarea> </div>
+                            <div><textarea placeholder="H 1.0 1.0 1.0" id="xyzText" name="text" onkeyup="updateScreen();" onmouseover="status('write xyz coordinates')" onmouseout="status('')"></textarea> </div>
                         </div>
                         <div id="tab2"> 
                             <div id ="controlResults">
@@ -107,10 +107,10 @@
                     </div>
                 </div>
             </div>
-            <div class="meter" id="progressbar"><span style="width: 1%" id="progress"></span></div>
+            <div class="meter" id="progressbar"><span style="width: 0%" id="progress"></span></div>
             <div id='affiliation'>
                 <div id='controls'>
-                    <div class='normalButton' onclick="Calculate();" >  </div>
+                    <div id="StartButton" class='normalButton' onclick="Calculate();" >  </div>
                     <div class='stopButton' onclick="stop();">  </div>
                     <div></div>
                 </div>
@@ -154,6 +154,7 @@
                     console.log("Error Happend!")
                 }
                 showatoms();
+                document.getElementById("StartButton").className = "normalButton";
                 //try{showatoms();}catch(err){}
                 
                 }

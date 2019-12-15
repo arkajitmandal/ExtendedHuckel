@@ -205,6 +205,7 @@ async function Calculate(){
                 moList();
                 document.getElementById("resultType").value = "E";
                 resultType();
+                document.getElementById("StartButton").className = "inactiveStart";
             }
         }
     }
@@ -575,4 +576,13 @@ function decimals(n,points=8){
     var val =  parseInt(n * Math.pow(10,points+1))/Math.pow(10,points+1);
     if (Math.abs(val)<Math.pow(10,-points)){return "0"}
     else {return String(val);}
+}
+
+
+function updateScreen(){
+    //console.log("trying to update")
+    try{
+    showatoms();
+    document.getElementById("StartButton").className = "normalButton";
+    }catch(err){}
 }
