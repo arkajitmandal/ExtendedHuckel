@@ -283,6 +283,14 @@ function colorSize(S){
         // light light blue
         return 0x7efff5
     }
+    else if (S === "Cd"){
+        // light yellow
+        return 0xf1c40f
+    }
+    else if (S === "Se"){
+        // light yellow
+        return 0xf39c12
+    }
     else {
     return 0xcd3333
     
