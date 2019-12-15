@@ -48,7 +48,7 @@ class atom {
 }
 
 class molecule {
-    constructor(atoms){
+    constructor(atoms,charge=0){
         this.atoms = atoms;
         // Compute Vnn (Nucler - Nuclear repulsion)
         //this.Vnn = Vnn(atoms);
@@ -68,7 +68,7 @@ class molecule {
         for (var i=0;i<this.atoms.length;i++){
             totalElec+=this.atoms[i].valenceElectrons;
         }
-        this.totalElectrons = totalElec;
+        this.totalElectrons = totalElec-charge;
         // K value
         // Wolfsberg-Helmholtz constant
         this.K = 1.75

@@ -158,7 +158,13 @@ async function Calculate(){
     await sleep(waitTime);
     
     // make molecule
-    mol = new molecule(allAtoms);
+    let charge = 0;
+    try {
+        charge = parseInt(document.getElementById("moleculeCharge").value);
+    } catch (error) {
+        
+    }
+    mol = new molecule(allAtoms,charge);
     updateProgress(3);
 
     //worker.postMessage({"cmd":"Start","mol":mol,"conv":conv})
