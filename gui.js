@@ -201,11 +201,11 @@ async function Calculate(){
                 document.getElementById("energyResults").innerHTML = ansEl;
                 ansEl = formatAnsV(mol);
                 document.getElementById("orbitalResult").innerHTML = ansEl;
+                document.getElementById("StartButton").className = "inactiveStart";
                 molNo();
                 moList();
                 document.getElementById("resultType").value = "E";
-                resultType();
-                document.getElementById("StartButton").className = "inactiveStart";
+                resultType("E");
             }
         }
     }

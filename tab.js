@@ -7,8 +7,10 @@ function thisTab(i){
     document.getElementById("tab"+String(i)).style.display="grid";
 }
 
-function resultType(){
-    var typeResult =  document.getElementById("resultType").value;
+function resultType(inp=false){
+    if (inp==false){var typeResult =  document.getElementById("resultType").value;}
+    else {typeResult = inp}
+    
     if (typeResult=="V"){
         document.getElementById("energyResults").style.display="none";
         document.getElementById("moType").style.display="block";
