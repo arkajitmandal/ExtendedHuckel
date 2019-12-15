@@ -263,8 +263,8 @@ var sqMat= function(Mat,convergence=1E-7,bar={'start':0,'end':20}){
 
 
 function genDiag(Hij,Sij, convergence=1E-7,bar={'start':0,'end':90}){
-    Hij = numeric.clone(Hij);
-    Sij = numeric.clone(Sij);
+    //Hij = numeric.clone(Hij);
+    //Sij = numeric.clone(Sij);
     // progress bar
     bar.end = bar.end/2 ;
     // finding sqrt of overlap
@@ -292,7 +292,7 @@ function main(mol){
     //console.log(invSxH);
     postMessage({'msg':'diagonalizing...','prg':10});
     // Final Diagonalization
-    let Out = genDiag(mol.Hij,mol.Sij, 1E-9, {'start':10,'end':95});
+    let Out = genDiag(numeric.clone(mol.Hij),numeric.clone(mol.Sij), 1E-9, {'start':10,'end':95});
     postMessage({'msg':'Diagonalization Done','prg':98});
     let E = Out[0];
     let Psi = Out[1];

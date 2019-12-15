@@ -1,0 +1,84 @@
+<html>
+    <head>
+            <script type="text/javascript" src="Lib/three.js"></script>
+            <script type="text/javascript" src="Lib/numeric-1.2.6.js"></script>
+            <script type="text/javascript" src="Lib/OrbitControls.js"></script>
+            <script type="text/javascript" src="gui.js"></script>
+            <script type="text/javascript" src="atom.js"></script>
+            <script type="text/javascript" src="zEff.js"></script>
+            <script type="text/javascript" src="MO.js"></script>
+            <script type="text/javascript" src="wavefunction.js"></script>
+            <script type="text/javascript" src="occupation.js"></script>
+            <script type="text/javascript" src="orthonormalization.js"></script>
+            <link rel="stylesheet" type="text/css" href="input.css?x=234">
+            <link rel="stylesheet" type="text/css" href="progress.css">
+    </head>
+
+    <body>
+
+
+            <div id='CanDivEl' >  
+                <canvas style="width:60%;height:50%;border-radius: 10px;margin:10px;float: left;"></canvas>
+                
+                    <form id="paper" method="get" action="">            
+                        <textarea placeholder="H 1.0 1.0 1.0" id="xyzText" name="text" rows="8" style="overflow: hidden; word-wrap: break-word; resize: none; height: 260px; overflow-y: scroll; overflow-x: scroll;margin:20px;width:30% ;   background-color: #f1f1f1;border-radius: 5px;    padding: 7px;"></textarea>  
+                            <br>       
+                    </form>
+                  <!-- <span> <a class="NormalButton" onclick=" showatoms()"> Show </a></span> -->
+                  <span> <input type="file" id="openfile" /></span>
+                   <span> <a class="NormalButton" onclick=" Calculate()" style= "width:100px;"> Calculate </a></span>
+
+            </div>
+
+            <br>
+            <br>
+            <div class="meter" id="progressbar" style="clear: both;">
+                <span style="width: 0%" id="progress"></span>
+            </div>
+
+            <div id = "status" style="color:grey;text-align: center;"></div>
+            <div id = "stop" style="text-align: center;display:none" >
+                <a onclick='stop();' style='color:rgb(206, 42, 78);text-decoration:none' href="#">&#9447</a>
+            </div>
+            <br>
+            <h2  id = "energy" style="display:none;margin:20px;">Energy (eV)</h2>
+            <div id ="Answers" style="clear:both;margin:20px;height:100px;overflow-x:scroll;background-color: #f1f1f1;
+            padding: 5px;">
+                    
+
+            </div>
+
+            <script type="text/javascript" >
+                document.getElementById("openfile").addEventListener("change", function(){
+
+                var fr = new FileReader();
+                fr.onload = function() {
+                filelines = this.result.split("\n");
+                for (var j=0;j<filelines.length;j++){
+                    filelines[j] = filelines[j].replace(/  +/g, ' ');
+                    //console.log(filelines)
+                }
+                let N = parseInt(filelines[0])
+                let xyzText = filelines.slice(2,2+N).join("\n");
+
+                document.getElementById("xyzText").value =xyzText;
+                try{
+                    removeAtoms();
+                    removeDensity();
+                    }
+                catch(err){
+                    console.log("Error Happend!")
+                }
+                showatoms();
+                }
+
+                fr.readAsText(this.files[0]);
+                }
+
+                )
+            </script>
+            <img src="logo.jpg" width="250">
+    </body>
+
+
+</html>

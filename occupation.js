@@ -32,6 +32,7 @@ function occupy(mol,pE = 0.02){
             return false;
         }
     }
+    mol.econfig = econfig;
     return econfig;
 }
 //get LUMO
