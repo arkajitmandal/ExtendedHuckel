@@ -72,6 +72,11 @@ class molecule {
         // K value
         // Wolfsberg-Helmholtz constant
         this.K = 1.75
+        try {
+            this.K = document.getElementById("Kconstant").value;
+        } catch (error) {
+            this.K = 1.75
+        }
         // Overlap matrix
         // initialize Sij
         let Sij =  new Array(N);
