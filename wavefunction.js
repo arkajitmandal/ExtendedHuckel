@@ -90,7 +90,7 @@ function box(Mol){
         e = Math.max(e,  Mol.atoms[i].radius);
     }
     e *= 2;
-    e += 3.5;
+    e += 4;
     return [[Xm,Ym,Zm],[Xmax*f +e ,Ymax*f + e,Zmax*f + e],[Xmin*f - e,Ymin*f - e,Zmin*f - e]];
 }
 

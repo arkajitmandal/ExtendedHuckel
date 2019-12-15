@@ -263,8 +263,8 @@ var sqMat= function(Mat,convergence=1E-7,bar={'start':0,'end':20}){
 
 
 function genDiag(Hij,Sij, convergence=1E-7,bar={'start':0,'end':90}){
-    //Hij = numeric.clone(Hij);
-    //Sij = numeric.clone(Sij);
+    Hij = numeric.clone(Hij);
+    Sij = numeric.clone(Sij);
     // progress bar
     bar.end = bar.end/2 ;
     // finding sqrt of overlap
