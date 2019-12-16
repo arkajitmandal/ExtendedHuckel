@@ -7,7 +7,7 @@ function getCharge(mol){
         //for each atom
         let icharge = 0
         for (iAO=0;iAO<mol.N;iAO++){
-            if (mol.AO[iAO][1]==iatom){
+            if (mol.AOs[iAO][1]==iatom){
             // for all atomic orbitals
                 for (iMO=0;iMO<mol.N;iMO++){
                     if (mol.econfig[iMO]>0){
@@ -16,6 +16,8 @@ function getCharge(mol){
                 }
             }
         }
+        charge[iatom] = mol.atoms[iatom].valenceElectrons - icharge;
     }
-
+    mol.charge = charge;
+    return charge
 }
