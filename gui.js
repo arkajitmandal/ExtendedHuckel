@@ -386,6 +386,8 @@ function generateOrbitals(Nth, mol, iso = -0.001, res = 10) {
 }
 
 function generateOrbitalsWorker(Nth, mol, iso = 0.002) {
+    //overridding any iso value by input
+    iso = document.getElementById("isovalue").value;
     var resQuality = document.getElementById("resolution").value;
     var res = 12;
     if (resQuality == "low") { res = 15 }
