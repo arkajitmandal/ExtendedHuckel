@@ -62,6 +62,7 @@ window.onload = init;
 var sphere = [];
 var density = [];
 var surfaces = [];
+var select = [];
 
 function showatom(a, b, c, d, col = 0xcd3333) {
 
@@ -89,6 +90,7 @@ function render() {
 
 
 function showatoms() {
+    removeSelect();
     removeAtoms();
     removeDensity();
     removeSurface();
@@ -602,4 +604,36 @@ function getSelectedXYZ() {
     //let X, Y, Z;
     //[X, Y, Z] = CenterOfMass(xyzData);
     return 0
+}
+
+
+
+function showSelectedAtoms() {
+    removeSelect();
+    let selXYZ = getSelectedXYZ();
+    let A = 1.889725989;
+    [X, Y, Z] = CenterOfMass(xyzData);
+    for (var i = 0; i < selXYZ.length; i++) {
+        let xyz = selXYZ[i].split(/(\s+)/).filter(function(e) { return e.trim().length > 0; });
+        let rad = getRadius(xyz[0], atomRadius);
+        //console.log((parseFloat(xyz[1])-X)*A);
+        showSelectedAtom((parseFloat(xyz[1]) - X) * A, (parseFloat(xyz[2]) - Y) * A, (parseFloat(xyz[3]) - Z) * A, rad * 2);
+    }
+}
+
+
+function showSelectedAtom(x, y, z, r) {
+    var material = new THREE.MeshLambertMaterial({ color: 0xbdc3c7, side: THREE.DoubleSide, transparent: true, opacity: 0.2 });
+    select.push(new THREE.Mesh(new THREE.SphereGeometry(r, 20, 20), material));
+    select[select.length - 1].overdraw = true;
+    select[select.length - 1].position.set(x, y, z);
+    scene.add(select[select.length - 1]);
+}
+
+
+function removeSelect() {
+    for (var i = 0; i < select.length; i = i + 1) {
+        scene.remove(select[i]);
+    }
+    select = [];
 }
