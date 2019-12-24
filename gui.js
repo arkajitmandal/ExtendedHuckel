@@ -584,3 +584,22 @@ function updateScreen() {
         document.getElementById("StartButton").className = "normalButton";
     } catch (err) {}
 }
+
+function getSelectedXYZ() {
+    var s1 = document.getElementById("xyzText").selectionStart;
+    var s2 = document.getElementById("xyzText").selectionEnd;
+    if (s1 !== s2) {
+        var xyzText = document.getElementById("xyzText").value;
+        let t1 = xyzText.substr(0, s1);
+        let t2 = xyzText.substr(0, s2);
+        let l1 = (t1.match(/\n/g) || []).length;
+        let l2 = (t2.match(/\n/g) || []).length;
+        let sel = xyzData.slice(l1, l2 + 1);
+        return sel
+    }
+
+    //xyzData = xyzText.split("\n");
+    //let X, Y, Z;
+    //[X, Y, Z] = CenterOfMass(xyzData);
+    return 0
+}
