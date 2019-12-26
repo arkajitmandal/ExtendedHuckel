@@ -1,4 +1,4 @@
-// get the molecule at n1 * v1 + n2 * v2 + n3 * v3 
+// get the molecule at n1 * v1 + n2 * v2 + n3 * v3 (unit cell = n1, n2, n3)
 // nn = [n1,n2,n3] is integers that define the unit cell
 // vv = [v1,v2,v3] is lattice vectors 
 function moveMol(atoms, nn, vv) {
