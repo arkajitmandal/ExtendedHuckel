@@ -11,6 +11,8 @@ function moveMol(atoms, nn, vv) {
             let x = nn[0] * vx + atoms[iatom].x;
             let y = nn[0] * vy + atoms[iatom].y;
             let z = nn[0] * vz + atoms[iatom].z;
+            movedAtoms.push(new atom(atoms[iatom].S, x, y, z));
         }
     }
+    return movedAtoms;
 }
