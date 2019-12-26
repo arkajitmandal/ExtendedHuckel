@@ -160,7 +160,7 @@ async function Calculate() {
         allAtoms.push(new atom(xyz[0], parseFloat(xyz[1]) * A, parseFloat(xyz[2]) * A, parseFloat(xyz[3]) * A));
     }
     updateProgress(2);
-    await sleep(waitTime);
+    //await sleep(waitTime);
 
     // make molecule
     let charge = 0;
@@ -174,9 +174,9 @@ async function Calculate() {
 
     //worker.postMessage({"cmd":"Start","mol":mol,"conv":conv})
 
-    await sleep(waitTime)
-        // Diagonalization part write here
-        // Native Diagonalization;
+    //await sleep(waitTime)
+    // Diagonalization part write here
+    // Native Diagonalization;
     if (!(window.Worker)) {
         stop();
         status("Please install a modern browser!");
