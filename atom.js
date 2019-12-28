@@ -243,17 +243,17 @@ function Diagonalization(Hij,Sij){
     //      0    1     2      3     4     5    6        7        8       9        10 
 
     var atomParam = [
-        "H        1      1      1     1     s  -13.600   1.3000   0.0000   1.0000   0.0000",
-        "HE       2      2      1     1     s  -23.400   1.6880   0.0000   1.0000   0.0000",
-        "LI       3      1      1     2     s   -5.400   0.6500   0.0000   1.0000   0.0000",
-        "LI       3      1      1     2     p   -3.500   0.6500   0.0000   1.0000   0.0000",
-        "BE       4      2      1     2     s  -10.000   0.9750   0.0000   1.0000   0.0000",
-        "BE       4      2      1     2     p   -6.000   0.9750   0.0000   1.0000   0.0000",
-        "B        5      3      1     2     s  -15.200   1.3000   0.0000   1.0000   0.0000",
-        "B        5      3      1     2     p   -8.500   1.3000   0.0000   1.0000   0.0000",
-        "C        6      4      1     2     s  -21.400   1.6250   0.0000   1.0000   0.0000",
-        "C        6      4      1     2     p  -11.400   1.6250   0.0000   1.0000   0.0000",
-        "N        7      5      1     2     s  -26.000   1.9500   0.0000   1.0000   0.0000",
+        "H        1      1      1     1     s  -13.6   1.3   0.0   1.0   0.0", // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/H.htm
+        "HE       2      2      1     1     s  -23.4   1.688   0.0   1.0   0.0",  // https://gitlab.com/aceteam.kaist/ACE-Molecule/blob/f88000112863d61e4c74997d8f81238736f078ef/eht_params.dat ! must be changed
+        "LI       3      1      1     2     s   -5.4   0.65    0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/Li.htm
+        "LI       3      1      1     2     p   -3.5   0.65    0.0   1.0   0.0",  // same
+        "BE       4      2      1     2     s  -10.0   1.2     0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/Be.htm  first one
+        "BE       4      2      1     2     p   -6.0   1.2     0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/Be.htm  first one
+        "B        5      3      1     2     s  -15.2   1.3     0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/B.htm   first one
+        "B        5      3      1     2     p   -8.2   1.3     0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/B.htm   first one
+        "C        6      4      1     2     s  -21.4   1.625   0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/C.htm   first one
+        "C        6      4      1     2     p  -11.4   1.625   0.0   1.0   0.0",  // http://www.op.titech.ac.jp/lab/mori/EHTB/atoms/C.htm   first one
+        "N        7      5      1     2     s  -26.000   1.9500   0.0000   1.0000   0.0000", // https://gitlab.com/aceteam.kaist/ACE-Molecule/blob/f88000112863d61e4c74997d8f81238736f078ef/eht_params.dat rest
         "N        7      5      1     2     p  -13.400   1.9500   0.0000   1.0000   0.0000",
         "O        8      6      1     2     s  -32.300   2.2750   0.0000   1.0000   0.0000",
         "O        8      6      1     2     p  -14.800   2.2750   0.0000   1.0000   0.0000",
