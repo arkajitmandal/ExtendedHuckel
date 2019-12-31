@@ -72,3 +72,9 @@ function moList(){
     //console.log(ans)
     document.getElementById("moNum").innerHTML = ans;
 }
+
+
+function noKey(a) {
+    control.noKeys = a;
+    //console.log(control.noKeys);
+}

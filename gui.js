@@ -1,4 +1,5 @@
 var model;
+var control
 var renderer, densityscene, camera;
 var atomX, atomY, atomZ, atomRad;
 var mol, Eig, MOs;
@@ -27,7 +28,7 @@ function init() {
     // Camera looks toward negative z with y up
     camera.position.set(5, 5, 100);
 
-    var control = new THREE.OrbitControls(camera, canv);
+    control = new THREE.OrbitControls(camera, canv);
     var light = new THREE.AmbientLight(0x513030); // soft white light
     scene.add(light);
     var directionalLight = new THREE.DirectionalLight(0xffffff);

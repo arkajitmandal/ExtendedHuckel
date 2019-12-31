@@ -40,7 +40,9 @@
                                         upload .xyz
                                 </label>
                         </div>
-                        <div><textarea onclick="removeSelect();" onselect="showSelectedAtoms();" placeholder="H 1.0 1.0 1.0" id="xyzText" name="text" onkeyup="updateScreen();" onmouseover="status('write xyz coordinates')" onmouseout="status('')"></textarea>                            </div>
+                        <div>
+                            <textarea onclick="removeSelect();" onselect="showSelectedAtoms();" placeholder="H 1.0 1.0 1.0" id="xyzText" name="text" onkeyup="updateScreen();" onmouseover="status('write xyz coordinates')" onmouseout="status('')" onblur="noKey(false)" onfocus="noKey(true)"></textarea>                  
+                        </div>
                     </div>
                     <div id="tab2">
                         <div id="controlResults">
