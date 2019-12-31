@@ -22,7 +22,7 @@ function moveMol(atoms, nn, vv) {
     return movedAtoms;
 }
 
-// Sij(k) = Σ exp(i k Rn) S(r-Rn)
+// Sij(k) = Σ exp(i k Rn) Sij(r-Rn)
 
 function bandSij( k, mol, vv, n = 2) {
     let dim = vv.length ;
