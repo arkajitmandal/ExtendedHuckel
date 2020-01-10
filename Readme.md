@@ -8,11 +8,12 @@ url : https://arkajitmandal.github.io/ExtendedHuckel/
 Arkajit Mandal 
 
 Shreif Alsaid 
-## Contributor
-Bahtiyar Mamedov 
+
 ## Principal Investigator
 Pengfei Huo 
 
+## Acknowledgements
+Bahtiyar Mamedov 
 
 
 
