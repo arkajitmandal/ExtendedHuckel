@@ -3,11 +3,17 @@
 url : https://arkajitmandal.github.io/ExtendedHuckel/
 <img src="Demo.png" >
 
-# Developers
+# Contributions
+## Developers
 Arkajit Mandal 
 
-Shreif Alsaid
+Shreif Alsaid 
+## Contributor
+Bahtiyar Mamedov 
+## Principal Investigator
+Pengfei Huo 
 
-PI : <b> Pengfei Huo </b>
+
+
 
 <img src="logo.jpg" width="250">
