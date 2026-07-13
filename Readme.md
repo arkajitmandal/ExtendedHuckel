@@ -8,11 +8,12 @@ url : https://arkajitmandal.github.io/ExtendedHuckel/
 # Contributions
 ## Developers
 Arkajit Mandal 
-
 Shreif Alsaid 
+Pengfei Huo (Principal Investigator)
 
-## Principal Investigator
-Pengfei Huo 
+
+## Maintainers 
+This is presently maintained by the Mandal group at Texas A&M University.
 
 ## Acknowledgements
 Bahtiyar Mamedov 
